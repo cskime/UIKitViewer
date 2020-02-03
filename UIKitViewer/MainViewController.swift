@@ -30,6 +30,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupCollectionView()
         setupFlowLayout()
+
     }
 
     private func setupCollectionView() {
