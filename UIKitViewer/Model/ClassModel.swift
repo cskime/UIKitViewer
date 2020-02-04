@@ -10,7 +10,7 @@ import UIKit
 
 struct ClassInfo {
     var name: String
-    var properties: [String]
+    var properties: [Property]
 }
 
 enum ClassList: String {
