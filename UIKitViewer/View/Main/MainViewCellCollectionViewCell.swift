@@ -25,7 +25,7 @@ class MainViewCellCollectionViewCell: UICollectionViewCell {
     }
     private func setupLabels() {
         clipsToBounds = true
-        layer.cornerRadius = 20
+        layer.cornerRadius = 16
         imageView.contentMode = .scaleAspectFill
         contentView.addSubview(imageView)
         

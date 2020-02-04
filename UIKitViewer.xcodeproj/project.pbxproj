@@ -11,6 +11,9 @@
 		049505BF23E8329300790D15 /* MainViewCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505BE23E8329300790D15 /* MainViewCellCollectionViewCell.swift */; };
 		049505C123E84D4E00790D15 /* OperationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505C023E84D4E00790D15 /* OperationViewController.swift */; };
 		049505C323E84D9700790D15 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505C223E84D9700790D15 /* MainView.swift */; };
+		AC0B8ABA23E982DE0057EEBC /* ColorControlCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8AB923E982DE0057EEBC /* ColorControlCell.swift */; };
+		ACB74E2F23E97F32001AE814 /* ClassModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB74E2D23E97F32001AE814 /* ClassModel.swift */; };
+		ACB74E3023E97F32001AE814 /* PropertyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB74E2E23E97F32001AE814 /* PropertyModel.swift */; };
 		ACE37E6323E43D3400055BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE37E6223E43D3400055BFE /* AppDelegate.swift */; };
 		ACE37E6723E43D3400055BFE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE37E6623E43D3400055BFE /* MainViewController.swift */; };
 		ACE37E6C23E43D3500055BFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACE37E6B23E43D3500055BFE /* Assets.xcassets */; };
@@ -22,6 +25,9 @@
 		049505BE23E8329300790D15 /* MainViewCellCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		049505C023E84D4E00790D15 /* OperationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationViewController.swift; sourceTree = "<group>"; };
 		049505C223E84D9700790D15 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		AC0B8AB923E982DE0057EEBC /* ColorControlCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ColorControlCell.swift; path = UIKitViewer/View/Operate/ColorControlCell.swift; sourceTree = SOURCE_ROOT; };
+		ACB74E2D23E97F32001AE814 /* ClassModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassModel.swift; sourceTree = "<group>"; };
+		ACB74E2E23E97F32001AE814 /* PropertyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyModel.swift; sourceTree = "<group>"; };
 		ACE37E5F23E43D3400055BFE /* UIKitViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKitViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE37E6223E43D3400055BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		ACE37E6623E43D3400055BFE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -44,26 +50,46 @@
 		049505AE23E8260300790D15 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				AC0B8AB723E982870057EEBC /* Main */,
+				AC0B8AB823E982900057EEBC /* Operate */,
 				049505C223E84D9700790D15 /* MainView.swift */,
 				049505B823E8298700790D15 /* OperationView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		049505AF23E8280A00790D15 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Controller;
-			path = "New Group/Controller";
-			sourceTree = "<group>";
-		};
-		049505BD23E8326600790D15 /* Cell */ = {
+		AC0B8AB723E982870057EEBC /* Main */ = {
 			isa = PBXGroup;
 			children = (
 				049505BE23E8329300790D15 /* MainViewCellCollectionViewCell.swift */,
+				AC0B8AB923E982DE0057EEBC /* ColorControlCell.swift */,
 			);
-			path = Cell;
+			path = Main;
+			sourceTree = "<group>";
+		};
+		AC0B8AB823E982900057EEBC /* Operate */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Operate;
+			sourceTree = "<group>";
+		};
+		ACB74E3123E97F35001AE814 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				ACB74E2D23E97F32001AE814 /* ClassModel.swift */,
+				ACB74E2E23E97F32001AE814 /* PropertyModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		ACB74E3223E97F47001AE814 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				ACE37E6623E43D3400055BFE /* MainViewController.swift */,
+				049505C023E84D4E00790D15 /* OperationViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		ACE37E5623E43D3400055BFE = {
@@ -86,14 +112,12 @@
 			isa = PBXGroup;
 			children = (
 				ACE37E6223E43D3400055BFE /* AppDelegate.swift */,
+				ACB74E3123E97F35001AE814 /* Model */,
+				049505AE23E8260300790D15 /* View */,
+				ACB74E3223E97F47001AE814 /* Controller */,
 				ACE37E6B23E43D3500055BFE /* Assets.xcassets */,
 				ACE37E6D23E43D3500055BFE /* LaunchScreen.storyboard */,
 				ACE37E7023E43D3500055BFE /* Info.plist */,
-				049505AE23E8260300790D15 /* View */,
-				049505AF23E8280A00790D15 /* Controller */,
-				ACE37E6623E43D3400055BFE /* MainViewController.swift */,
-				049505C023E84D4E00790D15 /* OperationViewController.swift */,
-				049505BD23E8326600790D15 /* Cell */,
 			);
 			path = UIKitViewer;
 			sourceTree = "<group>";
@@ -168,9 +192,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ACB74E2F23E97F32001AE814 /* ClassModel.swift in Sources */,
+				AC0B8ABA23E982DE0057EEBC /* ColorControlCell.swift in Sources */,
 				ACE37E6723E43D3400055BFE /* MainViewController.swift in Sources */,
 				049505C323E84D9700790D15 /* MainView.swift in Sources */,
 				049505C123E84D4E00790D15 /* OperationViewController.swift in Sources */,
+				ACB74E3023E97F32001AE814 /* PropertyModel.swift in Sources */,
 				049505B923E8298700790D15 /* OperationView.swift in Sources */,
 				ACE37E6323E43D3400055BFE /* AppDelegate.swift in Sources */,
 				049505BF23E8329300790D15 /* MainViewCellCollectionViewCell.swift in Sources */,
