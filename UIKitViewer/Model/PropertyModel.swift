@@ -63,7 +63,7 @@ var properties = [
         "currentPage",
         "numberOfPages"
     ],
-    "UISegmentController" : [
+    "UISegmentedControl" : [
         "ismomentary",
         "numberOfSegment"
     ]
