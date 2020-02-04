@@ -9,17 +9,62 @@
 import UIKit
 
 var properties = [
-  "UIButton" : [
-    "setTitle",
-    "setTitleColor",
-    "setImage"
-  ],
-  "UILabel" : [
-    "text",
-    "textColor"
-  ],
-  "UIView" : [
-    "backgroundColor",
-    "tintColor"
-  ]
+    "UIButton" : [
+        "setTitle",
+        "setImage",
+        "setTitleColor"
+    ],
+    "UILabel" : [
+        "text",
+        "textColor"
+    ],
+    "UIView" : [
+        "tintColor",
+        "backgroundColor"
+    ],
+    "UISwitch" : [
+        "isOn",
+        "onImage",
+        "offImage"
+    ],
+    "UIStepper" : [
+        "wraps",
+        "stepValue",
+        "autoRepeat",
+        "isContinuous",
+    ],
+    "UITextField" : [
+        "font",
+        "textColor",
+        "placeholder",
+        "borderStyle",
+        "textAlignment",
+    ],
+    "UITableView" : [
+        "style",
+        "rowHeight",
+        "cellForRow",
+        "numberOfRows",
+        "dequeueReusableCell"
+    ],
+    "UICollectionView" : [
+        "register",
+        "numberOfItems",
+        "numberOfSections",
+        "collectionViewLayout",
+        "layoutAttributesForSupplementaryElemnet"
+    ],
+    "UIImageView" : [
+        "isHighlighted",
+        "highlightImage",
+        "isUserInteractionEnabled"
+    ],
+    "UIPageControl" : [
+        "currentPage",
+        "numberOfPages"
+    ],
+    "UISegmentController" : [
+        "ismomentary",
+        "numberOfSegment"
+    ]
 ]

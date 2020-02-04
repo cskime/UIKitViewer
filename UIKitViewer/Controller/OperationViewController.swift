@@ -89,6 +89,8 @@ class OperationViewController: UIViewController {
       object = UIView()
       object.backgroundColor = .black
       willLayoutSize = true
+    default:
+        object = UIView()
     }
     
     self.displayView.addSubview(object)

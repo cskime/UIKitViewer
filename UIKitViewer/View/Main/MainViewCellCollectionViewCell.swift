@@ -11,6 +11,7 @@ import UIKit
 class MainViewCellCollectionViewCell: UICollectionViewCell {
     static let identifier = "MainViewCell"
     
+    private let view = UIView()
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
     
@@ -45,12 +46,10 @@ class MainViewCellCollectionViewCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            
             titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 25)
             
         ])
     }
