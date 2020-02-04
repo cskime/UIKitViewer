@@ -24,7 +24,7 @@ enum ClassList: String {
     case UICollectionView
     case UIImageView
     case UIPageControl
-    case UISegmentController
+    case UISegmentedControl
 
     
     func getInstance() -> UIView? {
@@ -60,9 +60,9 @@ enum ClassList: String {
         case .UIPageControl:
             guard let pageControlType = classType as? UIPageControl.Type else { return nil }
             return pageControlType.init()
-        case .UISegmentController:
-            guard let segmentControllerType = classType as? UISegmentedControl.Type else { return nil }
-            return segmentControllerType.init()
+        case .UISegmentedControl:
+            guard let segmentedControlType = classType as? UISegmentedControl.Type else { return nil }
+            return segmentedControlType.init()
         }
     }
     func getClass() -> AnyClass? {
