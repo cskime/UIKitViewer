@@ -40,7 +40,7 @@ class OperationViewController: UIViewController {
   
   private func setupTableView() {
     tableView.dataSource = self
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+    tableView.register(SliderCell.self, forCellReuseIdentifier: SliderCell.identifier)
     tableView.allowsSelection = false
   }
   
@@ -125,8 +125,8 @@ extension OperationViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-    cell.textLabel?.text = manager.dataSource[indexPath.section].properties[indexPath.row]
+    let title = manager.dataSource[indexPath.section].properties[indexPath.row]
+    let cell = CellProvider.create(to: tableView, with: title, for: .slider)
     return cell
   }
   

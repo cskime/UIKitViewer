@@ -56,7 +56,6 @@ extension MainViewController: UICollectionViewDataSource {
     cell.backgroundColor = .white
     cell.layer.cornerRadius = cell.frame.width / 3
     cell.configure(title: objects[indexPath.item])
-    let item = objects[indexPath.item]
     cell.backgroundColor = .blue
     return cell
     
