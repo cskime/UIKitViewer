@@ -48,20 +48,7 @@ extension MainViewController: UICollectionViewDataSource {
     print("$44")
     return objects.count
   }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellCollectionViewCell.identifier, for: indexPath) as! MainViewCellCollectionViewCell
-        cell.backgroundColor = .white
-        cell.layer.cornerRadius = cell.frame.width / 3
-        cell.configure(title: objects[indexPath.item])
-        let item = objects[indexPath.item]
-        cell.backgroundColor = .blue
-        return cell
-        
-    }
   
-<<<<<<< Updated upstream
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellCollectionViewCell.identifier, for: indexPath) as! MainViewCellCollectionViewCell
@@ -72,8 +59,6 @@ extension MainViewController: UICollectionViewDataSource {
     return cell
     
   }
-=======
->>>>>>> Stashed changes
   
 }
 //MARK: - UICollectionViewDelegateFlowLayout

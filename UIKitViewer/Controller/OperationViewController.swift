@@ -127,8 +127,8 @@ extension OperationViewController: UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let title = manager.dataSource[indexPath.section].properties[indexPath.row]
-    let cell = CellProvider.create(to: tableView, with: title, for: .slider)
+    let property = manager.dataSource[indexPath.section].properties[indexPath.row]
+    let cell = CellProvider.create(to: tableView, with: property.name, for: property.controlType)
     return cell
   }
   
