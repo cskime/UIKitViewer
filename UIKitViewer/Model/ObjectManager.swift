@@ -18,8 +18,13 @@ class ObjectManager {
       object
         .classNamesWithinInheritance()
         .forEach {
-          let classInfo = ObjectInfo(name: $0, properties: properties[$0] ?? [])
-          self.dataSource.append(classInfo)
+          let objectInfo = ObjectInfo(name: $0, properties: properties[$0] ?? [])
+          self.dataSource.append(objectInfo)
+      }
+      if object == .UICollectionView {
+        let layout = properties.filter { $0.key == "UICollectionViewFlowLayout" }.first
+        let objectInfo = ObjectInfo(name: layout?.key ?? "", properties: layout?.value ?? [])
+        self.dataSource.insert(objectInfo, at: 1)
       }
     }
   }

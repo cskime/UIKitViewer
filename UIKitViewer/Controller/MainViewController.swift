@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
   lazy var collectionView = UICollectionView(
     frame: view.frame , collectionViewLayout: flowLayout
   )
-  let objects = properties.keys.sorted()
+  let objects = properties.keys.filter { $0 != "UICollectionViewFlowLayout" }.sorted()
   
     private enum UI {
       static let itemSpacing: CGFloat = 10.0
