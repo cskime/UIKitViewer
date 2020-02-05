@@ -42,16 +42,18 @@ class DisplayView: UIView {
     switch self.objectType {
     case .UIView:
       object = UIView()
-      object.backgroundColor = .black
+      object.backgroundColor = .gray
       shouldLayoutView = true
     case .UIButton:
       guard let button = self.objectType.getInstance() as? UIButton else { return }
       button.setTitle("Test Button", for: .normal)
       button.setTitleColor(.black, for: .normal)
+      button.titleLabel?.font = .systemFont(ofSize: 24)
       object = button
     case .UILabel:
       guard let label = self.objectType.getInstance() as? UILabel else { return }
       label.text = "Test Label"
+      label.font = .systemFont(ofSize: 24)
       object = label
     case .UISwitch:
       guard let `switch` = self.objectType.getInstance() as? UISwitch else { return }
@@ -84,7 +86,11 @@ class DisplayView: UIView {
       object = imageView
     case .UIPageControl:
       guard let pageControl = self.objectType.getInstance() as? UIPageControl else { return }
+      pageControl.numberOfPages = 3
+      pageControl.currentPage = 0
+      pageControl.backgroundColor = .gray
       object = pageControl
+      shouldLayoutView = true
     case .UISegmentedControl:
       guard let segmentedControl = self.objectType.getInstance() as? UISegmentedControl else { return }
       segmentedControl.selectedSegmentIndex = 0

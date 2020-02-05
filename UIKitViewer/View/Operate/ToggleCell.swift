@@ -16,7 +16,7 @@ class ToggleCell: UITableViewCell {
   
   private let nameLabel: UILabel = {
     let label = UILabel()
-    label.font = .systemFont(ofSize: 20, weight: .semibold)
+    label.font = .systemFont(ofSize: 16)
     return label
   }()
   private let onOffSwitch = UISwitch()
@@ -34,7 +34,7 @@ class ToggleCell: UITableViewCell {
   }
   
   struct UI {
-    static let paddingY: CGFloat = 16
+    static let paddingY: CGFloat = 8
     static let paddingX: CGFloat = 16
     static let spacing: CGFloat = 8
   }

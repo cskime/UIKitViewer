@@ -32,7 +32,9 @@ class MainViewCellCollectionViewCell: UICollectionViewCell {
     contentView.addSubview(imageView)
     
     titleLabel.textAlignment = .center
-//    titleLabel.textColor = .white
+    titleLabel.backgroundColor = .white
+    titleLabel.layer.borderColor = #colorLiteral(red: 0.8999999762, green: 0.8999999762, blue: 0.8999999762, alpha: 1)
+    titleLabel.layer.borderWidth = 1
     titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
     titleLabel.adjustsFontSizeToFitWidth = true
     titleLabel.minimumScaleFactor = 0.1
@@ -42,8 +44,6 @@ class MainViewCellCollectionViewCell: UICollectionViewCell {
     self.layer.borderWidth = 0.8
     self.layer.cornerRadius = 8
     self.layer.borderColor = #colorLiteral(red: 0.9044573903, green: 0.9044573903, blue: 0.9044573903, alpha: 1)
-    titleLabel.layer.borderColor = #colorLiteral(red: 0.8999999762, green: 0.8999999762, blue: 0.8999999762, alpha: 1)
-    titleLabel.layer.borderWidth = 1
   }
   
   private func setupConstraints() {

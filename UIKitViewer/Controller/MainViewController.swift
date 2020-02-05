@@ -35,7 +35,7 @@ class MainViewController: UIViewController {
   
   private func setupCollectionView() {
     
-    collectionView.backgroundColor = .white
+    collectionView.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.register(MainViewCellCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCellCollectionViewCell.identifier)

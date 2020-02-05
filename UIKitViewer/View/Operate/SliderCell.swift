@@ -21,14 +21,14 @@ class SliderCell: UITableViewCell {
   }
   private let valueLabel: UILabel = {
     let countLabel = UILabel()
-    countLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+    countLabel.font = .systemFont(ofSize: 16)
     countLabel.text = "0"
     return countLabel
   }()
   
   private let nameLabel: UILabel = {
     let label = UILabel()
-    label.font = .systemFont(ofSize: 20, weight: .semibold)
+    label.font = .systemFont(ofSize: 16)
     return label
   }()
   private let slider = UISlider()
@@ -48,7 +48,7 @@ class SliderCell: UITableViewCell {
   }
   
   struct UI {
-    static let paddingY: CGFloat = 16
+    static let paddingY: CGFloat = 8
     static let paddingX: CGFloat = 16
     static let spacing: CGFloat = 8
   }

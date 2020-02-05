@@ -19,7 +19,7 @@ class PaletteCell: UITableViewCell {
   
   let nameLabel: UILabel = {
     let label = UILabel()
-    label.font = .systemFont(ofSize: 20, weight: .semibold)
+    label.font = .systemFont(ofSize: 16)
     return label
   }()
   
@@ -49,7 +49,7 @@ class PaletteCell: UITableViewCell {
   }
   
   struct UI {
-    static let paddingY: CGFloat = 16
+    static let paddingY: CGFloat = 8
     static let paddingX: CGFloat = 16
     static let spacing: CGFloat = 8
   }
@@ -59,7 +59,7 @@ class PaletteCell: UITableViewCell {
       stackView.axis = .horizontal
       stackView.alignment = .fill
       stackView.distribution = .fillEqually
-      stackView.spacing = 16
+      stackView.spacing = 24
       return stackView
     }()
     colorButtons.forEach {
@@ -77,8 +77,8 @@ class PaletteCell: UITableViewCell {
       self.nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX),
       
       stackView.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: UI.spacing),
-      stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX * 2),
-      stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX * 2),
+      stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX * 4),
+      stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX * 4),
       stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
     ])
   }
