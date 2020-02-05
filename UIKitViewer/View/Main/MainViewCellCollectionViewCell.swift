@@ -14,7 +14,7 @@ class MainViewCellCollectionViewCell: UICollectionViewCell {
     private let view = UIView()
     private let imageView = UIImageView()
     private let titleLabel = UILabel()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupLabels()
@@ -28,12 +28,14 @@ class MainViewCellCollectionViewCell: UICollectionViewCell {
         clipsToBounds = true
         layer.cornerRadius = 16
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         contentView.addSubview(imageView)
         
         titleLabel.textAlignment = .center
         titleLabel.textColor = .white
         titleLabel.font = UIFont.preferredFont(forTextStyle: .headline)
         contentView.addSubview(titleLabel)
+        
     }
     
     private func setupConstraints() {
@@ -46,14 +48,16 @@ class MainViewCellCollectionViewCell: UICollectionViewCell {
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: imageView.topAnchor),
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 40)
             
         ])
     }
     func configure(title: String) {
         titleLabel.text = title
+        imageView.image = UIImage(named: title)
     }
 }

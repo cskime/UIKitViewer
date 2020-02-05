@@ -9,13 +9,18 @@
 import UIKit
 
 class MainViewController: UIViewController {
-  
+      
   let flowLayout = UICollectionViewFlowLayout()
   lazy var collectionView = UICollectionView(
     frame: view.frame , collectionViewLayout: flowLayout
   )
   let objects = properties.keys.sorted()
   
+    private enum UI {
+      static let itemSpacing: CGFloat = 10.0
+      static let lineSpacing: CGFloat = 10.0
+    }
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     setupCollectionView()
@@ -29,15 +34,16 @@ class MainViewController: UIViewController {
     collectionView.delegate = self
     collectionView.register(MainViewCellCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCellCollectionViewCell.identifier)
     view.addSubview(collectionView)
-    print("!1111")
+    print("11111")
   }
   
   private func setupFlowLayout() {
-    flowLayout.itemSize = CGSize(width: 180, height: 180)
-    flowLayout.minimumInteritemSpacing = 2
-    flowLayout.minimumLineSpacing = 20
-    flowLayout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-    print("@2222")
+    flowLayout.itemSize = CGSize(width: collectionView.frame.width / 2 - (UI.itemSpacing * 2.5),
+                                 height: 180)
+    flowLayout.minimumInteritemSpacing = UI.itemSpacing
+    flowLayout.minimumLineSpacing = UI.lineSpacing
+    flowLayout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    print("22222")
   }
 }
 //MARK: - UICollectionViewDataSource
@@ -45,21 +51,20 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    print("$44")
+    print("44444")
     return objects.count
   }
-  
+    
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellCollectionViewCell.identifier, for: indexPath) as! MainViewCellCollectionViewCell
-    cell.backgroundColor = .white
-    cell.layer.cornerRadius = cell.frame.width / 3
+    cell.layer.cornerRadius = 16
     cell.configure(title: objects[indexPath.item])
-    cell.backgroundColor = .blue
+    cell.layer.borderWidth = 1
+    cell.backgroundColor = #colorLiteral(red: 0.5158689916, green: 0.8727806934, blue: 1, alpha: 1)
+    cell.layer.borderColor = #colorLiteral(red: 0.5158689916, green: 0.8727806934, blue: 1, alpha: 1)
     return cell
-    
   }
-  
 }
 //MARK: - UICollectionViewDelegateFlowLayout
 
