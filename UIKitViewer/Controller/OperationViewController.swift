@@ -10,7 +10,7 @@ import UIKit
 
 class OperationViewController: UIViewController {
   
-  private let manager = Manager.shared
+  private let manager = ObjectManager.shared
   private let tableView = UITableView(frame: .zero, style: .grouped)
   private let displayView = UIView()
   

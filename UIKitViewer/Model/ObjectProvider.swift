@@ -8,12 +8,12 @@
 
 import UIKit
 
-struct ClassInfo {
+struct ObjectInfo {
     var name: String
     var properties: [Property]
 }
 
-enum ClassList: String {
+enum ObjectProvider: String {
     case UIView
     case UIButton
     case UILabel
@@ -83,21 +83,4 @@ enum ClassList: String {
         
         return objects
     }
-}
-
-class Manager {
-    
-    static let shared = Manager()
-    private init() {}
-    var dataSource = [ClassInfo]()
-    var object: ClassList = .UIButton {
-        didSet {
-            let superClasses = object.classNamesWithinInheritance()
-            superClasses.forEach {
-                let classInfo = ClassInfo(name: $0, properties: properties[$0] ?? [])
-                self.dataSource.append(classInfo)
-            }
-        }
-    }
-    
 }

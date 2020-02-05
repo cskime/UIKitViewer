@@ -66,9 +66,9 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let object = ClassList(rawValue: objects[indexPath.item]) else { return }
+    guard let object = ObjectProvider(rawValue: objects[indexPath.item]) else { return }
     let operationVC = OperationViewController()
-    Manager.shared.object = object
+    ObjectManager.shared.object = object
     navigationController?.pushViewController(operationVC, animated: true)
   }
 }
