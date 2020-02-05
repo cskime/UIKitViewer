@@ -64,11 +64,7 @@ extension MainViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellCollectionViewCell.identifier, for: indexPath) as! MainViewCellCollectionViewCell
-    cell.layer.cornerRadius = 16
     cell.configure(title: objects[indexPath.item])
-    cell.layer.borderWidth = 1
-    cell.backgroundColor = #colorLiteral(red: 0.5158689916, green: 0.8727806934, blue: 1, alpha: 1)
-    cell.layer.borderColor = #colorLiteral(red: 0.5158689916, green: 0.8727806934, blue: 1, alpha: 1)
     return cell
   }
 }
