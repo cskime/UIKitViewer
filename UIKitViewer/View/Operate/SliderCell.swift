@@ -58,7 +58,7 @@ class SliderCell: UITableViewCell {
   func configureContents(title: String) {
     self.nameLabel.text = title
   }
-  
+
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
