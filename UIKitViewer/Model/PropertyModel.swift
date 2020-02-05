@@ -11,7 +11,7 @@ import UIKit
 enum ControlType {
     case slider // 수치변화하는 control
     case palette // 색 고르는 control
-    //    case picker //몇 가지 중에 고르는 control
+    case textField //몇 가지 중에 고르는 control
     case toggle // true / false 중에 고르는 control
 }
 
@@ -22,15 +22,16 @@ struct Property {
 
 var properties: [String: [Property]] = [
   "UIButton" : [
-    Property(name: "setTitle", controlType: .slider),
+    Property(name: "setTitle", controlType: .textField),
     Property(name: "setImage", controlType: .toggle),
     Property(name: "setTitleColor", controlType: .palette),
   ],
   "UILabel" : [
-    Property(name: "text", controlType: .slider),
+    Property(name: "text", controlType: .textField),
     Property(name: "textColor", controlType: .palette),
   ],
   "UIView" : [
+    Property(name: "contentMode", controlType: .toggle),
     Property(name: "tintColor", controlType: .palette),
     Property(name: "backgroundColor", controlType: .palette),
   ],
@@ -55,12 +56,11 @@ var properties: [String: [Property]] = [
   "UITableView" : [
     Property(name: "style", controlType: .slider),
     Property(name: "rowHeight", controlType: .slider),
-    Property(name: "cellForRow", controlType: .slider),
     Property(name: "numberOfRows", controlType: .slider),
+    Property(name: "numberOfSections", controlType: .slider),
     Property(name: "dequeueReusableCell", controlType: .slider),
   ],
   "UICollectionView" : [
-    Property(name: "register", controlType: .slider),
     Property(name: "numberOfItems", controlType: .slider),
     Property(name: "numberOfSections", controlType: .slider),
     Property(name: "collectionViewLayout", controlType: .slider),

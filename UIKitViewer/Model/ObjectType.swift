@@ -13,7 +13,7 @@ struct ObjectInfo {
     var properties: [Property]
 }
 
-enum ObjectProvider: String {
+enum ObjectType: String {
     case UIView
     case UIButton
     case UILabel

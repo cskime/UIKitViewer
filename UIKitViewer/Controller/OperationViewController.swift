@@ -10,9 +10,10 @@ import UIKit
 
 class OperationViewController: UIViewController {
   
-  private let manager = ObjectManager.shared
+  private let cellProvider = CellProvider()
+  private let objectManager = ObjectManager.shared
   private let tableView = UITableView(frame: .zero, style: .grouped)
-  private let displayView = UIView()
+  private lazy var displayView = DisplayView(objectType: self.objectManager.object)
   
   // MARK: Life Cycle
   
@@ -22,7 +23,7 @@ class OperationViewController: UIViewController {
   }
   
   deinit {
-    self.manager.dataSource.removeAll()
+    self.objectManager.dataSource.removeAll()
   }
   
   // MARK: Initialize
@@ -31,21 +32,23 @@ class OperationViewController: UIViewController {
     self.setupAttributes()
     self.setupTableView()
     self.setupConstraints()
+    self.cellProvider.delegate = self
+    self.cellProvider.register(to: self.tableView)
   }
   
   private func setupAttributes() {
-    self.view.backgroundColor = .white
-    navigationItem.title = manager.dataSource.first?.name
+    self.view.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+    navigationItem.title = objectManager.dataSource.first?.name
   }
   
   private func setupTableView() {
     tableView.dataSource = self
-    tableView.register(SliderCell.self, forCellReuseIdentifier: SliderCell.identifier)
     tableView.allowsSelection = false
   }
   
   struct UI {
-    static let displayHeight: CGFloat = 240
+    static let paddingY: CGFloat = 24
+    static let paddingX: CGFloat = 24
   }
   private func setupConstraints() {
     let subviews = [self.displayView, self.tableView]
@@ -57,56 +60,16 @@ class OperationViewController: UIViewController {
     let guide = self.view.safeAreaLayoutGuide
     self.displayView.backgroundColor = .lightText
     NSLayoutConstraint.activate([
-      self.displayView.topAnchor.constraint(equalTo: guide.topAnchor),
-      self.displayView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
-      self.displayView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-      self.displayView.heightAnchor.constraint(equalToConstant: UI.displayHeight),
+      self.displayView.topAnchor.constraint(equalTo: guide.topAnchor, constant: UI.paddingY),
+      self.displayView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: UI.paddingX),
+      self.displayView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -UI.paddingX),
+      self.displayView.heightAnchor.constraint(equalTo: guide.heightAnchor, multiplier: 0.3),
       
-      self.tableView.topAnchor.constraint(equalTo: self.displayView.bottomAnchor),
+      self.tableView.topAnchor.constraint(equalTo: self.displayView.bottomAnchor, constant: UI.paddingY),
       self.tableView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
       self.tableView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
       self.tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
     ])
-    
-    self.setupTargetObject()
-  }
-  
-  private func setupTargetObject() {
-    
-    var object: UIView
-    var willLayoutSize = false
-    switch manager.object {
-    case .UIButton:
-      guard let button = manager.object.getInstance() as? UIButton else { return }
-      button.setTitle("Test Button", for: .normal)
-      button.setTitleColor(.black, for: .normal)
-      object = button
-    case .UILabel:
-      guard let label = manager.object.getInstance() as? UILabel else { return }
-      label.text = "Test Label"
-      object = label
-    case .UIView:
-      object = UIView()
-      object.backgroundColor = .black
-      willLayoutSize = true
-    default:
-        object = UIView()
-    }
-    
-    self.displayView.addSubview(object)
-    object.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      object.centerXAnchor.constraint(equalTo: self.displayView.centerXAnchor),
-      object.centerYAnchor.constraint(equalTo: self.displayView.centerYAnchor),
-    ])
-    
-    if willLayoutSize {
-      NSLayoutConstraint.activate([
-        object.widthAnchor.constraint(equalTo: self.displayView.widthAnchor, multiplier: 0.5),
-        object.heightAnchor.constraint(equalTo: self.displayView.heightAnchor, multiplier: 0.5),
-      ])
-    }
-    
   }
   
 }
@@ -115,21 +78,40 @@ class OperationViewController: UIViewController {
 
 extension OperationViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return manager.dataSource.count
+    return objectManager.dataSource.count
   }
   
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return manager.dataSource[section].name
+    return objectManager.dataSource[section].name
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return manager.dataSource[section].properties.count
+    return objectManager.dataSource[section].properties.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let property = manager.dataSource[indexPath.section].properties[indexPath.row]
-    let cell = CellProvider.create(to: tableView, with: property.name, for: property.controlType)
+    let property = objectManager.dataSource[indexPath.section].properties[indexPath.row]
+    let cell = self.cellProvider.create(to: tableView, with: property.name, for: property.controlType)
     return cell
+  }
+  
+}
+
+// MARK:- ControlCellDelegate
+
+extension OperationViewController: ControlCellDelegate {
+  
+  func cell(_ tableViewCell: UITableViewCell, valueForColor color: UIColor?) {
+    guard let cell = tableViewCell as? PaletteCell else { return }
+    if cell.nameLabel.text!.contains("backgroundColor") {
+      self.displayView.configure(backgroundColor: color)
+    } else if cell.nameLabel.text!.contains("tint") {
+      self.displayView.configure(tintColor: color)
+    } else if cell.nameLabel.text!.contains("Title") || cell.nameLabel.text!.contains("text") {
+      self.displayView.configure(textColor: color)
+    } else {
+      return
+    }
   }
   
 }

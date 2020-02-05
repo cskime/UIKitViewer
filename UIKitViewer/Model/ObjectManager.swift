@@ -13,7 +13,7 @@ class ObjectManager {
   static let shared = ObjectManager()
   private init() {}
   var dataSource = [ObjectInfo]()
-  var object: ObjectProvider = .UIButton {
+  var object: ObjectType = .UIButton {
     didSet {
       object
         .classNamesWithinInheritance()

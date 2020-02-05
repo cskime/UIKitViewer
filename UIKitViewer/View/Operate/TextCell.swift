@@ -1,16 +1,16 @@
 //
-//  ToggleCell.swift
+//  TextCell.swift
 //  UIKitViewer
 //
-//  Created by mac on 2020/02/04.
+//  Created by cskim on 2020/02/05.
 //  Copyright © 2020 cskim. All rights reserved.
 //
 
 import UIKit
 
-class ToggleCell: UITableViewCell {
-  
-  static let identifier = String(describing: ToggleCell.self)
+class TextCell: UITableViewCell {
+
+  static let identifier = String(describing: TextCell.self)
   
   weak var delegate: ControlCellDelegate?
   
@@ -19,7 +19,13 @@ class ToggleCell: UITableViewCell {
     label.font = .systemFont(ofSize: 20, weight: .semibold)
     return label
   }()
-  private let onOffSwitch = UISwitch()
+  private let textField: UITextField = {
+    let textField = UITextField()
+    textField.autocapitalizationType = .none
+    textField.autocorrectionType = .no
+    textField.borderStyle = .roundedRect
+    return textField
+  }()
   
   // MARK: Initialize
   
@@ -29,7 +35,6 @@ class ToggleCell: UITableViewCell {
   }
   
   private func setupUI() {
-    self.onOffSwitch.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
     self.setupConstraints()
   }
   
@@ -38,8 +43,9 @@ class ToggleCell: UITableViewCell {
     static let paddingX: CGFloat = 16
     static let spacing: CGFloat = 8
   }
+  
   private func setupConstraints() {
-    let subviews = [self.nameLabel, self.onOffSwitch]
+    let subviews = [self.nameLabel, self.textField]
     subviews.forEach {
       self.contentView.addSubview($0)
       $0.translatesAutoresizingMaskIntoConstraints = false
@@ -50,10 +56,13 @@ class ToggleCell: UITableViewCell {
       self.nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX),
       self.nameLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
       
-      self.onOffSwitch.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.onOffSwitch.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX),
-      self.onOffSwitch.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
+      self.textField.topAnchor.constraint(equalTo: self.nameLabel.topAnchor),
+      self.textField.leadingAnchor.constraint(equalTo: self.contentView.centerXAnchor, constant: UI.paddingX),
+      self.textField.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX),
+      self.textField.bottomAnchor.constraint(equalTo: self.nameLabel.bottomAnchor),
     ])
+    
+    self.nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
   }
   
   // MARK: Interface
@@ -62,13 +71,8 @@ class ToggleCell: UITableViewCell {
     self.nameLabel.text = title
   }
   
-  // MARK: Actions
-  
-  @objc private func switchChanged(_ sender: UISwitch) {
-    self.delegate?.cell?(self, valueForToggle: sender.isOn)
-  }
-  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+  
 }

@@ -23,8 +23,14 @@ class MainViewController: UIViewController {
     
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupUI()
     setupCollectionView()
     setupFlowLayout()
+  }
+  
+  private func setupUI() {
+    self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+    self.navigationItem.title = "UIKit Viewer"
   }
   
   private func setupCollectionView() {
@@ -71,7 +77,7 @@ extension MainViewController: UICollectionViewDataSource {
 extension MainViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    guard let object = ObjectProvider(rawValue: objects[indexPath.item]) else { return }
+    guard let object = ObjectType(rawValue: objects[indexPath.item]) else { return }
     let operationVC = OperationViewController()
     ObjectManager.shared.object = object
     navigationController?.pushViewController(operationVC, animated: true)
