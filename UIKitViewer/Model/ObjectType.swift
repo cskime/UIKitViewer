@@ -38,7 +38,7 @@ enum ObjectType: String {
             return labelType.init()
         case .UIButton:
             guard let buttonType = classType as? UIButton.Type else { return nil }
-            return buttonType.init()
+            return buttonType.init(type: .system)
         case .UISwitch:
             guard let switchType = classType as? UISwitch.Type else { return nil }
             return switchType.init()
@@ -50,19 +50,24 @@ enum ObjectType: String {
             return textFieldType.init()
         case .UITableView:
             guard let tableViewType = classType as? UITableView.Type else { return nil }
-            return tableViewType.init()
+            return tableViewType.init(frame: .zero, style: .plain)
         case .UICollectionView:
             guard let collectionViewType = classType as? UICollectionView.Type else { return nil }
-            return collectionViewType.init()
+            let layout: UICollectionViewFlowLayout = {
+              let layout = UICollectionViewFlowLayout()
+              layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+              return layout
+            }()
+            return collectionViewType.init(frame: .zero, collectionViewLayout: layout)
         case .UIImageView:
             guard let imageViewType = classType as? UIImageView.Type else { return nil }
-            return imageViewType.init()
+            return imageViewType.init(image: UIImage(named: "default"))
         case .UIPageControl:
             guard let pageControlType = classType as? UIPageControl.Type else { return nil }
             return pageControlType.init()
         case .UISegmentedControl:
             guard let segmentedControlType = classType as? UISegmentedControl.Type else { return nil }
-            return segmentedControlType.init()
+            return segmentedControlType.init(items: ["First", "Second"])
         }
     }
     func getClass() -> AnyClass? {
