@@ -9,9 +9,10 @@
 import UIKit
 
 enum ControlType {
-  case slider
-  case palette
-  case toggle
+    case slider // 수치변화하는 control
+    case palette // 색 고르는 control
+    //    case picker //몇 가지 중에 고르는 control
+    case toggle // true / false 중에 고르는 control
 }
 
 struct Property {
@@ -27,29 +28,29 @@ var properties: [String: [Property]] = [
   ],
   "UILabel" : [
     Property(name: "text", controlType: .slider),
-    Property(name: "textColor", controlType: .slider),
+    Property(name: "textColor", controlType: .palette),
   ],
   "UIView" : [
-    Property(name: "tintColor", controlType: .slider),
-    Property(name: "backgroundColor", controlType: .slider),
+    Property(name: "tintColor", controlType: .palette),
+    Property(name: "backgroundColor", controlType: .palette),
   ],
   "UISwitch" : [
-    Property(name: "isOn", controlType: .slider),
-    Property(name: "onImage", controlType: .slider),
-    Property(name: "offImage", controlType: .slider),
+    Property(name: "isOn", controlType: .toggle),
+    Property(name: "onImage", controlType: .toggle),
+    Property(name: "offImage", controlType: .toggle),
   ],
   "UIStepper" : [
-    Property(name: "wraps", controlType: .slider),
+    Property(name: "wraps", controlType: .toggle),
     Property(name: "stepValue", controlType: .slider),
-    Property(name: "autoRepeat", controlType: .slider),
-    Property(name: "isContinuous", controlType: .slider),
+    Property(name: "autoRepeat", controlType: .toggle),
+    Property(name: "isContinuous", controlType: .toggle),
   ],
   "UITextField" : [
     Property(name: "font", controlType: .slider),
-    Property(name: "textColor", controlType: .slider),
+    Property(name: "textColor", controlType: .palette),
     Property(name: "placeholder", controlType: .slider),
     Property(name: "borderStyle", controlType: .slider),
-    Property(name: "textAlignment", controlType: .slider),
+    Property(name: "textAlignment", controlType: .toggle),
   ],
   "UITableView" : [
     Property(name: "style", controlType: .slider),
