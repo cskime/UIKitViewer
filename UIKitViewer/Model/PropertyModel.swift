@@ -66,16 +66,11 @@ var properties: [String: [Property]] = [
     Property(name: "numberOfSections", controlType: .slider),
   ],
   "UICollectionView" : [
-    Property(name: "numberOfItems", controlType: .slider),
-    Property(name: "numberOfSections", controlType: .slider),
-    Property(name: "insertItems", controlType: .toggle),
-    Property(name: "moveItem", controlType: .toggle),
-    Property(name: "deleteItem", controlType: .toggle),
     ],
   "UICollectionViewFlowLayout" : [
+    Property(name: "itemSize", controlType: .slider),
     Property(name: "minimumLineSpacing", controlType: .slider),
     Property(name: "minimumInteritemSpacing",controlType: .slider),
-    Property(name: "itemSize", controlType: .slider),
     Property(name: "sectionInset", controlType: .slider),
     Property(name: "headerReferenceSize", controlType: .slider),
     Property(name: "footerReferenceSize", controlType: .slider),
