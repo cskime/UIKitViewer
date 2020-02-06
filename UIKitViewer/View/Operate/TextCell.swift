@@ -24,6 +24,7 @@ class TextCell: UITableViewCell {
     textField.autocapitalizationType = .none
     textField.autocorrectionType = .no
     textField.borderStyle = .roundedRect
+    textField.returnKeyType = .done
     return textField
   }()
   
@@ -35,6 +36,7 @@ class TextCell: UITableViewCell {
   }
   
   private func setupUI() {
+    self.textField.delegate = self
     self.setupConstraints()
   }
   
@@ -68,6 +70,11 @@ class TextCell: UITableViewCell {
   // MARK: Interface
   
   func configure(title: String) {
+    if let text = ObjectManager.shared.values(for: title) as? String {
+      self.textField.text = text
+    } else {
+      ObjectManager.shared.addValue(self.textField.text!, for: title)
+    }
     self.nameLabel.text = title
   }
   
@@ -75,4 +82,18 @@ class TextCell: UITableViewCell {
     fatalError("init(coder:) has not been implemented")
   }
   
+}
+
+// MARK:- UITextFieldDelegate
+
+extension TextCell: UITextFieldDelegate {
+  func textFieldDidChangeSelection(_ textField: UITextField) {
+    ObjectManager.shared.updateValue(textField.text!, for: self.nameLabel.text!)
+    self.delegate?.cell?(self, valueForTextField: textField.text ?? "")
+  }
+  
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
 }

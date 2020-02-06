@@ -8,6 +8,14 @@
 
 import UIKit
 
+enum ControlType {
+  case slider // 수치변화하는 control
+  case palette // 색 고르는 control
+  case textField //몇 가지 중에 고르는 control
+  case toggle // true / false 중에 고르는 control
+  case select
+}
+
 @objc protocol ControlCellDelegate {
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForColor color: UIColor?)
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float)
@@ -51,10 +59,10 @@ class CellProvider {
       cell.delegate = self.delegate
       return cell
     case .select:
-        let cell = tableView.dequeueReusableCell(withIdentifier: SelectCell.identifier) as! SelectCell
-        cell.configure(title: title)
-        cell.delegate = self.delegate
-        return cell
+      let cell = tableView.dequeueReusableCell(withIdentifier: SelectCell.identifier) as! SelectCell
+      cell.configure(title: title)
+      cell.delegate = self.delegate
+      return cell
     }
   }
 }

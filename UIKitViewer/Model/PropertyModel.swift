@@ -8,23 +8,19 @@
 
 import UIKit
 
-enum ControlType {
-    case slider // 수치변화하는 control
-    case palette // 색 고르는 control
-    case textField //몇 가지 중에 고르는 control
-    case toggle // true / false 중에 고르는 control
-    case select
-}
-
 struct Property {
   var name: String
   var controlType: ControlType
 }
 var properties: [String: [Property]] = [
+  "CALayer" : [
+    Property(name: "borderWidth", controlType: .slider),
+    Property(name: "borderColor", controlType: .palette),
+    Property(name: "cornerRadius", controlType: .slider)
+  ],
   "UIButton" : [
     Property(name: "setTitle", controlType: .textField),
     Property(name: "setTitleColor", controlType: .palette),
-    Property(name: "image", controlType: .toggle),
     Property(name: "setImage", controlType: .toggle),
     Property(name: "setBackgroundImage", controlType: .toggle)
   ],

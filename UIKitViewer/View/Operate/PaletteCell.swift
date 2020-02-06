@@ -17,7 +17,7 @@ class PaletteCell: UITableViewCell {
   private let colors = [#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 1, green: 0.3927565978, blue: 0, alpha: 1)]
   private var colorButtons = [UIButton]()
   
-  let nameLabel: UILabel = {
+  private let nameLabel: UILabel = {
     let label = UILabel()
     label.font = .systemFont(ofSize: 16)
     return label
@@ -39,11 +39,9 @@ class PaletteCell: UITableViewCell {
     colors.forEach {
       let button = UIButton()
       button.backgroundColor = $0
+      button.addTarget(self, action: #selector(paletteTouched(_:)), for: .touchUpInside)
+      button.layer.cornerRadius = 8
       self.colorButtons.append(button)
-    }
-    colorButtons.forEach {
-      $0.addTarget(self, action: #selector(paletteTouched(_:)), for: .touchUpInside)
-      $0.layer.cornerRadius = 8
     }
     self.setupConstraints()
   }
@@ -68,14 +66,16 @@ class PaletteCell: UITableViewCell {
     }
     
     let subviews = [self.nameLabel, stackView]
-    subviews.forEach {
-      self.contentView.addSubview($0)
-      $0.translatesAutoresizingMaskIntoConstraints = false
-    }
+    subviews.forEach { self.contentView.addSubview($0) }
+    
+    self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       self.nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
       self.nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX),
-      
+    ])
+    
+    stackView.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
       stackView.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: UI.spacing),
       stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX * 4),
       stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX * 4),
@@ -93,6 +93,10 @@ class PaletteCell: UITableViewCell {
   
   func configure(title: String) {
     self.nameLabel.text = title
+  }
+  
+  func relates(to propertyName: String) -> Bool {
+    return self.nameLabel.text!.contains(propertyName)
   }
   
 }

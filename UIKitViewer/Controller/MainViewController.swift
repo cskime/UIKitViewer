@@ -9,18 +9,20 @@
 import UIKit
 
 class MainViewController: UIViewController {
-      
+  
   let flowLayout = UICollectionViewFlowLayout()
   lazy var collectionView = UICollectionView(
     frame: view.frame , collectionViewLayout: flowLayout
   )
-  let objects = properties.keys.filter { $0 != "UICollectionViewFlowLayout" }.sorted()
+  let objects = properties.keys
+    .filter { $0 != "UICollectionViewFlowLayout" && $0 != "CALayer" }
+    .sorted()
   
-    private enum UI {
-      static let itemSpacing: CGFloat = 10.0
-      static let lineSpacing: CGFloat = 10.0
-    }
-    
+  private enum UI {
+    static let itemSpacing: CGFloat = 10.0
+    static let lineSpacing: CGFloat = 10.0
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
@@ -60,7 +62,7 @@ extension MainViewController: UICollectionViewDataSource {
     print("44444")
     return objects.count
   }
-    
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellCollectionViewCell.identifier, for: indexPath) as! MainViewCellCollectionViewCell

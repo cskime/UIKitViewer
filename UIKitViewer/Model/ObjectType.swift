@@ -38,7 +38,7 @@ enum ObjectType: String {
             return labelType.init()
         case .UIButton:
             guard let buttonType = classType as? UIButton.Type else { return nil }
-            return buttonType.init(type: .system)
+            return buttonType.init()
         case .UISwitch:
             guard let switchType = classType as? UISwitch.Type else { return nil }
             return switchType.init()

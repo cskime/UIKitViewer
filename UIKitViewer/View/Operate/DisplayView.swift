@@ -126,7 +126,7 @@ class DisplayView: UIView {
   
 }
 
-// MARK:- Interfaces
+// MARK:- Interfaces - TextField
 
 extension DisplayView {
   
@@ -145,14 +145,11 @@ extension DisplayView {
       return
     }
   }
-  
-  func configure(backgroundColor color: UIColor?) {
-    self.object.backgroundColor = color
-  }
-  
-  func configure(tintColor color: UIColor?) {
-    self.object.tintColor = color
-  }
+}
+
+// MARK:- Interfaces - Palette
+
+extension DisplayView {
   
   func configure(textColor color: UIColor?) {
     switch self.objectType {
@@ -166,6 +163,45 @@ extension DisplayView {
       return
     }
   }
+  
+  func configure(backgroundColor color: UIColor?) { self.object.backgroundColor = color }
+  func configure(tintColor color: UIColor?) { self.object.tintColor = color }
+  func configure(borderColor color: UIColor?) { self.object.layer.borderColor = color?.cgColor }
+}
+
+// MARK:- Interfaces - Toggle
+
+extension DisplayView {
+  
+  enum ImageType { case `default`, background }
+  func configure(shouldSetImage: Bool, for type: ImageType) {
+    switch self.objectType {
+    case .UIButton:
+      guard let button = self.object as? UIButton else { return }
+      switch type {
+      case .default:
+        button.setImage(shouldSetImage ? UIImage(named: "default") : nil, for: .normal)
+      case .background:
+        button.setBackgroundImage(shouldSetImage ? UIImage(named: "background") : nil, for: .normal)
+      }
+    default:
+      return
+    }
+  }
+  
+  func configure(hidden value: Bool) { self.object.isHidden = value }
+  func configure(clipsToBounds value: Bool) { self.object.clipsToBounds = value }
+  
+}
+
+// MARK:- Interfaces - Slider
+
+extension DisplayView {
+  
+  func configure(alpha value: Float) { self.object.alpha = CGFloat(value) }
+  func configure(borderWidth value: Float) { self.object.layer.borderWidth = CGFloat(value) }
+  func configure(cornerRadius value: Float) { self.object.layer.cornerRadius = CGFloat(value) }
+  
 }
 
 // MARK:- UITableViewDataSource
