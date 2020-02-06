@@ -78,10 +78,9 @@ var properties: [String: [Property]] = [
   "UIImageView" : [
   ],
   "UIPageControl" : [
-    Property(name: "size", controlType: .slider),
+    Property(name: "currentPage", controlType: .slider),
     Property(name: "numberOfPages", controlType: .slider),
   ],
   "UISegmentedControl" : [
-    Property(name: "numberOfSegment", controlType: .slider),
   ]
 ]

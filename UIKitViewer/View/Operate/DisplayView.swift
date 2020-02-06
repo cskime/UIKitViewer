@@ -277,6 +277,21 @@ extension DisplayView {
     }
   }
   
+  enum PageContrlValueType {
+    case numberOfPages, currentPage
+  }
+  func configurePageControl(with value: Float, for type: PageContrlValueType) {
+    guard let pageControl = self.object as? UIPageControl else { return }
+    
+    let value = Int(value)
+    switch type {
+    case .currentPage:
+      pageControl.currentPage = value
+    case .numberOfPages:
+      pageControl.numberOfPages = value
+    }
+  }
+  
   func configure(alpha value: Float) { self.object.alpha = CGFloat(value) }
   func configure(borderWidth value: Float) { self.object.layer.borderWidth = CGFloat(value) }
   func configure(cornerRadius value: Float) { self.object.layer.cornerRadius = CGFloat(value) }

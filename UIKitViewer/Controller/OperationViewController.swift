@@ -156,6 +156,10 @@ extension OperationViewController: ControlCellDelegate {
       self.displayView.configureCollectionViewLayout(with: value, for: .lineSpacing)
     } else if cell.relates(to: "sectionInset") {
       self.displayView.configureCollectionViewLayout(with: value, for: .sectionInset)
+    } else if cell.relates(to: "currentPage") {
+      self.displayView.configurePageControl(with: value, for: .currentPage)
+    } else if cell.relates(to: "numberOfPages") {
+      self.displayView.configurePageControl(with: value, for: .numberOfPages)
     } else {
       return
     }
