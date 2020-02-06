@@ -75,7 +75,7 @@ class TextCell: UITableViewCell {
     self.currentObject = object
     
     if let text = ObjectManager.shared.values(for: title) as? String {
-      self.textField.text = text
+        self.textField.text = "Test Button"
     } else {
       switch self.currentObject {
       case .UIButton:
@@ -104,6 +104,7 @@ extension TextCell: UITextFieldDelegate {
   }
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
     textField.resignFirstResponder()
     return true
   }
