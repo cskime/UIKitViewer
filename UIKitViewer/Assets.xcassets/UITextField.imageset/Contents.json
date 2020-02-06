@@ -6,12 +6,12 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "UITextField-1.png",
+      "filename" : "UITextField.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "UITextField.png",
+      "filename" : "UITextField-1.png",
       "scale" : "3x"
     }
   ],
