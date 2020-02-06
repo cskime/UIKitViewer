@@ -21,7 +21,7 @@ enum ControlType {
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float)
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool)
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String)
-  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSelect value: Bool)
+  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSelect values: [String])
 }
 
 class CellProvider {

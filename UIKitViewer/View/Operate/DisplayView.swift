@@ -204,6 +204,12 @@ extension DisplayView {
   
 }
 
+// MARK:- Interfaces - Select
+
+extension DisplayView {
+  func configure(contentMode: UIView.ContentMode) { self.object.contentMode = contentMode }
+}
+
 // MARK:- UITableViewDataSource
 
 extension DisplayView: UITableViewDataSource {

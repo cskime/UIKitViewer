@@ -148,34 +148,34 @@ extension OperationViewController: ControlCellDelegate {
   }
   
   
-  func cell(_ tableViewCell: UITableViewCell, valueForSelect value: Bool) {
-    
-    let titles = ["Top", "Left", "Right", "Bottom", "Cancel"]
+  func cell(_ tableViewCell: UITableViewCell, valueForSelect values: [String]) {
     guard let cell = tableViewCell as? SelectCell else { return }
-    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    
-    titles.forEach { title in
-      let style: UIAlertAction.Style = (title == "Cancel") ? .cancel : .default
-      let action = UIAlertAction(title: title, style: style) { _ in
-        cell.selectButton.setTitle(title, for: .normal)
-      }
-      alertController.addAction(action)
+    var actions = [UIAlertAction]()
+    values
+      .enumerated()
+      .forEach { (index, title) in
+        let action = UIAlertAction(title: title, style: .default) { _ in
+          cell.configure(selectedValue: title)
+          self.configureCases(with: title, at: index)
+        }
+        actions.append(action)
     }
+    let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+    actions.append(cancelAction)
     
-    //        let topAction = UIAlertAction(title: "Top", style: .default) { ( action) in }
-    //        alertController.addAction(topAction)
-    //
-    //        let leftAction = UIAlertAction(title: "Left", style: .default) { _ in }
-    //        alertController.addAction(leftAction)
-    //
-    //        let rightAction = UIAlertAction(title: "Right", style: .default) { _ in }
-    //        alertController.addAction(rightAction)
-    //
-    //        let bottomAction = UIAlertAction(title: "Bottom", style: .default) { _ in }
-    //        alertController.addAction(bottomAction)
-    //
-    //        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in }
-    //        alertController.addAction(cancelAction)
-    present(alertController, animated: true)
+    
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    actions.forEach { alert.addAction($0) }
+    present(alert, animated: true)
   }
+  
+  private func configureCases(with title: String, at index: Int) {
+    switch title {
+    case "contentMode":
+      self.displayView.configure(contentMode: .center)
+    default:
+      return
+    }
+  }
+  
 }
