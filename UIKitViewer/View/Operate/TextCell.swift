@@ -71,7 +71,7 @@ class TextCell: UITableViewCell {
   
   func configure(title: String) {
     if let text = ObjectManager.shared.values(for: title) as? String {
-      self.textField.text = text
+        self.textField.text = "Test Button"
     } else {
       ObjectManager.shared.addValue(self.textField.text!, for: title)
     }
@@ -93,6 +93,7 @@ extension TextCell: UITextFieldDelegate {
   }
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+
     textField.resignFirstResponder()
     return true
   }
