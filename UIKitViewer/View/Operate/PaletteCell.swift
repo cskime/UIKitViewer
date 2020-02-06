@@ -22,6 +22,7 @@ class PaletteCell: UITableViewCell {
     label.font = .systemFont(ofSize: 16)
     return label
   }()
+  private var currentObject: ObjectType = .UIView
   
   // MARK: Life Cycle
   
@@ -91,8 +92,9 @@ class PaletteCell: UITableViewCell {
   
   // MARK: Interface
   
-  func configure(title: String) {
+  func configure(title: String, from object: ObjectType) {
     self.nameLabel.text = title
+    self.currentObject = object
   }
   
   func relates(to propertyName: String) -> Bool {

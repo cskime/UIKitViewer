@@ -19,6 +19,7 @@ class SelectCell: UITableViewCell {
     label.font = .systemFont(ofSize: 16)
     return label
   }()
+  private var currentObject: ObjectType = .UIView
   var currentProperty: String { return self.nameLabel.text ?? "" }
   
   private let selectButton: UIButton = {
@@ -66,8 +67,9 @@ class SelectCell: UITableViewCell {
   // MARK: Interface
   
   private var cases = [String]()
-  func configure(title: String) {
+  func configure(title: String, from object: ObjectType) {
     self.nameLabel.text = title
+    self.currentObject = object
     
     let initialTitle: String
     switch title {

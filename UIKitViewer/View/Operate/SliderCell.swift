@@ -35,6 +35,7 @@ class SliderCell: UITableViewCell {
     return label
   }()
   private var slider = UISlider()
+  private var currentObject: ObjectType = .UIView
   
   // MARK: Initialize
   
@@ -85,7 +86,10 @@ class SliderCell: UITableViewCell {
   // MARK: Interface
   
   
-  func configure(title: String) {
+  func configure(title: String, from object: ObjectType) {
+    self.nameLabel.text = title
+    self.currentObject = object
+    
     if let sliderValues = ObjectManager.shared.values(for: title) as? SliderValueSet {
       self.setupSlider(valueType: .custom(sliderValues.value),
                        minValue: sliderValues.minValue,
@@ -94,7 +98,6 @@ class SliderCell: UITableViewCell {
       let sliderValues = self.initializeSlider(for: title)
       ObjectManager.shared.addValue(sliderValues, for: title)
     }
-    self.nameLabel.text = title
   }
   
   func relates(to propertyName: String) -> Bool {
@@ -143,6 +146,24 @@ class SliderCell: UITableViewCell {
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 16)
     case "cornerRadius":
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 100)
+    case "itemSize":
+      self.setupSlider(valueType: .custom(50), minValue: 20, maxValue: 80)
+    case "minimumLineSpacing":
+      self.setupSlider(valueType: .minimum, minValue: 10, maxValue: 32)
+    case "minimumInteritemSpacing":
+      self.setupSlider(valueType: .minimum, minValue: 10, maxValue: 32)
+    case "sectionInset":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 32)
+    case "headerReferenceSize":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
+    case "footerReferenceSize":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
+    case "currentPage":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 10)
+    case "numberOfPages":
+      self.setupSlider(valueType: .minimum, minValue: 3, maxValue: 10)
+    case "numberOfLines":
+      self.setupSlider(valueType: .custom(1), minValue: 0, maxValue: 5)
     default:
       print("Unknown")
       return (0, 0, 0)

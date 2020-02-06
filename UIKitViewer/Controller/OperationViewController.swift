@@ -90,7 +90,7 @@ extension OperationViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let property = objectManager.dataSource[indexPath.section].properties[indexPath.row]
-    let cell = self.cellProvider.create(to: tableView, with: property.name, for: property.controlType)
+    let cell = self.cellProvider.createCell(to: tableView, with: property.name, forObjectType: objectManager.object, forControlType: property.controlType)
     return cell
   }
   
@@ -110,6 +110,8 @@ extension OperationViewController: ControlCellDelegate {
       self.displayView.configure(textColor: color)
     } else if cell.relates(to: "border") {
       self.displayView.configure(borderColor: color)
+    } else if cell.relates(to: "separator") {
+      self.displayView.configureTableView(separatorColor: color)
     } else {
       return
     }
@@ -135,6 +137,8 @@ extension OperationViewController: ControlCellDelegate {
       self.displayView.configure(shouldSetImage: value, for: .increment)
     } else if cell.relates(to: "setDividerImage") {
       self.displayView.configure(shouldSetImage: value, for: .divider)
+    } else if cell.relates(to: "placeholder") {
+      self.displayView.configureTextField(shouldDisplayPlaceholder: value)
     } else {
       return
     }
@@ -148,6 +152,20 @@ extension OperationViewController: ControlCellDelegate {
       self.displayView.configure(borderWidth: value)
     } else if cell.relates(to: "cornerRadius") {
       self.displayView.configure(cornerRadius: value)
+    } else if cell.relates(to: "itemSize") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .itemSize)
+    } else if cell.relates(to: "minimumInteritemSpacing") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .itemSpacing)
+    } else if cell.relates(to: "minimumLineSpacing") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .lineSpacing)
+    } else if cell.relates(to: "sectionInset") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .sectionInset)
+    } else if cell.relates(to: "currentPage") {
+      self.displayView.configurePageControl(with: value, for: .currentPage)
+    } else if cell.relates(to: "numberOfPages") {
+      self.displayView.configurePageControl(with: value, for: .numberOfPages)
+    } else if cell.relates(to: "numberOfLines") {
+      self.displayView.configureLabel(numberOfLines: value)
     } else {
       return
     }

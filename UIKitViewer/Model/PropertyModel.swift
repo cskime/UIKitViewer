@@ -26,9 +26,7 @@ var properties: [String: [Property]] = [
   ],
   "UILabel" : [
     Property(name: "text", controlType: .textField),
-    Property(name: "font", controlType: .textField),
     Property(name: "textColor", controlType: .palette),
-    Property(name: "minimumScaleFactor", controlType: .slider),
     Property(name: "numberOfLines", controlType: .slider)
   ],
   "UIView" : [
@@ -51,31 +49,21 @@ var properties: [String: [Property]] = [
     Property(name: "setDividerImage", controlType: .toggle)
   ],
   "UITextField" : [
-    Property(name: "font", controlType: .slider),
     Property(name: "textColor", controlType: .palette),
-    Property(name: "placeholder", controlType: .textField),
+    Property(name: "placeholder", controlType: .toggle),
     Property(name: "borderStyle", controlType: .select),
     Property(name: "clearButtonMode", controlType: .select),
   ],
   "UITableView" : [
     Property(name: "style", controlType: .select),
-    Property(name: "rowHeight", controlType: .slider),
-    Property(name: "numberOfRows", controlType: .slider),
-    Property(name: "backgroundView", controlType: .toggle),
     Property(name: "separatorColor", controlType: .palette),
-    Property(name: "numberOfSections", controlType: .slider),
   ],
   "UICollectionView" : [
-    Property(name: "numberOfItems", controlType: .slider),
-    Property(name: "numberOfSections", controlType: .slider),
-    Property(name: "insertItems", controlType: .toggle),
-    Property(name: "moveItem", controlType: .toggle),
-    Property(name: "deleteItem", controlType: .toggle),
     ],
   "UICollectionViewFlowLayout" : [
+    Property(name: "itemSize", controlType: .slider),
     Property(name: "minimumLineSpacing", controlType: .slider),
     Property(name: "minimumInteritemSpacing",controlType: .slider),
-    Property(name: "itemSize", controlType: .slider),
     Property(name: "sectionInset", controlType: .slider),
     Property(name: "headerReferenceSize", controlType: .slider),
     Property(name: "footerReferenceSize", controlType: .slider),
@@ -83,10 +71,9 @@ var properties: [String: [Property]] = [
   "UIImageView" : [
   ],
   "UIPageControl" : [
-    Property(name: "size", controlType: .slider),
+    Property(name: "currentPage", controlType: .slider),
     Property(name: "numberOfPages", controlType: .slider),
   ],
   "UISegmentedControl" : [
-    Property(name: "numberOfSegment", controlType: .slider),
   ]
 ]
