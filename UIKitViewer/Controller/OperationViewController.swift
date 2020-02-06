@@ -112,6 +112,10 @@ extension OperationViewController: ControlCellDelegate {
       self.displayView.configure(borderColor: color)
     } else if cell.relates(to: "separator") {
       self.displayView.configureTableView(separatorColor: color)
+    } else if cell.relates(to: "onTint") {
+      self.displayView.configureSwitch(color: color, for: .onTint)
+    } else if cell.relates(to: "thumbTint") {
+      self.displayView.configureSwitch(color: color, for: .thumbTint)
     } else {
       return
     }

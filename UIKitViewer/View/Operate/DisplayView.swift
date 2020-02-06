@@ -36,13 +36,10 @@ class DisplayView: UIView {
   
   private func setupObject() {
     
-    var shouldLayoutView = false
-    
     switch self.objectType {
     case .UIView:
       object = UIView()
       object.backgroundColor = .gray
-      shouldLayoutView = true
     case .UIButton:
       guard let button = self.objectType.getInstance() as? UIButton else { return }
       button.setTitle("Test Button", for: .normal)
@@ -65,13 +62,13 @@ class DisplayView: UIView {
       guard let textField = self.objectType.getInstance() as? UITextField else { return }
       textField.delegate = self
       textField.returnKeyType = .done
+      textField.becomeFirstResponder()
       object = textField
     case .UITableView:
       guard let tableView = self.objectType.getInstance() as? UITableView else { return }
       tableView.dataSource = self
       tableView.delegate = self
       object = tableView
-      shouldLayoutView = true
     case .UICollectionView:
       guard let collectionView = self.objectType.getInstance() as? UICollectionView else { return }
       collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -79,7 +76,6 @@ class DisplayView: UIView {
       collectionView.dataSource = self
       collectionView.delegate = self
       object = collectionView
-      shouldLayoutView = true
     case .UIImageView:
       guard let imageView = self.objectType.getInstance() as? UIImageView else { return }
       imageView.image = UIImage(named: "UIImageView")
@@ -175,6 +171,20 @@ extension DisplayView {
 // MARK:- Interfaces - Palette
 
 extension DisplayView {
+  
+  enum SwitchColorType {
+    case onTint, thumbTint
+  }
+  func configureSwitch(color: UIColor?, for type: SwitchColorType) {
+    guard let `switch` = self.object as? UISwitch else { return }
+    switch type {
+    case .onTint:
+      `switch`.onTintColor = color
+    case .thumbTint:
+      `switch`.thumbTintColor = color
+    }
+    
+  }
   
   func configure(textColor color: UIColor?) {
     switch self.objectType {

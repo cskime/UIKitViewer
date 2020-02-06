@@ -53,11 +53,7 @@ enum ObjectType: String {
             return tableViewType.init(frame: .zero, style: .plain)
         case .UICollectionView:
             guard let collectionViewType = classType as? UICollectionView.Type else { return nil }
-            let layout: UICollectionViewFlowLayout = {
-              let layout = UICollectionViewFlowLayout()
-              layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-              return layout
-            }()
+            let layout = UICollectionViewFlowLayout()
             return collectionViewType.init(frame: .zero, collectionViewLayout: layout)
         case .UIImageView:
             guard let imageViewType = classType as? UIImageView.Type else { return nil }
