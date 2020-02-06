@@ -75,7 +75,7 @@ class TextCell: UITableViewCell {
     self.currentObject = object
     
     if let text = ObjectManager.shared.values(for: title) as? String {
-        self.textField.text = "Test Button"
+        self.textField.text = text
     } else {
       switch self.currentObject {
       case .UIButton:
