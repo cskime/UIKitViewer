@@ -51,19 +51,14 @@ var properties: [String: [Property]] = [
     Property(name: "setDividerImage", controlType: .toggle)
   ],
   "UITextField" : [
-    Property(name: "font", controlType: .slider),
     Property(name: "textColor", controlType: .palette),
-    Property(name: "placeholder", controlType: .textField),
+    Property(name: "placeholder", controlType: .toggle),
     Property(name: "borderStyle", controlType: .select),
     Property(name: "clearButtonMode", controlType: .select),
   ],
   "UITableView" : [
     Property(name: "style", controlType: .select),
-    Property(name: "rowHeight", controlType: .slider),
-    Property(name: "numberOfRows", controlType: .slider),
-    Property(name: "backgroundView", controlType: .toggle),
     Property(name: "separatorColor", controlType: .palette),
-    Property(name: "numberOfSections", controlType: .slider),
   ],
   "UICollectionView" : [
     ],
