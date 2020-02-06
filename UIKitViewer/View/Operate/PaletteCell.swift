@@ -14,7 +14,7 @@ class PaletteCell: UITableViewCell {
   
   weak var delegate: ControlCellDelegate?
   
-  private let colors = [#colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 1, green: 0.3927565978, blue: 0, alpha: 1)]
+  private let colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 1, green: 0.3927565978, blue: 0, alpha: 1)]
   private var colorButtons = [UIButton]()
   
   private let nameLabel: UILabel = {
@@ -42,8 +42,11 @@ class PaletteCell: UITableViewCell {
       button.backgroundColor = $0
       button.addTarget(self, action: #selector(paletteTouched(_:)), for: .touchUpInside)
       button.layer.cornerRadius = 8
+      button.clipsToBounds = true
       self.colorButtons.append(button)
     }
+    self.colorButtons.first?.setBackgroundImage(UIImage(named: "ClearColor"), for: .normal)
+    self.colorButtons.first?.layer.borderWidth = 0.8
     self.setupConstraints()
   }
   
@@ -58,7 +61,7 @@ class PaletteCell: UITableViewCell {
       stackView.axis = .horizontal
       stackView.alignment = .fill
       stackView.distribution = .fillEqually
-      stackView.spacing = 24
+      stackView.spacing = 20
       return stackView
     }()
     colorButtons.forEach {
@@ -78,8 +81,8 @@ class PaletteCell: UITableViewCell {
     stackView.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
       stackView.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: UI.spacing),
-      stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX * 4),
-      stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX * 4),
+      stackView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX * 3),
+      stackView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX * 3),
       stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
     ])
   }
