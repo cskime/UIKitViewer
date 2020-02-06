@@ -110,6 +110,8 @@ extension OperationViewController: ControlCellDelegate {
       self.displayView.configure(textColor: color)
     } else if cell.relates(to: "border") {
       self.displayView.configure(borderColor: color)
+    } else if cell.relates(to: "separator") {
+      self.displayView.configureTableView(separatorColor: color)
     } else {
       return
     }

@@ -185,6 +185,11 @@ extension DisplayView {
     }
   }
   
+  func configureTableView(separatorColor color: UIColor?) {
+    guard let tableView = self.object as? UITableView else { return }
+    tableView.separatorColor = color
+  }
+  
   func configure(backgroundColor color: UIColor?) { self.object.backgroundColor = color }
   func configure(tintColor color: UIColor?) { self.object.tintColor = color }
   func configure(borderColor color: UIColor?) { self.object.layer.borderColor = color?.cgColor }
