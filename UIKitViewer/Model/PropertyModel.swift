@@ -46,11 +46,8 @@ var properties: [String: [Property]] = [
     Property(name: "thumbTintColor", controlType: .palette),
   ],
   "UIStepper" : [
-    Property(name: "wraps", controlType: .toggle),
-    Property(name: "stepValue", controlType: .slider),
-    Property(name: "decrementImage", controlType: .toggle),
+    Property(name: "setIncrementImage", controlType: .toggle),
     Property(name: "setDecrementImage", controlType: .toggle),
-    Property(name: "dividerImage", controlType: .toggle),
     Property(name: "setDividerImage", controlType: .toggle)
   ],
   "UITextField" : [
@@ -59,14 +56,12 @@ var properties: [String: [Property]] = [
     Property(name: "placeholder", controlType: .textField),
     Property(name: "borderStyle", controlType: .select),
     Property(name: "clearButtonMode", controlType: .select),
-    Property(name: "disabledBackground", controlType: .toggle),
   ],
   "UITableView" : [
     Property(name: "style", controlType: .select),
     Property(name: "rowHeight", controlType: .slider),
     Property(name: "numberOfRows", controlType: .slider),
     Property(name: "backgroundView", controlType: .toggle),
-    Property(name: "separatorStyle", controlType: .toggle),
     Property(name: "separatorColor", controlType: .palette),
     Property(name: "numberOfSections", controlType: .slider),
   ],
@@ -86,19 +81,12 @@ var properties: [String: [Property]] = [
     Property(name: "footerReferenceSize", controlType: .slider),
     ],
   "UIImageView" : [
-    Property(name: "isHighlighted", controlType: .toggle),
-    Property(name: "highlightImage", controlType: .slider),
-    Property(name: "isUserInteractionEnabled", controlType: .toggle),
-    Property(name: "startAnimating", controlType: .toggle),
-    Property(name: "stopAnimating", controlType: .toggle),
   ],
   "UIPageControl" : [
     Property(name: "size", controlType: .slider),
     Property(name: "numberOfPages", controlType: .slider),
   ],
   "UISegmentedControl" : [
-    Property(name: "setDividerImage", controlType: .toggle),
     Property(name: "numberOfSegment", controlType: .slider),
-    Property(name: "removeAllSegment", controlType: .toggle),
   ]
 ]

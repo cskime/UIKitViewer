@@ -57,7 +57,7 @@ class DisplayView: UIView {
       object = label
     case .UISwitch:
       guard let `switch` = self.objectType.getInstance() as? UISwitch else { return }
-      `switch`.isOn = true
+      `switch`.isOn = false
       object = `switch`
     case .UIStepper:
       guard let stepper = self.objectType.getInstance() as? UIStepper else { return }
@@ -82,6 +82,7 @@ class DisplayView: UIView {
       shouldLayoutView = true
     case .UIImageView:
       guard let imageView = self.objectType.getInstance() as? UIImageView else { return }
+      imageView.image = UIImage(named: "UIImageView")
       object = imageView
     case .UIPageControl:
       guard let pageControl = self.objectType.getInstance() as? UIPageControl else { return }
@@ -193,22 +194,53 @@ extension DisplayView {
 
 extension DisplayView {
   
-  enum ImageType { case `default`, background }
+    enum ImageType {
+        case `default`      // 설정할 이미지 1개일 때 이미지
+        case background     // 밑바닥에 깔리는 이미지
+        case increment, decrement, divider      // UIStepper image
+    }
+    
   func configure(shouldSetImage: Bool, for type: ImageType) {
     switch self.objectType {
     case .UIButton:
       guard let button = self.object as? UIButton else { return }
       switch type {
       case .default:
-        button.setImage(shouldSetImage ? UIImage(named: "default") : nil, for: .normal)
+        button.setImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
       case .background:
-        button.setBackgroundImage(shouldSetImage ? UIImage(named: "background") : nil, for: .normal)
-      }
+        button.setBackgroundImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
+      default:
+        return
+        }
+    case .UIStepper:
+        guard let stepper = self.object as? UIStepper else { return }
+        switch type {
+        case .increment:
+            stepper.setIncrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
+        case .decrement:
+            stepper.setDecrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
+        case .divider:
+            stepper.setDividerImage(shouldSetImage ? UIImage(named: "UIImageView") : nil,
+                                    forLeftSegmentState: .normal,
+                                    rightSegmentState: .normal)
+        case .background:
+            stepper.setBackgroundImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
+        default:
+            return
+        }
     default:
       return
     }
   }
-  
+
+    func configure(isOn value: Bool) {
+        guard let `switch` = self.object as? UISwitch else { return }
+        `switch`.isOn = value
+    }
+    func configure(setOn value: Bool) {
+        guard let `switch` = self.object as? UISwitch else { return }
+        `switch`.setOn(value , animated: true)
+    }
   func configure(hidden value: Bool) { self.object.isHidden = value }
   func configure(clipsToBounds value: Bool) { self.object.clipsToBounds = value }
   
@@ -277,7 +309,6 @@ extension DisplayView: UITableViewDataSource {
 
 extension DisplayView: UITableViewDelegate {
 
-  
 }
 
 // MARK:- UICollectionViewDataSource

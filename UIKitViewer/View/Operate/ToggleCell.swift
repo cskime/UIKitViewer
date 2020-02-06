@@ -62,7 +62,7 @@ class ToggleCell: UITableViewCell {
     if let currentState = ObjectManager.shared.values(for: title) as? Bool {
       self.toggleSwitch.isOn = currentState
     } else {
-      self.toggleSwitch.isOn = false
+      self.toggleSwitch.isOn = true
       ObjectManager.shared.addValue(self.toggleSwitch.isOn, for: title)
     }
     self.nameLabel.text = title

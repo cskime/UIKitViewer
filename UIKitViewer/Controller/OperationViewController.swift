@@ -117,14 +117,24 @@ extension OperationViewController: ControlCellDelegate {
   
   func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool) {
     guard let cell = tableViewCell as? ToggleCell else { return }
-    if cell.relates(to: "Image") {
+    if cell.relates(to: "setImage") {
       self.displayView.configure(shouldSetImage: value, for: .default)
-    } else if cell.relates(to: "backgroundImage") {
+    } else if cell.relates(to: "setBackgroundImage") {
       self.displayView.configure(shouldSetImage: value, for: .background)
     } else if cell.relates(to: "isHidden"){
       self.displayView.configure(hidden: value)
     } else if cell.relates(to: "clipsToBounds"){
       self.displayView.configure(clipsToBounds: value)
+    } else if cell.relates(to: "isOn") {
+      self.displayView.configure(isOn: value)
+    } else if cell.relates(to: "setOn") {
+      self.displayView.configure(setOn: value)
+    } else if cell.relates(to: "setDecrementImage") {
+      self.displayView.configure(shouldSetImage: value, for: .decrement)
+    } else if cell.relates(to: "setIncrementImage") {
+      self.displayView.configure(shouldSetImage: value, for: .increment)
+    } else if cell.relates(to: "setDividerImage") {
+      self.displayView.configure(shouldSetImage: value, for: .divider)
     } else {
       return
     }
