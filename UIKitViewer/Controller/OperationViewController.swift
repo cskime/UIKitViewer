@@ -148,6 +148,14 @@ extension OperationViewController: ControlCellDelegate {
       self.displayView.configure(borderWidth: value)
     } else if cell.relates(to: "cornerRadius") {
       self.displayView.configure(cornerRadius: value)
+    } else if cell.relates(to: "itemSize") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .itemSize)
+    } else if cell.relates(to: "minimumInteritemSpacing") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .itemSpacing)
+    } else if cell.relates(to: "minimumLineSpacing") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .lineSpacing)
+    } else if cell.relates(to: "sectionInset") {
+      self.displayView.configureCollectionViewLayout(with: value, for: .sectionInset)
     } else {
       return
     }

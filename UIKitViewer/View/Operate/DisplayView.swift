@@ -250,6 +250,33 @@ extension DisplayView {
 
 extension DisplayView {
   
+  enum CollectionViewLayoutType {
+    case itemSize, lineSpacing, itemSpacing, sectionInset
+    case headerSize, footerSize
+  }
+  func configureCollectionViewLayout(with value: Float, for type: CollectionViewLayoutType) {
+    guard
+      let collectionView = self.object as? UICollectionView,
+      let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+      else { return }
+    
+    let layoutValue = CGFloat(value)
+    switch type {
+    case .itemSize:
+      layout.itemSize = CGSize(width: layoutValue, height: layoutValue)
+    case .itemSpacing:
+      layout.minimumInteritemSpacing = layoutValue
+    case .lineSpacing:
+      layout.minimumLineSpacing = layoutValue
+    case .sectionInset:
+      layout.sectionInset = UIEdgeInsets(
+        top: layoutValue, left: layoutValue, bottom: layoutValue, right: layoutValue
+      )
+    default:
+      return
+    }
+  }
+  
   func configure(alpha value: Float) { self.object.alpha = CGFloat(value) }
   func configure(borderWidth value: Float) { self.object.layer.borderWidth = CGFloat(value) }
   func configure(cornerRadius value: Float) { self.object.layer.cornerRadius = CGFloat(value) }

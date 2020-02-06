@@ -143,6 +143,18 @@ class SliderCell: UITableViewCell {
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 16)
     case "cornerRadius":
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 100)
+    case "itemSize":
+      self.setupSlider(valueType: .custom(50), minValue: 20, maxValue: 80)
+    case "minimumLineSpacing":
+      self.setupSlider(valueType: .minimum, minValue: 10, maxValue: 32)
+    case "minimumInteritemSpacing":
+      self.setupSlider(valueType: .minimum, minValue: 10, maxValue: 32)
+    case "sectionInset":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 32)
+    case "headerReferenceSize":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
+    case "footerReferenceSize":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
     default:
       print("Unknown")
       return (0, 0, 0)
