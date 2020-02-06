@@ -8,22 +8,40 @@
 
 import UIKit
 
-@IBDesignable
-extension UIView {
-  @IBInspectable
-  var borderWidth: Double {
-    get { Double(self.layer.borderWidth) }
-    set { self.layer.borderWidth = CGFloat(newValue) }
+protocol EnumerationExtension: CaseIterable {
+  var stringRepresentation: String { get }
+}
+
+extension UIView.ContentMode: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [Self] {
+    return [
+      .top, .topLeft, .topRight,
+      .bottom, .bottomLeft, .bottomRight,
+      .left, .right, .center,
+      .scaleToFill, .scaleAspectFill, .scaleAspectFit,
+      .redraw
+    ]
   }
-  
-  @IBInspectable
-  var borderColor: UIColor? {
+  var stringRepresentation: String {
     get {
-      guard let cgColor = self.layer.borderColor else { return nil }
-      return UIColor(cgColor: cgColor)
-    }
-    set {
-      self.layer.borderColor = newValue?.cgColor
+      switch self {
+      case .top:              return "top"
+      case .topLeft:          return "topLeft"
+      case .topRight:         return "topRight"
+      case .bottom:           return "bottom"
+      case .bottomLeft:       return "bottomLeft"
+      case .bottomRight:      return "bottomRight"
+      case .left:             return "left"
+      case .right:            return "right"
+      case .center:           return "center"
+      case .redraw:           return "redraw"
+      case .scaleToFill:      return "scaleToFill"
+      case .scaleAspectFill:  return "scaleAspectFill"
+      case .scaleAspectFit:   return "scaleAspectFit"
+      @unknown default:
+        fatalError("UIView.ContentMode: Unknown Case")
+      }
     }
   }
 }
