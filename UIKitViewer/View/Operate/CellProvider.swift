@@ -13,6 +13,7 @@ import UIKit
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float)
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool)
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String)
+  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSelect value: Bool)
 }
 
 class CellProvider {
@@ -24,6 +25,7 @@ class CellProvider {
     tableView.register(PaletteCell.self, forCellReuseIdentifier: PaletteCell.identifier)
     tableView.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.identifier)
     tableView.register(TextCell.self, forCellReuseIdentifier: TextCell.identifier)
+    tableView.register(SelectCell.self, forCellReuseIdentifier: SelectCell.identifier)
   }
   
   func create(to tableView: UITableView, with title: String, for type: ControlType) -> UITableViewCell {
@@ -48,6 +50,11 @@ class CellProvider {
       cell.configure(title: title)
       cell.delegate = self.delegate
       return cell
+    case .select:
+        let cell = tableView.dequeueReusableCell(withIdentifier: SelectCell.identifier) as! SelectCell
+        cell.configure(title: title)
+        cell.delegate = self.delegate
+        return cell
     }
   }
 }

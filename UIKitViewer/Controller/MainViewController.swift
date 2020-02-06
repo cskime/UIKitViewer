@@ -79,3 +79,11 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     navigationController?.pushViewController(operationVC, animated: true)
   }
 }
+//extension UIView {
+//    func shadow() {
+//        self.layer.shadowRadius = 5.0
+//        self.layer.shadowOpactiy = 0.3
+//        self.layer.shadowOffset = 0.0
+//        self.layer.shadowColor = UIColor.darkgray.cgColor
+//    }
+//}

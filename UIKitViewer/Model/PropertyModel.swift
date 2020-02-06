@@ -13,6 +13,7 @@ enum ControlType {
     case palette // 색 고르는 control
     case textField //몇 가지 중에 고르는 control
     case toggle // true / false 중에 고르는 control
+    case select
 }
 
 struct Property {
@@ -35,7 +36,7 @@ var properties: [String: [Property]] = [
     Property(name: "numberOfLines", controlType: .slider)
   ],
   "UIView" : [
-    Property(name: "contentMode", controlType: .toggle),
+    Property(name: "contentMode", controlType: .select),
     Property(name: "tintColor", controlType: .palette),
     Property(name: "backgroundColor", controlType: .palette),
     Property(name: "clipsToBounds", controlType: .toggle),
@@ -62,7 +63,7 @@ var properties: [String: [Property]] = [
     Property(name: "textColor", controlType: .palette),
     Property(name: "placeholder", controlType: .textField),
     Property(name: "borderStyle", controlType: .slider),
-    Property(name: "clearButtonMode", controlType: .toggle),
+    Property(name: "clearButtonMode", controlType: .select),
     Property(name: "disabledBackground", controlType: .toggle),
   ],
   "UITableView" : [
