@@ -156,7 +156,7 @@ extension OperationViewController: ControlCellDelegate {
       .forEach { (index, title) in
         let action = UIAlertAction(title: title, style: .default) { _ in
           cell.configure(selectedValue: title)
-          self.configureCases(with: title, at: index)
+          self.configureCases(with: cell.currentProperty, at: index)
         }
         actions.append(action)
     }
@@ -172,7 +172,13 @@ extension OperationViewController: ControlCellDelegate {
   private func configureCases(with title: String, at index: Int) {
     switch title {
     case "contentMode":
-      self.displayView.configure(contentMode: .center)
+      self.displayView.configure(contentMode: UIView.ContentMode(rawValue: index) ?? .scaleToFill)
+    case "style":
+      self.displayView.configure(tableViewStyle: UITableView.Style(rawValue: index) ?? .plain)
+    case "borderStyle":
+      self.displayView.configure(textFieldBorderStyle: UITextField.BorderStyle(rawValue: index) ?? .none)
+    case "clearButtonMode":
+      self.displayView.configure(clearButtonMode: UITextField.ViewMode(rawValue: index) ?? .never)
     default:
       return
     }

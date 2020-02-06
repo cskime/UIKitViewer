@@ -55,15 +55,14 @@ var properties: [String: [Property]] = [
   ],
   "UITextField" : [
     Property(name: "font", controlType: .slider),
-    Property(name: "attributedText", controlType: .textField),
     Property(name: "textColor", controlType: .palette),
     Property(name: "placeholder", controlType: .textField),
-    Property(name: "borderStyle", controlType: .slider),
+    Property(name: "borderStyle", controlType: .select),
     Property(name: "clearButtonMode", controlType: .select),
     Property(name: "disabledBackground", controlType: .toggle),
   ],
   "UITableView" : [
-    Property(name: "style", controlType: .slider),
+    Property(name: "style", controlType: .select),
     Property(name: "rowHeight", controlType: .slider),
     Property(name: "numberOfRows", controlType: .slider),
     Property(name: "backgroundView", controlType: .toggle),

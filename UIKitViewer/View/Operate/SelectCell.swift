@@ -19,6 +19,7 @@ class SelectCell: UITableViewCell {
     label.font = .systemFont(ofSize: 16)
     return label
   }()
+  var currentProperty: String { return self.nameLabel.text ?? "" }
   
   private let selectButton: UIButton = {
     let button = UIButton()
@@ -68,12 +69,24 @@ class SelectCell: UITableViewCell {
   func configure(title: String) {
     self.nameLabel.text = title
     
+    let initialTitle: String
     switch title {
     case "contentMode":
+      initialTitle = UIView.ContentMode.scaleToFill.stringRepresentation
       self.cases = UIView.ContentMode.allCases.map { $0.stringRepresentation }
+    case "style":
+      initialTitle = UITableView.Style.plain.stringRepresentation
+      self.cases = UITableView.Style.allCases.map { $0.stringRepresentation }
+    case "borderStyle":
+      initialTitle = UITextField.BorderStyle.none.stringRepresentation
+      self.cases = UITextField.BorderStyle.allCases.map { $0.stringRepresentation }
+    case "clearButtonMode":
+      initialTitle = UITextField.ViewMode.never.stringRepresentation
+      self.cases = UITextField.ViewMode.allCases.map { $0.stringRepresentation }
     default:
       return
     }
+    self.selectButton.setTitle(initialTitle, for: .normal)
   }
   
   func configure(selectedValue: String) {

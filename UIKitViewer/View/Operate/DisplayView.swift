@@ -64,7 +64,6 @@ class DisplayView: UIView {
       object = stepper
     case .UITextField:
       guard let textField = self.objectType.getInstance() as? UITextField else { return }
-      textField.borderStyle = .roundedRect
       object = textField
       shouldLayoutTextField = true
     case .UITableView:
@@ -106,8 +105,8 @@ class DisplayView: UIView {
     
     if shouldLayoutView {
       NSLayoutConstraint.activate([
-        object.widthAnchor.constraint(equalTo: self.widthAnchor),
-        object.heightAnchor.constraint(equalTo: self.heightAnchor),
+        object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
+        object.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9),
       ])
     }
     
@@ -117,6 +116,27 @@ class DisplayView: UIView {
       ])
     }
     
+  }
+  
+  private func replaceTableViewStyle(to style: UITableView.Style) {
+    self.object.removeConstraints(self.object.constraints)
+    self.object.removeFromSuperview()
+    
+    let tableView = UITableView(frame: .zero, style: style)
+    tableView.dataSource = self
+    tableView.delegate = self
+    self.object = tableView
+    
+    self.addSubview(self.object)
+    self.object.translatesAutoresizingMaskIntoConstraints = false
+    NSLayoutConstraint.activate([
+      self.object.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.object.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
+      self.object.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9),
+    ])
+
+    tableView.reloadData()
   }
   
   required init?(coder: NSCoder) {
@@ -140,7 +160,7 @@ extension DisplayView {
       label.text = title
     case .UITextField:
       guard let textField = self.object as? UITextField else { return }
-      textField.text = "asdf"
+      textField.text = title
     default:
       return
     }
@@ -207,7 +227,21 @@ extension DisplayView {
 // MARK:- Interfaces - Select
 
 extension DisplayView {
-  func configure(contentMode: UIView.ContentMode) { self.object.contentMode = contentMode }
+  func configure(contentMode mode: UIView.ContentMode) { self.object.contentMode = mode }
+  
+  func configure(tableViewStyle style: UITableView.Style) {
+    self.replaceTableViewStyle(to: style)
+  }
+  
+  func configure(textFieldBorderStyle style: UITextField.BorderStyle) {
+    guard let textField = self.object as? UITextField else { return }
+    textField.borderStyle = style
+  }
+  
+  func configure(clearButtonMode mode: UITextField.ViewMode) {
+    guard let textField = self.object as? UITextField else { return }
+    textField.clearButtonMode = mode
+  }
 }
 
 // MARK:- UITableViewDataSource
@@ -215,7 +249,7 @@ extension DisplayView {
 extension DisplayView: UITableViewDataSource {
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return nil
+    return "Section \(section)"
   }
   
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
@@ -223,7 +257,7 @@ extension DisplayView: UITableViewDataSource {
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 1
+    return 2
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
