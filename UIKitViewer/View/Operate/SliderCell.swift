@@ -35,6 +35,7 @@ class SliderCell: UITableViewCell {
     return label
   }()
   private var slider = UISlider()
+  private var currentObject: ObjectType = .UIView
   
   // MARK: Initialize
   
@@ -85,7 +86,10 @@ class SliderCell: UITableViewCell {
   // MARK: Interface
   
   
-  func configure(title: String) {
+  func configure(title: String, from object: ObjectType) {
+    self.nameLabel.text = title
+    self.currentObject = object
+    
     if let sliderValues = ObjectManager.shared.values(for: title) as? SliderValueSet {
       self.setupSlider(valueType: .custom(sliderValues.value),
                        minValue: sliderValues.minValue,
@@ -94,7 +98,6 @@ class SliderCell: UITableViewCell {
       let sliderValues = self.initializeSlider(for: title)
       ObjectManager.shared.addValue(sliderValues, for: title)
     }
-    self.nameLabel.text = title
   }
   
   func relates(to propertyName: String) -> Bool {
@@ -159,6 +162,8 @@ class SliderCell: UITableViewCell {
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 10)
     case "numberOfPages":
       self.setupSlider(valueType: .minimum, minValue: 3, maxValue: 10)
+    case "numberOfLines":
+      self.setupSlider(valueType: .custom(1), minValue: 0, maxValue: 5)
     default:
       print("Unknown")
       return (0, 0, 0)

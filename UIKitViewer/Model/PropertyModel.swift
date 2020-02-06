@@ -26,9 +26,7 @@ var properties: [String: [Property]] = [
   ],
   "UILabel" : [
     Property(name: "text", controlType: .textField),
-    Property(name: "font", controlType: .textField),
     Property(name: "textColor", controlType: .palette),
-    Property(name: "minimumScaleFactor", controlType: .slider),
     Property(name: "numberOfLines", controlType: .slider)
   ],
   "UIView" : [

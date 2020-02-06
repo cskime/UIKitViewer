@@ -37,7 +37,6 @@ class DisplayView: UIView {
   private func setupObject() {
     
     var shouldLayoutView = false
-    var shouldLayoutTextField = false
     
     switch self.objectType {
     case .UIView:
@@ -64,8 +63,9 @@ class DisplayView: UIView {
       object = stepper
     case .UITextField:
       guard let textField = self.objectType.getInstance() as? UITextField else { return }
+      textField.delegate = self
+      textField.returnKeyType = .done
       object = textField
-      shouldLayoutTextField = true
     case .UITableView:
       guard let tableView = self.objectType.getInstance() as? UITableView else { return }
       tableView.dataSource = self
@@ -90,31 +90,35 @@ class DisplayView: UIView {
       pageControl.currentPage = 0
       pageControl.backgroundColor = .gray
       object = pageControl
-      shouldLayoutView = true
     case .UISegmentedControl:
       guard let segmentedControl = self.objectType.getInstance() as? UISegmentedControl else { return }
       segmentedControl.selectedSegmentIndex = 0
       object = segmentedControl
     }
     
-    self.addSubview(object)
-    object.translatesAutoresizingMaskIntoConstraints = false
+    self.setupConstraintForObject()
+  }
+  
+  private func setupConstraintForObject() {
+    self.addSubview(self.object)
+    self.object.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      object.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      object.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+      self.object.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+      self.object.centerYAnchor.constraint(equalTo: self.centerYAnchor),
     ])
     
-    if shouldLayoutView {
+    switch self.objectType {
+    case .UILabel, .UIButton:
+      self.object.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: 0.5).isActive = true
+    case .UITextField:
+      self.object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5).isActive = true
+    case .UIImageView, .UIView, .UITableView, .UICollectionView:
       NSLayoutConstraint.activate([
-        object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
-        object.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9),
+        self.object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
+        self.object.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9),
       ])
-    }
-    
-    if shouldLayoutTextField {
-      NSLayoutConstraint.activate([
-        object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5),
-      ])
+    default:
+      return
     }
     
   }
@@ -136,7 +140,7 @@ class DisplayView: UIView {
       self.object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
       self.object.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9),
     ])
-
+    
     tableView.reloadData()
   }
   
@@ -180,6 +184,9 @@ extension DisplayView {
     case .UILabel:
       guard let label = self.object as? UILabel else { return }
       label.textColor = color
+    case .UITextField:
+      guard let textField = self.object as? UITextField else { return }
+      textField.textColor = color
     default:
       return
     }
@@ -199,12 +206,17 @@ extension DisplayView {
 
 extension DisplayView {
   
-    enum ImageType {
-        case `default`      // 설정할 이미지 1개일 때 이미지
-        case background     // 밑바닥에 깔리는 이미지
-        case increment, decrement, divider      // UIStepper image
-    }
-    
+  func configureTextField(shouldDisplayPlaceholder display: Bool) {
+    guard let textField = self.object as? UITextField else { return }
+    textField.placeholder = display ? "placeholder" : ""
+  }
+  
+  enum ImageType {
+    case `default`      // 설정할 이미지 1개일 때 이미지
+    case background     // 밑바닥에 깔리는 이미지
+    case increment, decrement, divider      // UIStepper image
+  }
+  
   func configure(shouldSetImage: Bool, for type: ImageType) {
     switch self.objectType {
     case .UIButton:
@@ -216,36 +228,38 @@ extension DisplayView {
         button.setBackgroundImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
       default:
         return
-        }
+      }
     case .UIStepper:
-        guard let stepper = self.object as? UIStepper else { return }
-        switch type {
-        case .increment:
-            stepper.setIncrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-        case .decrement:
-            stepper.setDecrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-        case .divider:
-            stepper.setDividerImage(shouldSetImage ? UIImage(named: "UIImageView") : nil,
-                                    forLeftSegmentState: .normal,
-                                    rightSegmentState: .normal)
-        case .background:
-            stepper.setBackgroundImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-        default:
-            return
-        }
+      guard let stepper = self.object as? UIStepper else { return }
+      switch type {
+      case .increment:
+        stepper.setIncrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
+      case .decrement:
+        stepper.setDecrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
+      case .divider:
+        stepper.setDividerImage(shouldSetImage ? UIImage(named: "UIImageView") : nil,
+                                forLeftSegmentState: .normal,
+                                rightSegmentState: .normal)
+      case .background:
+        stepper.setBackgroundImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
+      default:
+        return
+      }
     default:
       return
     }
   }
-
-    func configure(isOn value: Bool) {
-        guard let `switch` = self.object as? UISwitch else { return }
-        `switch`.isOn = value
-    }
-    func configure(setOn value: Bool) {
-        guard let `switch` = self.object as? UISwitch else { return }
-        `switch`.setOn(value , animated: true)
-    }
+  
+  func configure(isOn value: Bool) {
+    guard let `switch` = self.object as? UISwitch else { return }
+    `switch`.isOn = value
+  }
+  
+  func configure(setOn value: Bool) {
+    guard let `switch` = self.object as? UISwitch else { return }
+    `switch`.setOn(value , animated: true)
+  }
+  
   func configure(hidden value: Bool) { self.object.isHidden = value }
   func configure(clipsToBounds value: Bool) { self.object.clipsToBounds = value }
   
@@ -254,6 +268,11 @@ extension DisplayView {
 // MARK:- Interfaces - Slider
 
 extension DisplayView {
+  
+  func configureLabel(numberOfLines value: Float) {
+    guard let label = self.object as? UILabel else { return }
+    label.numberOfLines = Int(value)
+  }
   
   enum CollectionViewLayoutType {
     case itemSize, lineSpacing, itemSpacing, sectionInset
@@ -326,7 +345,7 @@ extension DisplayView {
 // MARK:- UITableViewDataSource
 
 extension DisplayView: UITableViewDataSource {
-
+  
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return "Section \(section)"
   }
@@ -338,7 +357,7 @@ extension DisplayView: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
     return 2
   }
-
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return 2
   }
@@ -346,7 +365,7 @@ extension DisplayView: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell()
     cell.textLabel?.text = "Section : \(indexPath.section), Row: \(indexPath.row)"
-//    cell.textLabel?.font = .systemFont(ofSize: 12)
+    //    cell.textLabel?.font = .systemFont(ofSize: 12)
     return cell
   }
   
@@ -355,7 +374,7 @@ extension DisplayView: UITableViewDataSource {
 // MARK:- UITableViewDelegate
 
 extension DisplayView: UITableViewDelegate {
-
+  
 }
 
 // MARK:- UICollectionViewDataSource
@@ -382,4 +401,13 @@ extension DisplayView: UICollectionViewDataSource {
 
 extension DisplayView: UICollectionViewDelegateFlowLayout {
   
+}
+
+// MARK:- UITextFieldDelegate
+
+extension DisplayView: UITextFieldDelegate {
+  func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+    textField.resignFirstResponder()
+    return true
+  }
 }

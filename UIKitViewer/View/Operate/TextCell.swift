@@ -19,6 +19,7 @@ class TextCell: UITableViewCell {
     label.font = .systemFont(ofSize: 16)
     return label
   }()
+  private var currentObject: ObjectType = .UIView
   private let textField: UITextField = {
     let textField = UITextField()
     textField.autocapitalizationType = .none
@@ -69,13 +70,23 @@ class TextCell: UITableViewCell {
   
   // MARK: Interface
   
-  func configure(title: String) {
+  func configure(title: String, from object: ObjectType) {
+    self.nameLabel.text = title
+    self.currentObject = object
+    
     if let text = ObjectManager.shared.values(for: title) as? String {
       self.textField.text = text
     } else {
+      switch self.currentObject {
+      case .UIButton:
+        self.textField.text = "Test Button"
+      case .UILabel:
+        self.textField.text = "Test Label"
+      default:
+        break
+      }
       ObjectManager.shared.addValue(self.textField.text!, for: title)
     }
-    self.nameLabel.text = title
   }
   
   required init?(coder: NSCoder) {

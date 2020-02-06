@@ -20,6 +20,7 @@ class ToggleCell: UITableViewCell {
     return label
   }()
   private let toggleSwitch = UISwitch()
+  private var currentObject: ObjectType = .UIView
   
   // MARK: Initialize
   
@@ -58,14 +59,22 @@ class ToggleCell: UITableViewCell {
   
   // MARK: Interface
   
-  func configure(title: String) {
+  func configure(title: String, from object: ObjectType) {
+    self.nameLabel.text = title
+    self.currentObject = object
+    
     if let currentState = ObjectManager.shared.values(for: title) as? Bool {
       self.toggleSwitch.isOn = currentState
     } else {
-      self.toggleSwitch.isOn = true
+      switch self.currentObject {
+      case .UICollectionView, .UIView:
+        self.toggleSwitch.isOn = true
+      default:
+        self.toggleSwitch.isOn = false
+      }
+      
       ObjectManager.shared.addValue(self.toggleSwitch.isOn, for: title)
     }
-    self.nameLabel.text = title
   }
   
   func relates(to propertyName: String) -> Bool {
