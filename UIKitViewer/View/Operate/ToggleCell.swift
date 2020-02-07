@@ -67,8 +67,8 @@ class ToggleCell: UITableViewCell {
       self.toggleSwitch.isOn = currentState
     } else {
       switch self.currentObject {
-      case .UICollectionView, .UIView:
-        self.toggleSwitch.isOn = true
+      case .UICollectionView, .UIView, .UITableView, .UISegmentedControl:
+        self.toggleSwitch.isOn = !self.relates(to: "isHidden") || self.relates(to: "clipsToBounds")
       default:
         self.toggleSwitch.isOn = false
       }

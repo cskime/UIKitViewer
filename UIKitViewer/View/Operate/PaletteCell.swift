@@ -61,7 +61,7 @@ class PaletteCell: UITableViewCell {
       stackView.axis = .horizontal
       stackView.alignment = .fill
       stackView.distribution = .fillEqually
-      stackView.spacing = 20
+      stackView.spacing = 16
       return stackView
     }()
     colorButtons.forEach {
