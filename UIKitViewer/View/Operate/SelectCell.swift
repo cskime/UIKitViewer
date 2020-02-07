@@ -88,11 +88,18 @@ class SelectCell: UITableViewCell {
     default:
       return
     }
-    self.selectButton.setTitle(initialTitle, for: .normal)
+    
+    if let selected = ObjectManager.shared.values(for: title) as? String {
+      self.selectButton.setTitle(selected, for: .normal)
+    } else {
+      self.selectButton.setTitle(initialTitle, for: .normal)
+      ObjectManager.shared.addValue(initialTitle, for: title)
+    }
   }
   
   func configure(selectedValue: String) {
     self.selectButton.setTitle(selectedValue, for: .normal)
+    ObjectManager.shared.updateValue(selectedValue, for: self.nameLabel.text!)
   }
   
   func relates(to propertyName: String) -> Bool {
