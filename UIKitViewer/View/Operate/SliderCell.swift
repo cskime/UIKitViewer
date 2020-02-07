@@ -9,11 +9,9 @@
 import UIKit
 
 
-class SliderCell: UITableViewCell {
+class SliderCell: ControlCell {
   
   static let identifier = String(describing: SliderCell.self)
-  
-  weak var delegate: ControlCellDelegate?
   
   private var currentValue: Float {
     get { return self.slider.value }
@@ -86,7 +84,7 @@ class SliderCell: UITableViewCell {
   // MARK: Interface
   
   
-  func configure(title: String, from object: ObjectType) {
+  override func configure(title: String, from object: ObjectType) {
     self.nameLabel.text = title
     self.currentObject = object
     

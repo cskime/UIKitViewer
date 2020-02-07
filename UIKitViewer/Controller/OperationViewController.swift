@@ -10,7 +10,7 @@ import UIKit
 
 class OperationViewController: UIViewController {
   
-  private let cellProvider = CellProvider()
+  private lazy var cellProvider = CellProvider(tableView: self.tableView)
   private let objectManager = ObjectManager.shared
   private let tableView = UITableView(frame: .zero, style: .grouped)
   private lazy var displayView = DisplayView(objectType: self.objectManager.object)
@@ -34,7 +34,6 @@ class OperationViewController: UIViewController {
     self.setupTableView()
     self.setupConstraints()
     self.cellProvider.delegate = self
-    self.cellProvider.register(to: self.tableView)
   }
   
   private func setupAttributes() {

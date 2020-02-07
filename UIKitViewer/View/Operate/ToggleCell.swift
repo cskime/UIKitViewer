@@ -8,11 +8,9 @@
 
 import UIKit
 
-class ToggleCell: UITableViewCell {
+class ToggleCell: ControlCell {
   
   static let identifier = String(describing: ToggleCell.self)
-  
-  weak var delegate: ControlCellDelegate?
   
   private let nameLabel: UILabel = {
     let label = UILabel()
@@ -59,7 +57,7 @@ class ToggleCell: UITableViewCell {
   
   // MARK: Interface
   
-  func configure(title: String, from object: ObjectType) {
+  override func configure(title: String, from object: ObjectType) {
     self.nameLabel.text = title
     self.currentObject = object
     

@@ -8,11 +8,9 @@
 
 import UIKit
 
-class SelectCell: UITableViewCell {
+class SelectCell: ControlCell {
   
   static let identifier = String(describing: SelectCell.self)
-  
-  weak var delegate: ControlCellDelegate?
   
   private let nameLabel: UILabel = {
     let label = UILabel()
@@ -67,7 +65,7 @@ class SelectCell: UITableViewCell {
   // MARK: Interface
   
   private var cases = [String]()
-  func configure(title: String, from object: ObjectType) {
+  override func configure(title: String, from object: ObjectType) {
     self.nameLabel.text = title
     self.currentObject = object
     
