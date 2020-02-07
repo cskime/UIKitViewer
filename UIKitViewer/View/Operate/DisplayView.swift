@@ -35,64 +35,24 @@ class DisplayView: UIView {
   }
   
   private func setupObject() {
+    self.object = self.objectType.getInstance() ?? UIView()
+    self.setupConstraintForObject()
     
     switch self.objectType {
-    case .UIView:
-      object = UIView()
-      object.backgroundColor = .gray
-    case .UIButton:
-      guard let button = self.objectType.getInstance() as? UIButton else { return }
-      button.setTitle("Test Button", for: .normal)
-      button.setTitleColor(.black, for: .normal)
-      button.titleLabel?.font = .systemFont(ofSize: 24)
-      object = button
-    case .UILabel:
-      guard let label = self.objectType.getInstance() as? UILabel else { return }
-      label.text = "Test Label"
-      label.font = .systemFont(ofSize: 24)
-      object = label
-    case .UISwitch:
-      guard let `switch` = self.objectType.getInstance() as? UISwitch else { return }
-      `switch`.isOn = false
-      object = `switch`
-    case .UIStepper:
-      guard let stepper = self.objectType.getInstance() as? UIStepper else { return }
-      object = stepper
     case .UITextField:
-      guard let textField = self.objectType.getInstance() as? UITextField else { return }
+      guard let textField = self.object as? UITextField else { return }
       textField.delegate = self
-      textField.returnKeyType = .done
-      textField.becomeFirstResponder()
-      object = textField
     case .UITableView:
-      guard let tableView = self.objectType.getInstance() as? UITableView else { return }
+      guard let tableView = self.object as? UITableView else { return }
       tableView.dataSource = self
       tableView.delegate = self
-      object = tableView
     case .UICollectionView:
-      guard let collectionView = self.objectType.getInstance() as? UICollectionView else { return }
-      collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-      collectionView.backgroundColor = .clear
+      guard let collectionView = self.object as? UICollectionView else { return }
       collectionView.dataSource = self
       collectionView.delegate = self
-      object = collectionView
-    case .UIImageView:
-      guard let imageView = self.objectType.getInstance() as? UIImageView else { return }
-      imageView.image = UIImage(named: "UIImageView")
-      object = imageView
-    case .UIPageControl:
-      guard let pageControl = self.objectType.getInstance() as? UIPageControl else { return }
-      pageControl.numberOfPages = 3
-      pageControl.currentPage = 0
-      pageControl.backgroundColor = .gray
-      object = pageControl
-    case .UISegmentedControl:
-      guard let segmentedControl = self.objectType.getInstance() as? UISegmentedControl else { return }
-      segmentedControl.selectedSegmentIndex = 0
-      object = segmentedControl
+    default:
+      return
     }
-    
-    self.setupConstraintForObject()
   }
   
   private func setupConstraintForObject() {

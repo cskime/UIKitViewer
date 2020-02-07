@@ -32,38 +32,64 @@ enum ObjectType: String {
         switch self {
         case .UIView:
             guard let viewType = classType as? UIView.Type else { return nil }
-            return viewType.init()
+            let view = viewType.init()
+            view.backgroundColor = .gray
+            return view
         case .UILabel:
             guard let labelType = classType as? UILabel.Type else { return nil }
-            return labelType.init()
+            let label = labelType.init()
+            label.text = "Test Label"
+            label.font = .systemFont(ofSize: 24)
+            return label
         case .UIButton:
             guard let buttonType = classType as? UIButton.Type else { return nil }
-            return buttonType.init()
+            let button = buttonType.init()
+            button.setTitle("Test Button", for: .normal)
+            button.setTitleColor(.black, for: .normal)
+            button.titleLabel?.font = .systemFont(ofSize: 24)
+            return button
         case .UISwitch:
             guard let switchType = classType as? UISwitch.Type else { return nil }
-            return switchType.init()
+            let `switch` = switchType.init()
+            `switch`.isOn = false
+            return `switch`
         case .UIStepper:
             guard let stepperType = classType as? UIStepper.Type else { return nil }
-            return stepperType.init()
+            let stepper = stepperType.init()
+            return stepper
         case .UITextField:
             guard let textFieldType = classType as? UITextField.Type else { return nil }
-            return textFieldType.init()
+            let textField = textFieldType.init()
+            textField.returnKeyType = .done
+            textField.becomeFirstResponder()
+            return textField
         case .UITableView:
             guard let tableViewType = classType as? UITableView.Type else { return nil }
-            return tableViewType.init(frame: .zero, style: .plain)
+            let tableView = tableViewType.init(frame: .zero, style: .plain)
+            return tableView
         case .UICollectionView:
             guard let collectionViewType = classType as? UICollectionView.Type else { return nil }
-            let layout = UICollectionViewFlowLayout()
-            return collectionViewType.init(frame: .zero, collectionViewLayout: layout)
+            let collectionView = collectionViewType.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+            collectionView.backgroundColor = .clear
+            return collectionView
         case .UIImageView:
             guard let imageViewType = classType as? UIImageView.Type else { return nil }
-            return imageViewType.init(image: UIImage(named: "default"))
+            let imageView = imageViewType.init()
+            imageView.image = UIImage(named: "UIImageView")
+            return imageView
         case .UIPageControl:
             guard let pageControlType = classType as? UIPageControl.Type else { return nil }
-            return pageControlType.init()
+            let pageControl = pageControlType.init()
+            pageControl.numberOfPages = 3
+            pageControl.currentPage = 0
+            pageControl.backgroundColor = .gray
+            return pageControl
         case .UISegmentedControl:
             guard let segmentedControlType = classType as? UISegmentedControl.Type else { return nil }
-            return segmentedControlType.init(items: ["First", "Second"])
+            let segmentedControl = segmentedControlType.init(items: ["First", "Second"])
+            segmentedControl.selectedSegmentIndex = 0
+            return segmentedControl
         }
     }
     func getClass() -> AnyClass? {
