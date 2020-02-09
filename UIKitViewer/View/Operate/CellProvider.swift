@@ -47,9 +47,9 @@ class CellProvider {
     self.tableView.register(SelectCell.self, forCellReuseIdentifier: SelectCell.identifier)
   }
   
-  func createCell(to tableView: UITableView, with title: String, forObjectType object: ObjectType, forControlType control: ControlType) -> UITableViewCell {
+  func create(withProperty name: String, of object: ObjectType, controlType control: ControlType) -> UITableViewCell {
     let controlCell = self.dequeueCell(forControlType: control)
-    controlCell.configure(title: title, from: object)
+    controlCell.configure(title: name, from: object)
     controlCell.delegate = self.delegate
     return controlCell
   }

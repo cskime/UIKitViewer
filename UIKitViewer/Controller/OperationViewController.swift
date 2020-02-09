@@ -89,7 +89,9 @@ extension OperationViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let property = objectManager.dataSource[indexPath.section].properties[indexPath.row]
-    let cell = self.cellProvider.createCell(to: tableView, with: property.name, forObjectType: objectManager.object, forControlType: property.controlType)
+    let cell = self.cellProvider.create(
+      withProperty: property.name, of: objectManager.object, controlType: property.controlType
+    )
     return cell
   }
   
