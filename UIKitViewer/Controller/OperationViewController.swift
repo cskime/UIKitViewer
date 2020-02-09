@@ -37,7 +37,7 @@ class OperationViewController: UIViewController {
   }
   
   private func setupAttributes() {
-    self.view.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+    self.view.backgroundColor = ColorReference.background
     navigationItem.title = objectManager.dataSource.first?.name
   }
   

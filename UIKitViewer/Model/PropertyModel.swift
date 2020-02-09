@@ -10,7 +10,7 @@ import UIKit
 
 struct Property {
   var name: String
-  var controlType: ControlType
+  var controlType: CellControlType
 }
 var properties: [String: [Property]] = [
   "CALayer" : [

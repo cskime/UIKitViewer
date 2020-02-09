@@ -10,6 +10,11 @@ import UIKit
 
 typealias SliderValueSet = (value: Float, minValue: Float, maxValue: Float)
 
+struct ObjectInfo {
+    var name: String
+    var properties: [Property]
+}
+
 class ObjectManager {
   
   static let shared = ObjectManager()

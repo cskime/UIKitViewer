@@ -37,12 +37,11 @@ class MainViewController: UIViewController {
   
   private func setupCollectionView() {
     
-    collectionView.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+    collectionView.backgroundColor = ColorReference.background
     collectionView.dataSource = self
     collectionView.delegate = self
-    collectionView.register(MainViewCellCollectionViewCell.self, forCellWithReuseIdentifier: MainViewCellCollectionViewCell.identifier)
+    collectionView.register(ThumbnailCell.self, forCellWithReuseIdentifier: ThumbnailCell.identifier)
     view.addSubview(collectionView)
-    print("11111")
   }
   
   private func setupFlowLayout() {
@@ -51,7 +50,6 @@ class MainViewController: UIViewController {
     flowLayout.minimumInteritemSpacing = UI.itemSpacing
     flowLayout.minimumLineSpacing = UI.lineSpacing
     flowLayout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-    print("22222")
   }
 }
 //MARK: - UICollectionViewDataSource
@@ -59,13 +57,12 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    print("44444")
     return objects.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainViewCellCollectionViewCell.identifier, for: indexPath) as! MainViewCellCollectionViewCell
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ThumbnailCell.identifier, for: indexPath) as! ThumbnailCell
     cell.configure(title: objects[indexPath.item])
     return cell
   }
@@ -81,11 +78,3 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     navigationController?.pushViewController(operationVC, animated: true)
   }
 }
-//extension UIView {
-//    func shadow() {
-//        self.layer.shadowRadius = 5.0
-//        self.layer.shadowOpactiy = 0.3
-//        self.layer.shadowOffset = 0.0
-//        self.layer.shadowColor = UIColor.darkgray.cgColor
-//    }
-//}

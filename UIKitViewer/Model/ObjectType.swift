@@ -8,11 +8,6 @@
 
 import UIKit
 
-struct ObjectInfo {
-    var name: String
-    var properties: [Property]
-}
-
 enum ObjectType: String {
     case UIView
     case UIButton

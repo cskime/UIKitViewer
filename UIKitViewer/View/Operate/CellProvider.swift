@@ -8,12 +8,24 @@
 
 import UIKit
 
-enum ControlType {
+enum CellControlType {
   case slider // 수치변화하는 control
   case palette // 색 고르는 control
   case textField //몇 가지 중에 고르는 control
   case toggle // true / false 중에 고르는 control
   case select
+  
+  var cellType: ControlCell.Type {
+    get {
+      switch self {
+      case .slider:     return SliderCell.self
+      case .palette:    return PaletteCell.self
+      case .textField:  return TextCell.self
+      case .toggle:     return ToggleCell.self
+      case .select:     return SelectCell.self
+      }
+    }
+  }
 }
 
 @objc protocol ControlCellDelegate {
@@ -34,38 +46,23 @@ class CellProvider {
   private let tableView: UITableView
   init(tableView: UITableView) {
     self.tableView = tableView
-    self.register()
   }
   
   weak var delegate: ControlCellDelegate?
   
-  private func register() {
-    self.tableView.register(SliderCell.self, forCellReuseIdentifier: SliderCell.identifier)
-    self.tableView.register(PaletteCell.self, forCellReuseIdentifier: PaletteCell.identifier)
-    self.tableView.register(ToggleCell.self, forCellReuseIdentifier: ToggleCell.identifier)
-    self.tableView.register(TextCell.self, forCellReuseIdentifier: TextCell.identifier)
-    self.tableView.register(SelectCell.self, forCellReuseIdentifier: SelectCell.identifier)
-  }
-  
-  func create(withProperty name: String, of object: ObjectType, controlType control: ControlType) -> UITableViewCell {
-    let controlCell = self.dequeueCell(forControlType: control)
+  func create(withProperty name: String, of object: ObjectType, controlType control: CellControlType) -> UITableViewCell {
+    self.register(of: control.cellType)
+    let controlCell = self.dequeueReusableCell(of: control.cellType)
     controlCell.configure(title: name, from: object)
     controlCell.delegate = self.delegate
     return controlCell
   }
   
-  private func dequeueCell(forControlType type: ControlType) -> ControlCell {
-    switch type {
-    case .slider:
-      return self.tableView.dequeueReusableCell(withIdentifier: SliderCell.identifier) as! SliderCell
-    case .palette:
-      return self.tableView.dequeueReusableCell(withIdentifier: PaletteCell.identifier) as! PaletteCell
-    case .toggle:
-      return self.tableView.dequeueReusableCell(withIdentifier: ToggleCell.identifier) as! ToggleCell
-    case .textField:
-      return self.tableView.dequeueReusableCell(withIdentifier: TextCell.identifier) as! TextCell
-    case .select:
-      return self.tableView.dequeueReusableCell(withIdentifier: SelectCell.identifier) as! SelectCell
-    }
+  private func register<T: ControlCell>(of type: T.Type) {
+    self.tableView.register(type, forCellReuseIdentifier: String(describing: type))
+  }
+  
+  private func dequeueReusableCell<T: ControlCell>(of type: T.Type) -> T {
+    return self.tableView.dequeueReusableCell(withIdentifier: String(describing: type)) as! T
   }
 }

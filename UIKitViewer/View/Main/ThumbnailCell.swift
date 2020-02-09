@@ -8,8 +8,8 @@
 
 import UIKit
 
-class MainViewCellCollectionViewCell: UICollectionViewCell {
-  static let identifier = "MainViewCell"
+class ThumbnailCell: UICollectionViewCell {
+  static let identifier = String(describing: ThumbnailCell.self)
   
   private let view = UIView()
   private let imageView = UIImageView()
