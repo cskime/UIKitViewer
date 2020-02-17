@@ -5,7 +5,9 @@
 - UIKit Framework에 있는 UI 객체들의 속성과, 그 속성을 변경했을 때 UI 변화를 관찰할 수 있는 공부용 앱
 - Duration : 2020.02.05 ~ 2020.02.07
 
-<img src="images/UIKitViewer-description.png" alt="Page Description" width="90%">
+<p align="center">
+  <img src="images/UIKitViewer-description.png" alt="Page Description" width="90%">
+</p>
 
 ## Using Skills
 
@@ -16,7 +18,9 @@
 - 프로젝트 유지보수성을 향상시키기 위해 **MVC Pattern** 적용 시도
 - **Delegate Pattern**을 사용하여 custom cell에서 발생한 사용자 입력을 controller로 전달하여 display view로 update
 
-<img src="images/architecture.png" alt="Page Description" width="80%">
+<p align="center">
+  <img src="images/architecture.png" alt="Page Description" width="100%">
+</p>
 
 - `ObjectModel`에서 `String` type의 object 이름을 `NSClassFromString` 함수를 사용하여 실제 object의 metatype을 생성하고 case별로 instance를 생성
 
