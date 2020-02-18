@@ -67,7 +67,7 @@ extension UITableView.Style: EnumerationExtension {
     case .insetGrouped:   return "insetGrouped"
     case .plain:          return "plain"
     @unknown default:
-      fatalError("UIView.ContentMode: Unknown Case")
+      fatalError("UITableView.Style: Unknown Case")
     }
   }
 }
@@ -89,7 +89,7 @@ extension UITextField.BorderStyle: EnumerationExtension {
     case .bezel:        return "bezel"
     case .roundedRect:  return "roundedRect"
     @unknown default:
-      fatalError("UIView.ContentMode: Unknown Case")
+      fatalError("UITextField.BorderStyle: Unknown Case")
     }
   }
 }
@@ -111,7 +111,7 @@ extension UITextField.ViewMode: EnumerationExtension {
     case .unlessEditing: return "unlessEditing"
     case .always:        return "always"
     @unknown default:
-      fatalError("UIView.ContentMode: Unknown Case")
+      fatalError("UITextField.ViewMode: Unknown Case")
     }
   }
 }
