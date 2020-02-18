@@ -3,9 +3,9 @@
 ## Description
 
 - UIKit Framework에 있는 UI 객체들의 속성과, 그 속성을 변경했을 때 UI 변화를 관찰할 수 있는 공부용 앱
-- iOS 개발을 처음 배우는 사람들이 **'UIKit에서 사용할 수 있는 객체들에 어떤 것이 있는지' ** 쉽게 찾아보고 Xcode 없이도 스마트폰에서 간단하게 UI 개발을 연습할 수 있도록 개발
+- iOS 개발을 처음 배우는 사람들이 **'UIKit에서 사용할 수 있는 객체들에 어떤 것이 있는지'** 쉽게 찾아보고 Xcode 없이도 스마트폰에서 간단하게 UI 개발을 연습할 수 있도록 개발
 - UI 객체의 속성값을 조절하면 실시간으로 UI가 변화하여 **'어떤 UI의 어떤 속성을 어떻게 설정하면 어떤 모습으로 변한다'**는 것을 한눈에 관찰할 수 있다
-- 각 UI에서 더 다양한 property를 설정할 수 있도록 controller를 추가하고 UX를 향상시키는 등 보완해 나갈 계획
+- 각 UI에서 더 다양한 property를 설정할 수 있도록 controller를 추가하고 UX를 향상시키는 등 보완해 나갈 계획
 
 <p align="center">
   <img src="images/UIKitViewer-description.png" alt="Page Description" width="90%">
@@ -23,6 +23,7 @@
 <p align="center">
   <img src="images/architecture.png" alt="Page Description" width="100%">
 </p>
+
 ## Trouble Shooting
 
 - `UIView.ContentMode`같이 몇 가지 case 중에서 하나를 선택해야 하는 `enum` 타입의 property에 대해 controller를 추가할 때, UIKit Framework에서 미리 정의된 불특정 다수의 `enum`타입의 모든 `case`를 일일이 파악해야 하는 어려움
