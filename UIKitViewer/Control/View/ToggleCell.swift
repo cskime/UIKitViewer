@@ -10,15 +10,18 @@ import UIKit
 
 class ToggleCell: ControlCell {
   
-  static let identifier = String(describing: ToggleCell.self)
+  // MARK: Views
   
-  private let nameLabel: UILabel = {
-    let label = UILabel()
-    label.font = .systemFont(ofSize: 16)
-    return label
-  }()
-  private let toggleSwitch = UISwitch()
-  private var currentObject: ObjectType = .UIView
+  private let nameLabel = UILabel().then {
+    $0.font = .systemFont(ofSize: 16)
+  }
+  private lazy var toggleSwitch = UISwitch().then {
+    $0.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
+  }
+  
+  // MARK: Properties
+  
+  private var currentObject: UIKitObject = .UIView
   
   // MARK: Initialize
   
@@ -28,7 +31,6 @@ class ToggleCell: ControlCell {
   }
   
   private func setupUI() {
-    self.toggleSwitch.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
     self.setupConstraints()
   }
   
@@ -38,26 +40,24 @@ class ToggleCell: ControlCell {
     static let spacing: CGFloat = 8
   }
   private func setupConstraints() {
-    let subviews = [self.nameLabel, self.toggleSwitch]
-    subviews.forEach {
-      self.contentView.addSubview($0)
-      $0.translatesAutoresizingMaskIntoConstraints = false
+    [self.nameLabel, self.toggleSwitch].forEach { self.contentView.addSubview($0) }
+    
+    self.nameLabel.snp.makeConstraints {
+      $0.top.leading.bottom
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: UI.paddingY, right: 0))
     }
     
-    NSLayoutConstraint.activate([
-      self.nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX),
-      self.nameLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
-      
-      self.toggleSwitch.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.toggleSwitch.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX),
-      self.toggleSwitch.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
-    ])
+    self.toggleSwitch.snp.makeConstraints {
+      $0.top.trailing.bottom
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: UI.paddingY, left: 0, bottom: UI.paddingY, right: UI.paddingX))
+    }
   }
   
   // MARK: Interface
   
-  override func configure(title: String, from object: ObjectType) {
+  override func configure(title: String, from object: UIKitObject) {
     self.nameLabel.text = title
     self.currentObject = object
     

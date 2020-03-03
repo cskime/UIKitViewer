@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Then
 
 enum CellControlType {
   case slider // 수치변화하는 control
@@ -38,10 +39,10 @@ enum CellControlType {
 
 class ControlCell: UITableViewCell {
   weak var delegate: ControlCellDelegate?
-  func configure(title: String, from object: ObjectType) { }
+  func configure(title: String, from object: UIKitObject) { }
 }
 
-class CellProvider {
+class CellProvider: Then {
   
   private let tableView: UITableView
   init(tableView: UITableView) {
@@ -50,19 +51,11 @@ class CellProvider {
   
   weak var delegate: ControlCellDelegate?
   
-  func create(withProperty name: String, of object: ObjectType, controlType control: CellControlType) -> UITableViewCell {
-    self.register(of: control.cellType)
-    let controlCell = self.dequeueReusableCell(of: control.cellType)
+  func create(withProperty name: String, of object: UIKitObject, controlType control: CellControlType) -> UITableViewCell {
+    self.tableView.register(control.cellType)
+    guard let controlCell = self.tableView.dequeueCell(control.cellType) else { return UITableViewCell() }
     controlCell.configure(title: name, from: object)
     controlCell.delegate = self.delegate
     return controlCell
-  }
-  
-  private func register<T: ControlCell>(of type: T.Type) {
-    self.tableView.register(type, forCellReuseIdentifier: String(describing: type))
-  }
-  
-  private func dequeueReusableCell<T: ControlCell>(of type: T.Type) -> T {
-    return self.tableView.dequeueReusableCell(withIdentifier: String(describing: type)) as! T
   }
 }

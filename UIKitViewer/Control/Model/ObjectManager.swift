@@ -10,11 +10,6 @@ import UIKit
 
 typealias SliderValueSet = (value: Float, minValue: Float, maxValue: Float)
 
-struct ObjectInfo {
-    var name: String
-    var properties: [Property]
-}
-
 class ObjectManager {
   
   static let shared = ObjectManager()
@@ -23,23 +18,23 @@ class ObjectManager {
   // MARK: Using table view data source
   
   var dataSource = [ObjectInfo]()
-  var object: ObjectType = .UIButton {
+  var object: UIKitObject = .UIButton {
     didSet {
-      object
-        .classNamesWithinInheritance()
-        .forEach {
-          let objectInfo = ObjectInfo(name: $0, properties: properties[$0] ?? [])
-          self.dataSource.append(objectInfo)
-      }
-      let layer = properties.filter { $0.key == "CALayer" }.first
-      let layerInfo = ObjectInfo(name: layer?.key ?? "", properties: layer?.value ?? [])
-      self.dataSource.append(layerInfo)
-      
-      if object == .UICollectionView {
-        let layout = properties.filter { $0.key == "UICollectionViewFlowLayout" }.first
-        let objectInfo = ObjectInfo(name: layout?.key ?? "", properties: layout?.value ?? [])
-        self.dataSource.insert(objectInfo, at: 1)
-      }
+//      object
+//        .classNamesWithinInheritance()
+//        .forEach {
+//          let objectInfo = ObjectInfo(name: $0, properties: properties[$0] ?? [])
+//          self.dataSource.append(objectInfo)
+//      }
+//      let layer = properties.filter { $0.key == "CALayer" }.first
+//      let layerInfo = ObjectInfo(name: layer?.key ?? "", properties: layer?.value ?? [])
+//      self.dataSource.append(layerInfo)
+//      
+//      if object == .UICollectionView {
+//        let layout = properties.filter { $0.key == "UICollectionViewFlowLayout" }.first
+//        let objectInfo = ObjectInfo(name: layout?.key ?? "", properties: layout?.value ?? [])
+//        self.dataSource.insert(objectInfo, at: 1)
+//      }
     }
   }
   

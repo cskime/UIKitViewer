@@ -10,33 +10,26 @@ import UIKit
 
 class SelectCell: ControlCell {
   
-  static let identifier = String(describing: SelectCell.self)
+  // MARK: Views
   
-  private let nameLabel: UILabel = {
-    let label = UILabel()
-    label.font = .systemFont(ofSize: 16)
-    return label
-  }()
-  private var currentObject: ObjectType = .UIView
+  private let nameLabel = UILabel().then {
+    $0.font = .systemFont(ofSize: 16)
+  }
+  
+  private lazy var selectButton = UIButton().then {
+    $0.setTitle("Select Case", for: .normal)
+    $0.setTitleColor(.black, for: .normal)
+    $0.addTarget(self, action: #selector(selectButtonTouched(_:)), for: .touchUpInside)
+  }
+  
+  private var currentObject: UIKitObject = .UIView
   var currentProperty: String { return self.nameLabel.text ?? "" }
-  
-  private let selectButton: UIButton = {
-    let button = UIButton()
-    button.setTitle("Select Case", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    return button
-  }()
   
   // MARK: Initialize
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    self.setupUI()
-  }
-  
-  private func setupUI() {
-    self.selectButton.addTarget(self, action: #selector(selectButtonTouched(_:)), for: .touchUpInside)
-    setupConstraints()
+    self.setupConstraints()
   }
   
   private struct UI {
@@ -45,27 +38,25 @@ class SelectCell: ControlCell {
     static let spacing: CGFloat = 8
   }
   private func setupConstraints() {
-    let subviews = [self.nameLabel, self.selectButton]
-    subviews.forEach {
-      self.contentView.addSubview($0)
-      $0.translatesAutoresizingMaskIntoConstraints = false
+    [self.nameLabel, self.selectButton].forEach { self.contentView.addSubview($0) }
+    
+    self.nameLabel.snp.makeConstraints {
+      $0.top.leading.bottom
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: UI.paddingY, right: 0))
     }
     
-    NSLayoutConstraint.activate([
-      self.nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX),
-      self.nameLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
-      
-      self.selectButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.selectButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX),
-      self.selectButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
-    ])
+    self.selectButton.snp.makeConstraints {
+      $0.top.trailing.bottom
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: UI.paddingY, left: 0, bottom: UI.paddingY, right: UI.paddingX))
+    }
   }
   
   // MARK: Interface
   
   private var cases = [String]()
-  override func configure(title: String, from object: ObjectType) {
+  override func configure(title: String, from object: UIKitObject) {
     self.nameLabel.text = title
     self.currentObject = object
     

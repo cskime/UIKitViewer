@@ -7,100 +7,110 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
-class OperationViewController: UIViewController {
-  
-  private lazy var cellProvider = CellProvider(tableView: self.tableView)
-  private let objectManager = ObjectManager.shared
-  private let tableView = UITableView(frame: .zero, style: .grouped)
-  private lazy var displayView = DisplayView(objectType: self.objectManager.object)
-  
+class PropertyControlViewController: UIViewController {
+
+  // MARK: Views
+
+  private lazy var cellProvider = CellProvider(tableView: self.tableView).then {
+    $0.delegate = self
+  }
+
+  private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
+    $0.dataSource = self
+    $0.allowsSelection = false
+  }
+  private lazy var displayView = DisplayView(objectType: self.dataSource.first!.object)
+
+  // MARK: Model
+
+  private var dataSource = [ObjectInfo]()
+
   // MARK: Life Cycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.setupUI()
   }
-  
-  deinit {
-    self.objectManager.dataSource.removeAll()
-    self.objectManager.removeAllValues()
-  }
-  
+
   // MARK: Initialize
-  
+
+  init(object: UIKitObject) {
+    super.init(nibName: nil, bundle: Bundle.main)
+    let model = ControlModel(object: object)
+    self.dataSource = model.objects
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   private func setupUI() {
     self.setupAttributes()
-    self.setupTableView()
     self.setupConstraints()
-    self.cellProvider.delegate = self
   }
-  
+
   private func setupAttributes() {
     self.view.backgroundColor = ColorReference.background
-    navigationItem.title = objectManager.dataSource.first?.name
+    self.navigationItem.title = "\(self.dataSource.first!.object)"
   }
-  
-  private func setupTableView() {
-    tableView.dataSource = self
-    tableView.allowsSelection = false
-  }
-  
+
   struct UI {
     static let paddingY: CGFloat = 24
-    static let paddingX: CGFloat = 24
+    static let paddingX: CGFloat = 48
   }
   private func setupConstraints() {
     let subviews = [self.displayView, self.tableView]
-    subviews.forEach {
-      self.view.addSubview($0)
-      $0.translatesAutoresizingMaskIntoConstraints = false
-    }
-    
+    subviews.forEach { self.view.addSubview($0) }
+
     let guide = self.view.safeAreaLayoutGuide
-    self.displayView.backgroundColor = .lightText
-    NSLayoutConstraint.activate([
-      self.displayView.topAnchor.constraint(equalTo: guide.topAnchor, constant: UI.paddingY),
-      self.displayView.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: UI.paddingX),
-      self.displayView.trailingAnchor.constraint(equalTo: guide.trailingAnchor, constant: -UI.paddingX),
-      self.displayView.heightAnchor.constraint(equalTo: guide.heightAnchor, multiplier: 0.3),
-      
-      self.tableView.topAnchor.constraint(equalTo: self.displayView.bottomAnchor, constant: UI.paddingY),
-      self.tableView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
-      self.tableView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
-      self.tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
-    ])
+    self.displayView.snp.makeConstraints {
+      $0.top.equalTo(guide).offset(UI.paddingY)
+      $0.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(UI.paddingX)
+      $0.height.equalTo(guide).multipliedBy(0.3)
+    }
+
+    self.tableView.snp.makeConstraints {
+      $0.top.equalTo(self.displayView.snp.bottom).offset(UI.paddingY)
+      $0.leading.trailing.bottom.equalTo(guide)
+    }
   }
 }
+
 // MARK:- UITableViewDataSource
 
-extension OperationViewController: UITableViewDataSource {
+extension PropertyControlViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-    return objectManager.dataSource.count
+//    return objectManager.dataSource.count
+    return self.dataSource.count
   }
-  
+
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return objectManager.dataSource[section].name
+//    return objectManager.dataSource[section].name
+    return self.dataSource[section].object.rawValue
   }
-  
+
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return objectManager.dataSource[section].properties.count
+    return self.dataSource[section].properties.count
   }
-  
+
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let property = objectManager.dataSource[indexPath.section].properties[indexPath.row]
+    let objectInfo = self.dataSource[indexPath.section]
+    let property = objectInfo.properties[indexPath.row]
     let cell = self.cellProvider.create(
-      withProperty: property.name, of: objectManager.object, controlType: property.controlType
+      withProperty: property.name, of: objectInfo.object, controlType: property.controlType
     )
     return cell
   }
-  
+
 }
 
 // MARK:- ControlCellDelegate
 
-extension OperationViewController: ControlCellDelegate {
-  
+extension PropertyControlViewController: ControlCellDelegate {
+
   func cell(_ tableViewCell: UITableViewCell, valueForColor color: UIColor?) {
     guard let cell = tableViewCell as? PaletteCell else { return }
     if cell.relates(to: "backgroundColor") {
@@ -121,7 +131,7 @@ extension OperationViewController: ControlCellDelegate {
       return
     }
   }
-  
+
   func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool) {
     guard let cell = tableViewCell as? ToggleCell else { return }
     if cell.relates(to: "setImage") {
@@ -148,7 +158,7 @@ extension OperationViewController: ControlCellDelegate {
       return
     }
   }
-  
+
   func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float) {
     guard let cell = tableViewCell as? SliderCell else { return }
     if cell.relates(to: "alpha") {
@@ -175,12 +185,12 @@ extension OperationViewController: ControlCellDelegate {
       return
     }
   }
-  
+
   func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String) {
     self.displayView.configure(title: text)
   }
-  
-  
+
+
   func cell(_ tableViewCell: UITableViewCell, valueForSelect values: [String]) {
     guard let cell = tableViewCell as? SelectCell else { return }
     var actions = [UIAlertAction]()
@@ -195,13 +205,13 @@ extension OperationViewController: ControlCellDelegate {
     }
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
     actions.append(cancelAction)
-    
-    
+
+
     let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     actions.forEach { alert.addAction($0) }
     present(alert, animated: true)
   }
-  
+
   private func configureCases(with title: String, at index: Int) {
     switch title {
     case "contentMode":
@@ -216,5 +226,5 @@ extension OperationViewController: ControlCellDelegate {
       return
     }
   }
-  
+
 }

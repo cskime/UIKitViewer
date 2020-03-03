@@ -10,32 +10,24 @@ import UIKit
 
 class TextCell: ControlCell {
 
-  static let identifier = String(describing: TextCell.self)
+  // MARK: Views
   
-  private let nameLabel: UILabel = {
-    let label = UILabel()
-    label.font = .systemFont(ofSize: 16)
-    return label
-  }()
-  private var currentObject: ObjectType = .UIView
-  private let textField: UITextField = {
-    let textField = UITextField()
-    textField.autocapitalizationType = .none
-    textField.autocorrectionType = .no
-    textField.borderStyle = .roundedRect
-    textField.returnKeyType = .done
-    return textField
-  }()
+  private let nameLabel = UILabel().then {
+    $0.font = .systemFont(ofSize: 16)
+  }
+  private var currentObject: UIKitObject = .UIView
+  private lazy var textField = UITextField().then {
+    $0.autocapitalizationType = .none
+    $0.autocorrectionType = .no
+    $0.borderStyle = .roundedRect
+    $0.returnKeyType = .done
+    $0.delegate = self
+  }
   
   // MARK: Initialize
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    self.setupUI()
-  }
-  
-  private func setupUI() {
-    self.textField.delegate = self
     self.setupConstraints()
   }
   
@@ -44,31 +36,30 @@ class TextCell: ControlCell {
     static let paddingX: CGFloat = 16
     static let spacing: CGFloat = 8
   }
-  
   private func setupConstraints() {
-    let subviews = [self.nameLabel, self.textField]
-    subviews.forEach {
-      self.contentView.addSubview($0)
-      $0.translatesAutoresizingMaskIntoConstraints = false
+    [self.nameLabel, self.textField].forEach { self.contentView.addSubview($0) }
+    
+    self.nameLabel.snp.makeConstraints {
+      $0.top.leading.bottom
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: UI.paddingY, right: 0))
     }
-    
-    NSLayoutConstraint.activate([
-      self.nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX),
-      self.nameLabel.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
-      
-      self.textField.topAnchor.constraint(equalTo: self.nameLabel.topAnchor),
-      self.textField.leadingAnchor.constraint(equalTo: self.contentView.centerXAnchor, constant: UI.paddingX),
-      self.textField.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX),
-      self.textField.bottomAnchor.constraint(equalTo: self.nameLabel.bottomAnchor),
-    ])
-    
     self.nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+    
+    self.textField.snp.makeConstraints {
+      $0.top.bottom.equalTo(self.nameLabel)
+      $0.leading
+        .equalTo(self.contentView.snp.centerX)
+        .offset(UI.paddingX)
+      $0.trailing
+        .equalTo(self.contentView.snp.trailing)
+        .offset(-UI.paddingX)
+    }
   }
   
   // MARK: Interface
   
-  override func configure(title: String, from object: ObjectType) {
+  override func configure(title: String, from object: UIKitObject) {
     self.nameLabel.text = title
     self.currentObject = object
     

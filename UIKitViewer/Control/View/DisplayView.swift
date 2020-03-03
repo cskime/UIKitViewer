@@ -7,23 +7,26 @@
 //
 
 import UIKit
+import SnapKit
+import Then
 
 class DisplayView: UIView {
   
-  private var object = UIView()
-  private var objectType: ObjectType = .UIView
+  private var previewObject = UIView()
+  private var previewType: UIKitObject = .UIView
   
   // MARK: Initialize
   
-  init(objectType: ObjectType) {
+  init(objectType: UIKitObject) {
     super.init(frame: .zero)
-    self.objectType = objectType
+    self.previewType = objectType
     self.setupUI()
   }
   
   private func setupUI() {
     self.setupAttributes()
     self.setupObject()
+    self.setupConstraint()
   }
   
   private func setupAttributes() {
@@ -35,19 +38,18 @@ class DisplayView: UIView {
   }
   
   private func setupObject() {
-    self.object = self.objectType.getInstance() ?? UIView()
-    self.setupConstraintForObject()
+    self.previewObject = self.previewType.makeInstance() ?? UIView()
     
-    switch self.objectType {
+    switch self.previewType {
     case .UITextField:
-      guard let textField = self.object as? UITextField else { return }
+      guard let textField = self.previewObject as? UITextField else { return }
       textField.delegate = self
     case .UITableView:
-      guard let tableView = self.object as? UITableView else { return }
+      guard let tableView = self.previewObject as? UITableView else { return }
       tableView.dataSource = self
       tableView.delegate = self
     case .UICollectionView:
-      guard let collectionView = self.object as? UICollectionView else { return }
+      guard let collectionView = self.previewObject as? UICollectionView else { return }
       collectionView.dataSource = self
       collectionView.delegate = self
     default:
@@ -55,49 +57,26 @@ class DisplayView: UIView {
     }
   }
   
-  private func setupConstraintForObject() {
-    self.addSubview(self.object)
-    self.object.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      self.object.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      self.object.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-    ])
-    
-    switch self.objectType {
-    case .UILabel, .UIButton:
-      self.object.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: 0.5).isActive = true
-    case .UITextField:
-      self.object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5).isActive = true
-    case .UIImageView, .UIView, .UITableView, .UICollectionView:
-      NSLayoutConstraint.activate([
-        self.object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
-        self.object.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9),
-      ])
-    default:
-      return
+  private func setupConstraint() {
+    self.addSubview(self.previewObject)
+    self.previewObject.snp.makeConstraints {
+      $0.center.equalToSuperview()
     }
     
-  }
-  
-  private func replaceTableViewStyle(to style: UITableView.Style) {
-    self.object.removeConstraints(self.object.constraints)
-    self.object.removeFromSuperview()
-    
-    let tableView = UITableView(frame: .zero, style: style)
-    tableView.dataSource = self
-    tableView.delegate = self
-    self.object = tableView
-    
-    self.addSubview(self.object)
-    self.object.translatesAutoresizingMaskIntoConstraints = false
-    NSLayoutConstraint.activate([
-      self.object.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-      self.object.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-      self.object.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.9),
-      self.object.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.9),
-    ])
-    
-    tableView.reloadData()
+    self.previewObject.snp.makeConstraints { [weak self] in
+      guard let self = self else { return }
+      
+      switch self.previewType {
+      case .UILabel, .UIButton:
+        $0.width.lessThanOrEqualToSuperview().dividedBy(2)
+      case .UITextField:
+        $0.width.equalToSuperview().dividedBy(2)
+      case .UIImageView, .UIView, .UITableView, .UICollectionView:
+        $0.size.equalToSuperview().multipliedBy(0.9)
+      default:
+        return
+      }
+    }
   }
   
   required init?(coder: NSCoder) {
@@ -112,15 +91,15 @@ class DisplayView: UIView {
 extension DisplayView {
   
   func configure(title: String) {
-    switch self.objectType {
+    switch self.previewType {
     case .UIButton:
-      guard let button = self.object as? UIButton else { return }
+      guard let button = self.previewObject as? UIButton else { return }
       button.setTitle(title, for: .normal)
     case .UILabel:
-      guard let label = self.object as? UILabel else { return }
+      guard let label = self.previewObject as? UILabel else { return }
       label.text = title
     case .UITextField:
-      guard let textField = self.object as? UITextField else { return }
+      guard let textField = self.previewObject as? UITextField else { return }
       textField.text = title
     default:
       return
@@ -136,7 +115,7 @@ extension DisplayView {
     case onTint, thumbTint
   }
   func configureSwitch(color: UIColor?, for type: SwitchColorType) {
-    guard let `switch` = self.object as? UISwitch else { return }
+    guard let `switch` = self.previewObject as? UISwitch else { return }
     switch type {
     case .onTint:
       `switch`.onTintColor = color
@@ -147,15 +126,15 @@ extension DisplayView {
   }
   
   func configure(textColor color: UIColor?) {
-    switch self.objectType {
+    switch self.previewType {
     case .UIButton:
-      guard let button = self.object as? UIButton else { return }
+      guard let button = self.previewObject as? UIButton else { return }
       button.setTitleColor(color, for: .normal)
     case .UILabel:
-      guard let label = self.object as? UILabel else { return }
+      guard let label = self.previewObject as? UILabel else { return }
       label.textColor = color
     case .UITextField:
-      guard let textField = self.object as? UITextField else { return }
+      guard let textField = self.previewObject as? UITextField else { return }
       textField.textColor = color
     default:
       return
@@ -163,13 +142,13 @@ extension DisplayView {
   }
   
   func configureTableView(separatorColor color: UIColor?) {
-    guard let tableView = self.object as? UITableView else { return }
+    guard let tableView = self.previewObject as? UITableView else { return }
     tableView.separatorColor = color
   }
   
-  func configure(backgroundColor color: UIColor?) { self.object.backgroundColor = color }
-  func configure(tintColor color: UIColor?) { self.object.tintColor = color }
-  func configure(borderColor color: UIColor?) { self.object.layer.borderColor = color?.cgColor }
+  func configure(backgroundColor color: UIColor?) { self.previewObject.backgroundColor = color }
+  func configure(tintColor color: UIColor?) { self.previewObject.tintColor = color }
+  func configure(borderColor color: UIColor?) { self.previewObject.layer.borderColor = color?.cgColor }
 }
 
 // MARK:- Interfaces - Toggle
@@ -177,7 +156,7 @@ extension DisplayView {
 extension DisplayView {
   
   func configureTextField(shouldDisplayPlaceholder display: Bool) {
-    guard let textField = self.object as? UITextField else { return }
+    guard let textField = self.previewObject as? UITextField else { return }
     textField.placeholder = display ? "placeholder" : ""
   }
   
@@ -188,9 +167,9 @@ extension DisplayView {
   }
   
   func configure(shouldSetImage: Bool, for type: ImageType) {
-    switch self.objectType {
+    switch self.previewType {
     case .UIButton:
-      guard let button = self.object as? UIButton else { return }
+      guard let button = self.previewObject as? UIButton else { return }
       switch type {
       case .default:
         button.setImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
@@ -200,7 +179,7 @@ extension DisplayView {
         return
       }
     case .UIStepper:
-      guard let stepper = self.object as? UIStepper else { return }
+      guard let stepper = self.previewObject as? UIStepper else { return }
       switch type {
       case .increment:
         stepper.setIncrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
@@ -221,17 +200,17 @@ extension DisplayView {
   }
   
   func configure(isOn value: Bool) {
-    guard let `switch` = self.object as? UISwitch else { return }
+    guard let `switch` = self.previewObject as? UISwitch else { return }
     `switch`.isOn = value
   }
   
   func configure(setOn value: Bool) {
-    guard let `switch` = self.object as? UISwitch else { return }
+    guard let `switch` = self.previewObject as? UISwitch else { return }
     `switch`.setOn(value , animated: true)
   }
   
-  func configure(hidden value: Bool) { self.object.isHidden = value }
-  func configure(clipsToBounds value: Bool) { self.object.clipsToBounds = value }
+  func configure(hidden value: Bool) { self.previewObject.isHidden = value }
+  func configure(clipsToBounds value: Bool) { self.previewObject.clipsToBounds = value }
   
 }
 
@@ -240,7 +219,7 @@ extension DisplayView {
 extension DisplayView {
   
   func configureLabel(numberOfLines value: Float) {
-    guard let label = self.object as? UILabel else { return }
+    guard let label = self.previewObject as? UILabel else { return }
     label.numberOfLines = Int(value)
   }
   
@@ -250,7 +229,7 @@ extension DisplayView {
   }
   func configureCollectionViewLayout(with value: Float, for type: CollectionViewLayoutType) {
     guard
-      let collectionView = self.object as? UICollectionView,
+      let collectionView = self.previewObject as? UICollectionView,
       let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
       else { return }
     
@@ -275,7 +254,7 @@ extension DisplayView {
     case numberOfPages, currentPage
   }
   func configurePageControl(with value: Float, for type: PageContrlValueType) {
-    guard let pageControl = self.object as? UIPageControl else { return }
+    guard let pageControl = self.previewObject as? UIPageControl else { return }
     
     let value = Int(value)
     switch type {
@@ -286,28 +265,45 @@ extension DisplayView {
     }
   }
   
-  func configure(alpha value: Float) { self.object.alpha = CGFloat(value) }
-  func configure(borderWidth value: Float) { self.object.layer.borderWidth = CGFloat(value) }
-  func configure(cornerRadius value: Float) { self.object.layer.cornerRadius = CGFloat(value) }
+  func configure(alpha value: Float) { self.previewObject.alpha = CGFloat(value) }
+  func configure(borderWidth value: Float) { self.previewObject.layer.borderWidth = CGFloat(value) }
+  func configure(cornerRadius value: Float) { self.previewObject.layer.cornerRadius = CGFloat(value) }
   
 }
 
 // MARK:- Interfaces - Select
 
 extension DisplayView {
-  func configure(contentMode mode: UIView.ContentMode) { self.object.contentMode = mode }
+  func configure(contentMode mode: UIView.ContentMode) { self.previewObject.contentMode = mode }
   
   func configure(tableViewStyle style: UITableView.Style) {
     self.replaceTableViewStyle(to: style)
   }
   
+  private func replaceTableViewStyle(to style: UITableView.Style) {
+    self.previewObject.removeConstraints(self.previewObject.constraints)
+    self.previewObject.removeFromSuperview()
+    
+    let tableView = UITableView(frame: .zero, style: style).then {
+      $0.dataSource = self
+      $0.delegate = self
+    }
+    self.previewObject = tableView
+    
+    self.addSubview(self.previewObject)
+    self.previewObject.snp.makeConstraints {
+      $0.center.equalToSuperview()
+      $0.size.equalToSuperview().multipliedBy(0.9)
+    }
+  }
+  
   func configure(textFieldBorderStyle style: UITextField.BorderStyle) {
-    guard let textField = self.object as? UITextField else { return }
+    guard let textField = self.previewObject as? UITextField else { return }
     textField.borderStyle = style
   }
   
   func configure(clearButtonMode mode: UITextField.ViewMode) {
-    guard let textField = self.object as? UITextField else { return }
+    guard let textField = self.previewObject as? UITextField else { return }
     textField.clearButtonMode = mode
   }
 }

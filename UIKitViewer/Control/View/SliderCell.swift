@@ -7,11 +7,10 @@
 //
 
 import UIKit
-
+import Then
+import SnapKit
 
 class SliderCell: ControlCell {
-  
-  static let identifier = String(describing: SliderCell.self)
   
   private var currentValue: Float {
     get { return self.slider.value }
@@ -20,36 +19,26 @@ class SliderCell: ControlCell {
       self.slider.value = newValue
     }
   }
-  private let valueLabel: UILabel = {
-    let label = UILabel()
-    label.font = .systemFont(ofSize: 16)
-    label.text = "0"
-    return label
-  }()
   
-  private let nameLabel: UILabel = {
-    let label = UILabel()
-    label.font = .systemFont(ofSize: 16)
-    return label
-  }()
-  private var slider = UISlider()
-  private var currentObject: ObjectType = .UIView
+  // MARK: Views
+  
+  private let valueLabel = UILabel().then {
+    $0.font = .systemFont(ofSize: 16)
+    $0.text = "0"
+  }
+  
+  private let nameLabel = UILabel().then {
+    $0.font = .systemFont(ofSize: 16)
+  }
+  private lazy var slider = UISlider().then {
+    $0.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
+  }
+  private var currentObject: UIKitObject = .UIView
   
   // MARK: Initialize
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    print("Cell Init")
-    self.setupUI()
-  }
-  
-  override func prepareForReuse() {
-    super.prepareForReuse()
-    print("Cell Reuse")
-  }
-  
-  private func setupUI() {
-    self.slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
     self.setupConstraints()
   }
   
@@ -59,32 +48,34 @@ class SliderCell: ControlCell {
     static let spacing: CGFloat = 8
   }
   private func setupConstraints() {
-    let subviews = [self.nameLabel, self.slider, self.valueLabel]
-    subviews.forEach {
-      self.contentView.addSubview($0)
-      $0.translatesAutoresizingMaskIntoConstraints = false
+    [self.nameLabel, self.slider, self.valueLabel].forEach { self.contentView.addSubview($0) }
+    
+    self.nameLabel.snp.makeConstraints {
+      $0.top.leading
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: 0, right: 0))
     }
     
-    NSLayoutConstraint.activate([
-      self.nameLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.nameLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX),
-      
-      self.valueLabel.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: UI.paddingY),
-      self.valueLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX),
-      self.valueLabel.bottomAnchor.constraint(equalTo: self.nameLabel.bottomAnchor),
-      
-      self.slider.topAnchor.constraint(equalTo: self.nameLabel.bottomAnchor, constant: UI.spacing),
-      self.slider.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: UI.paddingX * 2),
-      self.slider.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -UI.paddingX * 2),
-      self.slider.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -UI.paddingY),
-    ])
+    self.valueLabel.snp.makeConstraints {
+      $0.top.trailing
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: UI.paddingY, left: 0, bottom: 0, right: UI.paddingX))
+      $0.bottom.equalTo(self.nameLabel)
+    }
+    
+    self.slider.snp.makeConstraints {
+      $0.top
+        .equalTo(self.nameLabel.snp.bottom)
+        .offset(UI.spacing)
+      $0.leading.trailing.bottom
+        .equalTo(self.contentView)
+        .inset(UIEdgeInsets(top: 0, left: UI.paddingX * 2, bottom: UI.paddingY, right: UI.paddingX * 2))
+    }
   }
-  
   
   // MARK: Interface
   
-  
-  override func configure(title: String, from object: ObjectType) {
+  override func configure(title: String, from object: UIKitObject) {
     self.nameLabel.text = title
     self.currentObject = object
     
