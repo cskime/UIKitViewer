@@ -9,6 +9,7 @@
 import UIKit
 
 enum ColorReference {
-  static let background: UIColor? = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1.0)
+  static let background: UIColor? = UIColor(red: 242, green: 242, blue: 247)
+  static let subText: UIColor = UIColor(red: 130, green: 130, blue: 130)
 }
 

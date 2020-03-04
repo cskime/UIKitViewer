@@ -12,18 +12,16 @@ class SelectCell: ControlCell {
   
   // MARK: Views
   
-  private let nameLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 16)
-  }
+  private let propertyLabel = PropertyLabel()
   
   private lazy var selectButton = UIButton().then {
     $0.setTitle("Select Case", for: .normal)
-    $0.setTitleColor(.black, for: .normal)
+    $0.setTitleColor(ColorReference.subText, for: .normal)
     $0.addTarget(self, action: #selector(selectButtonTouched(_:)), for: .touchUpInside)
   }
   
   private var currentObject: UIKitObject = .UIView
-  var currentProperty: String { return self.nameLabel.text ?? "" }
+  var currentProperty: String { return self.propertyLabel.property }
   
   // MARK: Initialize
   
@@ -34,22 +32,21 @@ class SelectCell: ControlCell {
   
   private struct UI {
     static let paddingY: CGFloat = 8
-    static let paddingX: CGFloat = 16
+    static let paddingX: CGFloat = 20
     static let spacing: CGFloat = 8
   }
   private func setupConstraints() {
-    [self.nameLabel, self.selectButton].forEach { self.contentView.addSubview($0) }
+    [self.propertyLabel, self.selectButton].forEach { self.contentView.addSubview($0) }
     
-    self.nameLabel.snp.makeConstraints {
+    self.propertyLabel.snp.makeConstraints {
       $0.top.leading.bottom
         .equalTo(self.contentView)
         .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: UI.paddingY, right: 0))
     }
     
     self.selectButton.snp.makeConstraints {
-      $0.top.trailing.bottom
-        .equalTo(self.contentView)
-        .inset(UIEdgeInsets(top: UI.paddingY, left: 0, bottom: UI.paddingY, right: UI.paddingX))
+      $0.centerY.equalTo(self.propertyLabel)
+      $0.trailing.equalTo(self.contentView).offset(-UI.paddingX)
     }
   }
   
@@ -57,7 +54,7 @@ class SelectCell: ControlCell {
   
   private var cases = [String]()
   override func configure(title: String, from object: UIKitObject) {
-    self.nameLabel.text = title
+    self.propertyLabel.configure(name: title)
     self.currentObject = object
     
     let initialTitle: String
@@ -88,11 +85,11 @@ class SelectCell: ControlCell {
   
   func configure(selectedValue: String) {
     self.selectButton.setTitle(selectedValue, for: .normal)
-    ObjectManager.shared.updateValue(selectedValue, for: self.nameLabel.text!)
+    ObjectManager.shared.updateValue(selectedValue, for: self.propertyLabel.property)
   }
   
   func relates(to propertyName: String) -> Bool {
-    return self.nameLabel.text!.contains(propertyName)
+    return self.propertyLabel.property.contains(propertyName)
   }
   
   // MARK: Actions

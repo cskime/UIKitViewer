@@ -12,9 +12,7 @@ class ToggleCell: ControlCell {
   
   // MARK: Views
   
-  private let nameLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 16)
-  }
+  private let propertyLabel = PropertyLabel()
   private lazy var toggleSwitch = UISwitch().then {
     $0.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
   }
@@ -36,29 +34,28 @@ class ToggleCell: ControlCell {
   
   struct UI {
     static let paddingY: CGFloat = 8
-    static let paddingX: CGFloat = 16
+    static let paddingX: CGFloat = 20
     static let spacing: CGFloat = 8
   }
   private func setupConstraints() {
-    [self.nameLabel, self.toggleSwitch].forEach { self.contentView.addSubview($0) }
+    [self.propertyLabel, self.toggleSwitch].forEach { self.contentView.addSubview($0) }
     
-    self.nameLabel.snp.makeConstraints {
+    self.propertyLabel.snp.makeConstraints {
       $0.top.leading.bottom
         .equalTo(self.contentView)
         .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: UI.paddingY, right: 0))
     }
     
     self.toggleSwitch.snp.makeConstraints {
-      $0.top.trailing.bottom
-        .equalTo(self.contentView)
-        .inset(UIEdgeInsets(top: UI.paddingY, left: 0, bottom: UI.paddingY, right: UI.paddingX))
+      $0.trailing.equalTo(self.contentView).offset(-UI.paddingX)
+      $0.centerY.equalTo(self.propertyLabel)
     }
   }
   
   // MARK: Interface
   
   override func configure(title: String, from object: UIKitObject) {
-    self.nameLabel.text = title
+    self.propertyLabel.configure(name: title)
     self.currentObject = object
     
     if let currentState = ObjectManager.shared.values(for: title) as? Bool {
@@ -76,13 +73,13 @@ class ToggleCell: ControlCell {
   }
   
   func relates(to propertyName: String) -> Bool {
-    return self.nameLabel.text!.contains(propertyName)
+    return self.propertyLabel.property.contains(propertyName)
   }
   
   // MARK: Actions
   
   @objc private func switchChanged(_ sender: UISwitch) {
-    ObjectManager.shared.addValue(sender.isOn, for: self.nameLabel.text!)
+    ObjectManager.shared.addValue(sender.isOn, for: self.propertyLabel.property)
     self.delegate?.cell?(self, valueForToggle: sender.isOn)
   }
   

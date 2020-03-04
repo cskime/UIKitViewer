@@ -29,7 +29,6 @@ enum UIKitObject: String, CaseIterable, Hashable {
   case UITextField
   case UITableView
   case UICollectionView
-  case CollectionViewFlowLayout
   case UIImageView
   case UIPageControl
   case UISegmentedControl
@@ -88,15 +87,12 @@ enum UIKitObject: String, CaseIterable, Hashable {
       ]
     case .UICollectionView:
       return [
-      ]
-    case .CollectionViewFlowLayout:
-      return [
-        Property(name: "itemSize", controlType: .slider),
-        Property(name: "minimumLineSpacing", controlType: .slider),
-        Property(name: "minimumInteritemSpacing",controlType: .slider),
-        Property(name: "sectionInset", controlType: .slider),
-        Property(name: "headerReferenceSize", controlType: .slider),
-        Property(name: "footerReferenceSize", controlType: .slider),
+        Property(name: "collectionViewLayout.itemSize", controlType: .slider),
+        Property(name: "collectionViewLayout.minimumLineSpacing", controlType: .slider),
+        Property(name: "collectionViewLayout.minimumInteritemSpacing",controlType: .slider),
+        Property(name: "collectionViewLayout.sectionInset", controlType: .slider),
+        Property(name: "collectionViewLayout.headerReferenceSize", controlType: .slider),
+        Property(name: "collectionViewLayout.footerReferenceSize", controlType: .slider),
       ]
     case .UIImageView:
       return [

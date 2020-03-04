@@ -12,9 +12,7 @@ class TextCell: ControlCell {
 
   // MARK: Views
   
-  private let nameLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 16)
-  }
+  private let propertyLabel = PropertyLabel()
   private var currentObject: UIKitObject = .UIView
   private lazy var textField = UITextField().then {
     $0.autocapitalizationType = .none
@@ -33,34 +31,31 @@ class TextCell: ControlCell {
   
   struct UI {
     static let paddingY: CGFloat = 8
-    static let paddingX: CGFloat = 16
+    static let paddingX: CGFloat = 20
     static let spacing: CGFloat = 8
   }
   private func setupConstraints() {
-    [self.nameLabel, self.textField].forEach { self.contentView.addSubview($0) }
+    [self.propertyLabel, self.textField].forEach { self.contentView.addSubview($0) }
     
-    self.nameLabel.snp.makeConstraints {
+    self.propertyLabel.snp.makeConstraints {
       $0.top.leading.bottom
         .equalTo(self.contentView)
         .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: UI.paddingY, right: 0))
     }
-    self.nameLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+//    self.propertyLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
     
     self.textField.snp.makeConstraints {
-      $0.top.bottom.equalTo(self.nameLabel)
-      $0.leading
-        .equalTo(self.contentView.snp.centerX)
-        .offset(UI.paddingX)
-      $0.trailing
-        .equalTo(self.contentView.snp.trailing)
-        .offset(-UI.paddingX)
+      $0.centerY.equalTo(self.propertyLabel)
+      $0.leading.equalTo(self.contentView.snp.centerX)
+      .offset(UI.paddingX)
+      $0.trailing.equalTo(self.contentView).offset(-UI.paddingX)
     }
   }
   
   // MARK: Interface
   
   override func configure(title: String, from object: UIKitObject) {
-    self.nameLabel.text = title
+    self.propertyLabel.configure(name: title)
     self.currentObject = object
     
     if let text = ObjectManager.shared.values(for: title) as? String {
@@ -88,7 +83,7 @@ class TextCell: ControlCell {
 
 extension TextCell: UITextFieldDelegate {
   func textFieldDidChangeSelection(_ textField: UITextField) {
-    ObjectManager.shared.updateValue(textField.text!, for: self.nameLabel.text!)
+    ObjectManager.shared.updateValue(textField.text!, for: self.propertyLabel.property)
     self.delegate?.cell?(self, valueForTextField: textField.text ?? "")
   }
   

@@ -12,28 +12,28 @@ import SnapKit
 
 class SliderCell: ControlCell {
   
+  // MARK: Properties
+  
   private var currentValue: Float {
     get { return self.slider.value }
     set {
-      self.valueLabel.text = String(format: "%.1f", newValue)
+      self.valueLabel.text = String(format: "%.2f", newValue)
       self.slider.value = newValue
     }
   }
   
   // MARK: Views
   
+  private let propertyLabel = PropertyLabel()
+  
   private let valueLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 16)
-    $0.text = "0"
+    $0.font = .systemFont(ofSize: 18)
+    $0.textColor = ColorReference.subText
   }
   
-  private let nameLabel = UILabel().then {
-    $0.font = .systemFont(ofSize: 16)
-  }
   private lazy var slider = UISlider().then {
     $0.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
   }
-  private var currentObject: UIKitObject = .UIView
   
   // MARK: Initialize
   
@@ -44,60 +44,56 @@ class SliderCell: ControlCell {
   
   struct UI {
     static let paddingY: CGFloat = 8
-    static let paddingX: CGFloat = 16
+    static let paddingX: CGFloat = 20
     static let spacing: CGFloat = 8
   }
   private func setupConstraints() {
-    [self.nameLabel, self.slider, self.valueLabel].forEach { self.contentView.addSubview($0) }
+    [self.propertyLabel, self.slider, self.valueLabel]
+      .forEach { self.contentView.addSubview($0) }
     
-    self.nameLabel.snp.makeConstraints {
+    self.propertyLabel.snp.makeConstraints {
       $0.top.leading
         .equalTo(self.contentView)
         .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: 0, right: 0))
     }
     
-    self.valueLabel.snp.makeConstraints {
-      $0.top.trailing
-        .equalTo(self.contentView)
-        .inset(UIEdgeInsets(top: UI.paddingY, left: 0, bottom: 0, right: UI.paddingX))
-      $0.bottom.equalTo(self.nameLabel)
+    self.slider.snp.makeConstraints {
+      $0.top.equalTo(self.propertyLabel.snp.bottom).offset(UI.spacing / 2)
+      $0.leading.equalTo(self.propertyLabel).offset(UI.spacing)
+      $0.bottom.equalTo(self.contentView).offset(-UI.paddingY)
     }
     
-    self.slider.snp.makeConstraints {
-      $0.top
-        .equalTo(self.nameLabel.snp.bottom)
-        .offset(UI.spacing)
-      $0.leading.trailing.bottom
-        .equalTo(self.contentView)
-        .inset(UIEdgeInsets(top: 0, left: UI.paddingX * 2, bottom: UI.paddingY, right: UI.paddingX * 2))
+    self.valueLabel.snp.makeConstraints {
+      $0.leading.equalTo(self.slider.snp.trailing).offset(UI.paddingX)
+      $0.centerY.equalTo(self.slider)
+      $0.trailing.equalTo(self.contentView).offset(-UI.paddingX)
     }
   }
   
   // MARK: Interface
   
   override func configure(title: String, from object: UIKitObject) {
-    self.nameLabel.text = title
-    self.currentObject = object
+    self.propertyLabel.configure(name: title)
     
     if let sliderValues = ObjectManager.shared.values(for: title) as? SliderValueSet {
       self.setupSlider(valueType: .custom(sliderValues.value),
                        minValue: sliderValues.minValue,
                        maxValue: sliderValues.maxValue)
     } else {
-      let sliderValues = self.initializeSlider(for: title)
+      let sliderValues = self.initializeSlider(for: self.propertyLabel.property)
       ObjectManager.shared.addValue(sliderValues, for: title)
     }
   }
   
   func relates(to propertyName: String) -> Bool {
-    return self.nameLabel.text!.contains(propertyName)
+    return self.propertyLabel.property.contains(propertyName)
   }
   
   // MARK: Actions
   
   @objc private func sliderChanged(_ sender: UISlider) {
     self.currentValue = sender.value
-    ObjectManager.shared.updateSliderValue(sender.value, for: self.nameLabel.text ?? "")
+    ObjectManager.shared.updateSliderValue(sender.value, for: self.propertyLabel.property)
     delegate?.cell?(self, valueForSlider: sender.value)
   }
   
