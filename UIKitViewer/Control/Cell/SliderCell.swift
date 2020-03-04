@@ -72,8 +72,12 @@ class SliderCell: ControlCell {
   
   // MARK: Interface
   
-  override func configure(title: String, from object: UIKitObject) {
+  override func configure(object: UIKitObject, property: PropertyInfo) {
+    let title = property.name
     self.propertyLabel.configure(name: title)
+    self.currentObject = object
+    self.currentProperty = property
+    
     
     if let sliderValues = ObjectManager.shared.values(for: title) as? SliderValueSet {
       self.setupSlider(valueType: .custom(sliderValues.value),
@@ -83,10 +87,6 @@ class SliderCell: ControlCell {
       let sliderValues = self.initializeSlider(for: self.propertyLabel.property)
       ObjectManager.shared.addValue(sliderValues, for: title)
     }
-  }
-  
-  func relates(to propertyName: String) -> Bool {
-    return self.propertyLabel.property.contains(propertyName)
   }
   
   // MARK: Actions

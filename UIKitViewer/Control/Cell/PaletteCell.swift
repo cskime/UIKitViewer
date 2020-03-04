@@ -17,9 +17,6 @@ class PaletteCell: ControlCell {
   
   private let propertyLabel = PropertyLabel()
   
-  // MARK: Properties
-  private var currentObject: UIKitObject = .UIView
-  
   // MARK: Initialize
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -87,9 +84,10 @@ class PaletteCell: ControlCell {
   
   // MARK: Interface
   
-  override func configure(title: String, from object: UIKitObject) {
-    self.propertyLabel.configure(name: title)
+  override func configure(object: UIKitObject, property: PropertyInfo) {
+    self.propertyLabel.configure(name: property.name)
     self.currentObject = object
+    self.currentProperty = property
   }
   
   func relates(to propertyName: String) -> Bool {

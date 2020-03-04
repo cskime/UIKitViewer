@@ -13,7 +13,6 @@ class TextCell: ControlCell {
   // MARK: Views
   
   private let propertyLabel = PropertyLabel()
-  private var currentObject: UIKitObject = .UIView
   private lazy var textField = UITextField().then {
     $0.autocapitalizationType = .none
     $0.autocorrectionType = .no
@@ -54,9 +53,11 @@ class TextCell: ControlCell {
   
   // MARK: Interface
   
-  override func configure(title: String, from object: UIKitObject) {
+  override func configure(object: UIKitObject, property: PropertyInfo) {
+    let title = property.name
     self.propertyLabel.configure(name: title)
     self.currentObject = object
+    self.currentProperty = property
     
     if let text = ObjectManager.shared.values(for: title) as? String {
         self.textField.text = text

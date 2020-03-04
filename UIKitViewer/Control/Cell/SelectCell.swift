@@ -20,9 +20,6 @@ class SelectCell: ControlCell {
     $0.addTarget(self, action: #selector(selectButtonTouched(_:)), for: .touchUpInside)
   }
   
-  private var currentObject: UIKitObject = .UIView
-  var currentProperty: String { return self.propertyLabel.property }
-  
   // MARK: Initialize
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -53,9 +50,11 @@ class SelectCell: ControlCell {
   // MARK: Interface
   
   private var cases = [String]()
-  override func configure(title: String, from object: UIKitObject) {
+  override func configure(object: UIKitObject, property: PropertyInfo) {
+    let title = property.name
     self.propertyLabel.configure(name: title)
     self.currentObject = object
+    self.currentProperty = property
     
     let initialTitle: String
     switch title {
@@ -95,7 +94,7 @@ class SelectCell: ControlCell {
   // MARK: Actions
   
   @objc func selectButtonTouched(_ sender: UIButton) {
-    self.delegate?.cell?(self, valueForSelect: self.cases)
+    self.delegate?.cell?(self, valuesForSelect: self.cases)
   }
   
   required init?(coder: NSCoder) {

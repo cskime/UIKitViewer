@@ -86,198 +86,312 @@ class DisplayView: UIView {
   
 }
 
-// MARK:- Interfaces - TextField
+// MARK:- TextField Interfaces
 
 extension DisplayView {
-  
-  func configure(title: String) {
-    switch self.previewType {
-    case .UIButton:
-      guard let button = self.previewObject as? UIButton else { return }
-      button.setTitle(title, for: .normal)
-    case .UILabel:
-      guard let label = self.previewObject as? UILabel else { return }
-      label.text = title
-    case .UITextField:
-      guard let textField = self.previewObject as? UITextField else { return }
-      textField.text = title
-    default:
-      return
-    }
-  }
-}
 
-// MARK:- Interfaces - Palette
-
-extension DisplayView {
-  
-  enum SwitchColorType {
-    case onTint, thumbTint
-  }
-  func configureSwitch(color: UIColor?, for type: SwitchColorType) {
-    guard let `switch` = self.previewObject as? UISwitch else { return }
-    switch type {
-    case .onTint:
-      `switch`.onTintColor = color
-    case .thumbTint:
-      `switch`.thumbTintColor = color
-    }
+  func configure(text: String, for property: String, of object: UIKitObject) {
+    let property = property.components(separatedBy: ".").last!
     
+    switch object {
+    case .UIButton:       self.configureButton(title: text, for: property)
+    case .UILabel:        self.configureLabel(text: text, for: property)
+    case .UITextField:    self.configureTextField(text: text, for: property)
+    default: return
+    }
   }
   
-  func configure(textColor color: UIColor?) {
-    switch self.previewType {
-    case .UIButton:
-      guard let button = self.previewObject as? UIButton else { return }
-      button.setTitleColor(color, for: .normal)
-    case .UILabel:
-      guard let label = self.previewObject as? UILabel else { return }
-      label.textColor = color
-    case .UITextField:
-      guard let textField = self.previewObject as? UITextField else { return }
-      textField.textColor = color
+  private func configureButton(title: String, for property: String) {
+    guard let button = self.previewObject as? UIButton else { return }
+    
+    switch property {
+    case "setTitle":
+      button.setTitle(title, for: .normal)
     default:
       return
     }
   }
   
-  func configureTableView(separatorColor color: UIColor?) {
-    guard let tableView = self.previewObject as? UITableView else { return }
-    tableView.separatorColor = color
-  }
-  
-  func configure(backgroundColor color: UIColor?) { self.previewObject.backgroundColor = color }
-  func configure(tintColor color: UIColor?) { self.previewObject.tintColor = color }
-  func configure(borderColor color: UIColor?) { self.previewObject.layer.borderColor = color?.cgColor }
-}
-
-// MARK:- Interfaces - Toggle
-
-extension DisplayView {
-  
-  func configureTextField(shouldDisplayPlaceholder display: Bool) {
-    guard let textField = self.previewObject as? UITextField else { return }
-    textField.placeholder = display ? "placeholder" : ""
-  }
-  
-  enum ImageType {
-    case `default`      // 설정할 이미지 1개일 때 이미지
-    case background     // 밑바닥에 깔리는 이미지
-    case increment, decrement, divider      // UIStepper image
-  }
-  
-  func configure(shouldSetImage: Bool, for type: ImageType) {
-    switch self.previewType {
-    case .UIButton:
-      guard let button = self.previewObject as? UIButton else { return }
-      switch type {
-      case .default:
-        button.setImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-      case .background:
-        button.setBackgroundImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-      default:
-        return
-      }
-    case .UIStepper:
-      guard let stepper = self.previewObject as? UIStepper else { return }
-      switch type {
-      case .increment:
-        stepper.setIncrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-      case .decrement:
-        stepper.setDecrementImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-      case .divider:
-        stepper.setDividerImage(shouldSetImage ? UIImage(named: "UIImageView") : nil,
-                                forLeftSegmentState: .normal,
-                                rightSegmentState: .normal)
-      case .background:
-        stepper.setBackgroundImage(shouldSetImage ? UIImage(named: "UIImageView") : nil, for: .normal)
-      default:
-        return
-      }
-    default:
-      return
-    }
-  }
-  
-  func configure(isOn value: Bool) {
-    guard let `switch` = self.previewObject as? UISwitch else { return }
-    `switch`.isOn = value
-  }
-  
-  func configure(setOn value: Bool) {
-    guard let `switch` = self.previewObject as? UISwitch else { return }
-    `switch`.setOn(value , animated: true)
-  }
-  
-  func configure(hidden value: Bool) { self.previewObject.isHidden = value }
-  func configure(clipsToBounds value: Bool) { self.previewObject.clipsToBounds = value }
-  
-}
-
-// MARK:- Interfaces - Slider
-
-extension DisplayView {
-  
-  func configureLabel(numberOfLines value: Float) {
+  private func configureLabel(text: String, for property: String) {
     guard let label = self.previewObject as? UILabel else { return }
-    label.numberOfLines = Int(value)
+    
+    switch property {
+    case "text":
+      label.text = text
+    default:
+      return
+    }
   }
   
-  enum CollectionViewLayoutType {
-    case itemSize, lineSpacing, itemSpacing, sectionInset
-    case headerSize, footerSize
+  private func configureTextField(text: String, for property: String) {
+    guard let textField = self.previewObject as? UITextField else { return }
+    
+    switch property {
+    case "text":
+      textField.text = text
+    default:
+      return
+    }
   }
-  func configureCollectionViewLayout(with value: Float, for type: CollectionViewLayoutType) {
-    guard
-      let collectionView = self.previewObject as? UICollectionView,
+}
+
+// MARK:- Palette Interfaces
+
+extension DisplayView {
+  
+  func configure(color: UIColor?, for property: String, of object: UIKitObject) {
+    let property = property.components(separatedBy: ".").last!
+    
+    switch object {
+    case .UIView:             self.configureView(color: color, for: property)
+    case .UIButton:           self.configureButton(color: color, for: property)
+    case .UILabel:            self.configureLabel(color: color, for: property)
+    case .UISwitch:           self.configureSwitch(color: color, for: property)
+    case .UITextField:        self.configureTextField(color: color, for: property)
+    case .UITableView:        self.configureTableView(color: color, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureView(color: UIColor?, for property: String) {
+    switch property {
+    case "backgroundColor":     self.previewObject.backgroundColor = color
+    case "tintColor":           self.previewObject.tintColor = color
+    case "borderColor":         self.previewObject.layer.borderColor = color?.cgColor
+    default:
+      return
+    }
+  }
+  
+  private func configureSwitch(color: UIColor?, for property: String) {
+    guard let `switch` = self.previewObject as? UISwitch else { return }
+    
+    switch property {
+    case "onTintColor":       `switch`.onTintColor = color
+    case "thumbTintColor":    `switch`.thumbTintColor = color
+    default:
+      return
+    }
+  }
+  
+  private func configureButton(color: UIColor?, for property: String) {
+    guard let button = self.previewObject as? UIButton else { return }
+    
+    switch property {
+    case "setTitleColor":     button.setTitleColor(color, for: .normal)
+    default:
+      return
+    }
+  }
+  
+  private func configureLabel(color: UIColor?, for property: String) {
+    guard let label = self.previewObject as? UILabel else { return }
+    
+    switch property {
+    case "textColor":     label.textColor = color
+    default:
+      return
+    }
+  }
+  
+  private func configureTextField(color: UIColor?, for property: String) {
+    guard let textField = self.previewObject as? UITextField else { return }
+    
+    switch property {
+    case "textColor":     textField.textColor = color
+    default:
+      return
+    }
+  }
+  
+  private func configureTableView(color: UIColor?, for property: String) {
+    guard let tableView = self.previewObject as? UITableView else { return }
+    
+    switch property {
+    case "separatorColor":      tableView.separatorColor = color
+    default:
+      return
+    }
+  }
+}
+
+// MARK:- Toggle Interfaces
+
+extension DisplayView {
+  
+  func configure(isOn: Bool, for property: String, of object: UIKitObject) {
+    let property = property.components(separatedBy: ".").last!
+    
+    switch object {
+    case .UIView:           self.configureView(isOn: isOn, of: property)
+    case .UIButton:         self.configureButton(isOn: isOn, of: property)
+    case .UITextField:      self.configureTextField(isOn: isOn, of: property)
+    case .UIStepper:        self.configureStepper(isOn: isOn, of: property)
+    case .UISwitch:         self.configureSwitch(isOn: isOn, of: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureView(isOn: Bool, of property: String) {
+    switch property {
+    case "isHidden":        self.previewObject.isHidden = isOn
+    case "clipsToBounds":   self.previewObject.clipsToBounds = isOn
+    default:
+      return
+    }
+  }
+  
+  private func configureTextField(isOn: Bool, of property: String) {
+    guard let textField = self.previewObject as? UITextField else { return }
+    
+    switch property {
+    case "placeholder":
+      textField.placeholder = isOn ? "placeholder" : ""
+    default:
+      return
+    }
+  }
+  
+  private func configureButton(isOn: Bool, of property: String) {
+    guard let button = self.previewObject as? UIButton else { return }
+    let image: UIImage? = isOn ? UIImage(named: "UIImageView") : nil
+    
+    switch property {
+    case "setImage":              button.setImage(image, for: .normal)
+    case "setBackgroundImage":    button.setBackgroundImage(image, for: .normal)
+    default:
+      return
+    }
+  }
+  
+  private func configureStepper(isOn: Bool, of property: String) {
+    guard let stepper = self.previewObject as? UIStepper else { return }
+    let image: UIImage? = isOn ? UIImage(named: "UIImageView") : nil
+    
+    switch property {
+    case "setIncrementImage":     stepper.setIncrementImage(image, for: .normal)
+    case "setDecrementImage":     stepper.setDecrementImage(image, for: .normal)
+    case "setDividerImage":       stepper.setDividerImage(image, forLeftSegmentState: .normal, rightSegmentState: .normal)
+    case "setBackgroundImage":    stepper.setBackgroundImage(image, for: .normal)
+    default:
+      return
+    }
+  }
+  
+  private func configureSwitch(isOn: Bool, of property: String) {
+    guard let `switch` = self.previewObject as? UISwitch else { return }
+    
+    switch property {
+    case "isOn":
+      `switch`.isOn = isOn
+    case "setOn":
+      `switch`.setOn(isOn , animated: true)
+    default:
+      return
+    }
+  }
+}
+
+// MARK:- Slider Interfaces
+
+extension DisplayView {
+  
+  func configure(value: Float, for property: String, of object: UIKitObject) {
+    let property = property.components(separatedBy: ".").last!
+    
+    switch object {
+    case .UIView:                 self.configureView(value: CGFloat(value), for: property)
+    case .UILabel:                self.configureLabel(value: Int(value), for: property)
+    case .UIPageControl:          self.configurePageControl(value: Int(value), for: property)
+    case .UICollectionView:       self.configureCollectionView(value: CGFloat(value), for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureView(value: CGFloat, for property: String) {
+    switch property {
+    case "alpha":           self.previewObject.alpha = value
+    case "borderWidth":     self.previewObject.layer.borderWidth = value
+    case "cornerRadius":    self.previewObject.layer.cornerRadius = value
+    default:
+      return
+    }
+  }
+  
+  private func configureLabel(value: Int, for property: String) {
+    guard let label = self.previewObject as? UILabel else { return }
+    
+    switch property {
+    case "numberOfLines":
+      label.numberOfLines = value
+    default:
+      return
+    }
+  }
+  
+  private func configurePageControl(value: Int, for property: String) {
+    guard let pageControl = self.previewObject as? UIPageControl else { return }
+    
+    switch property {
+    case "currentPage":     pageControl.currentPage = value
+    case "numberOfPages":   pageControl.numberOfPages = value
+    default:
+      return
+    }
+  }
+  
+  private func configureCollectionView(value: CGFloat, for property: String) {
+    guard let collectionView = self.previewObject as? UICollectionView,
       let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout
       else { return }
     
-    let layoutValue = CGFloat(value)
-    switch type {
-    case .itemSize:
-      layout.itemSize = CGSize(width: layoutValue, height: layoutValue)
-    case .itemSpacing:
-      layout.minimumInteritemSpacing = layoutValue
-    case .lineSpacing:
-      layout.minimumLineSpacing = layoutValue
-    case .sectionInset:
-      layout.sectionInset = UIEdgeInsets(
-        top: layoutValue, left: layoutValue, bottom: layoutValue, right: layoutValue
-      )
+    switch property {
+    case "itemSize":                    layout.itemSize = CGSize(width: value, height: value)
+    case "minimumInteritemSpacing":     layout.minimumInteritemSpacing = value
+    case "minimumLineSpacing":          layout.minimumLineSpacing = value
+    case "sectionInset":                layout.sectionInset = .init(top: value, left: value, bottom: value, right: value)
+    default:
+      return
+    }
+  }
+}
+
+// MARK:- Select Interfaces
+
+extension DisplayView {
+  
+  func configure(rawValue: Int, property: String, of object: UIKitObject) {
+    let property = property.components(separatedBy: ".").last!
+    
+    switch object {
+    case .UIView:           self.configureView(rawValue: rawValue, for: property)
+    case .UITableView:      self.configureTableView(rawValue: rawValue, for: property)
+    case .UITextField:      self.configureTextField(rawValue: rawValue, for: property)
     default:
       return
     }
   }
   
-  enum PageContrlValueType {
-    case numberOfPages, currentPage
-  }
-  func configurePageControl(with value: Float, for type: PageContrlValueType) {
-    guard let pageControl = self.previewObject as? UIPageControl else { return }
-    
-    let value = Int(value)
-    switch type {
-    case .currentPage:
-      pageControl.currentPage = value
-    case .numberOfPages:
-      pageControl.numberOfPages = value
+  private func configureView(rawValue: Int, for property: String) {
+    switch property {
+    case "contentMode":
+      self.previewObject.contentMode = UIView.ContentMode(rawValue: rawValue) ?? .scaleToFill
+    default:
+      return
     }
   }
   
-  func configure(alpha value: Float) { self.previewObject.alpha = CGFloat(value) }
-  func configure(borderWidth value: Float) { self.previewObject.layer.borderWidth = CGFloat(value) }
-  func configure(cornerRadius value: Float) { self.previewObject.layer.cornerRadius = CGFloat(value) }
-  
-}
-
-// MARK:- Interfaces - Select
-
-extension DisplayView {
-  func configure(contentMode mode: UIView.ContentMode) { self.previewObject.contentMode = mode }
-  
-  func configure(tableViewStyle style: UITableView.Style) {
-    self.replaceTableViewStyle(to: style)
+  private func configureTableView(rawValue: Int, for property: String) {
+    switch property {
+    case "style":
+      let style = UITableView.Style(rawValue: rawValue) ?? .plain
+      self.replaceTableViewStyle(to: style)
+    default:
+      return
+    }
   }
   
   private func replaceTableViewStyle(to style: UITableView.Style) {
@@ -297,14 +411,17 @@ extension DisplayView {
     }
   }
   
-  func configure(textFieldBorderStyle style: UITextField.BorderStyle) {
+  private func configureTextField(rawValue: Int, for property: String) {
     guard let textField = self.previewObject as? UITextField else { return }
-    textField.borderStyle = style
-  }
-  
-  func configure(clearButtonMode mode: UITextField.ViewMode) {
-    guard let textField = self.previewObject as? UITextField else { return }
-    textField.clearButtonMode = mode
+    
+    switch property {
+    case "borderStyle":
+      textField.borderStyle = UITextField.BorderStyle(rawValue: rawValue) ?? .none
+    case "clearButtonMode":
+      textField.clearButtonMode = UITextField.ViewMode(rawValue: rawValue) ?? .never
+    default:
+      return
+    }
   }
 }
 

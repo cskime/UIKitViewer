@@ -9,14 +9,14 @@
 import UIKit
 import Then
 
-enum CellControlType {
+enum ControlType {
   case slider // 수치변화하는 control
   case palette // 색 고르는 control
   case textField //몇 가지 중에 고르는 control
   case toggle // true / false 중에 고르는 control
   case select
   
-  var cellType: ControlCell.Type {
+  var cell: ControlCell.Type {
     get {
       switch self {
       case .slider:     return SliderCell.self
@@ -34,12 +34,14 @@ enum CellControlType {
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float)
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool)
   @objc optional func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String)
-  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSelect values: [String])
+  @objc optional func cell(_ tableViewCell: UITableViewCell, valuesForSelect values: [String])
 }
 
 class ControlCell: UITableViewCell {
+  var currentObject: UIKitObject = .UIView
+  var currentProperty: PropertyInfo = PropertyInfo(name: "", controlType: .slider)
   weak var delegate: ControlCellDelegate?
-  func configure(title: String, from object: UIKitObject) { }
+  func configure(object: UIKitObject, property: PropertyInfo) { }
 }
 
 class CellProvider: Then {
@@ -51,11 +53,14 @@ class CellProvider: Then {
   
   weak var delegate: ControlCellDelegate?
   
-  func create(withProperty name: String, of object: UIKitObject, controlType control: CellControlType) -> UITableViewCell {
-    self.tableView.register(control.cellType)
-    guard let controlCell = self.tableView.dequeueCell(control.cellType) else { return UITableViewCell() }
-    controlCell.configure(title: name, from: object)
-    controlCell.delegate = self.delegate
-    return controlCell
+  func createCell(with objectInfo: ObjectInfo, for indexPath: IndexPath) -> UITableViewCell {
+    let propertyInfo = objectInfo.properties[indexPath.row]
+    let controlType = propertyInfo.controlType
+    
+    self.tableView.register(controlType.cell)
+    guard let cell = self.tableView.dequeueCell(controlType.cell) else { return UITableViewCell() }
+    cell.configure(object: objectInfo.object, property: propertyInfo)
+    cell.delegate = self.delegate
+    return cell
   }
 }

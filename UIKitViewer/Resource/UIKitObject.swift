@@ -10,14 +10,14 @@ import UIKit
 
 // MARK:- Target Objects
 
-struct ObjectInfo {
-  var object: UIKitObject
-  var properties: [Property]
+struct PropertyInfo {
+  var name: String
+  var controlType: ControlType
 }
 
-struct Property {
-  var name: String
-  var controlType: CellControlType
+struct ObjectInfo {
+  var object: UIKitObject
+  var properties: [PropertyInfo]
 }
 
 enum UIKitObject: String, CaseIterable, Hashable {
@@ -33,74 +33,74 @@ enum UIKitObject: String, CaseIterable, Hashable {
   case UIPageControl
   case UISegmentedControl
   
-  var properties: [Property] {
+  var properties: [PropertyInfo] {
     switch self {
     case .UIView:
       return [
-        Property(name: "contentMode", controlType: .select),
-        Property(name: "tintColor", controlType: .palette),
-        Property(name: "backgroundColor", controlType: .palette),
-        Property(name: "clipsToBounds", controlType: .toggle),
-        Property(name: "alpha", controlType: .slider),
-        Property(name: "isHidden", controlType: .toggle),
-        Property(name: "layer.borderWidth", controlType: .slider),
-        Property(name: "layer.borderColor", controlType: .palette),
-        Property(name: "layer.cornerRadius", controlType: .slider)
+        PropertyInfo(name: "contentMode", controlType: .select),
+        PropertyInfo(name: "tintColor", controlType: .palette),
+        PropertyInfo(name: "backgroundColor", controlType: .palette),
+        PropertyInfo(name: "clipsToBounds", controlType: .toggle),
+        PropertyInfo(name: "alpha", controlType: .slider),
+        PropertyInfo(name: "isHidden", controlType: .toggle),
+        PropertyInfo(name: "layer.borderWidth", controlType: .slider),
+        PropertyInfo(name: "layer.borderColor", controlType: .palette),
+        PropertyInfo(name: "layer.cornerRadius", controlType: .slider)
       ]
     case .UIButton:
       return [
-        Property(name: "setTitle", controlType: .textField),
-        Property(name: "setTitleColor", controlType: .palette),
-        Property(name: "setImage", controlType: .toggle),
-        Property(name: "setBackgroundImage", controlType: .toggle)
+        PropertyInfo(name: "setTitle", controlType: .textField),
+        PropertyInfo(name: "setTitleColor", controlType: .palette),
+        PropertyInfo(name: "setImage", controlType: .toggle),
+        PropertyInfo(name: "setBackgroundImage", controlType: .toggle)
       ]
     case .UILabel:
       return [
-        Property(name: "text", controlType: .textField),
-        Property(name: "textColor", controlType: .palette),
-        Property(name: "numberOfLines", controlType: .slider)
+        PropertyInfo(name: "text", controlType: .textField),
+        PropertyInfo(name: "textColor", controlType: .palette),
+        PropertyInfo(name: "numberOfLines", controlType: .slider)
       ]
     case.UISwitch:
       return [
-        Property(name: "isOn", controlType: .toggle),
-        Property(name: "setOn", controlType: .toggle),
-        Property(name: "onTintColor", controlType: .palette),
-        Property(name: "thumbTintColor", controlType: .palette)
+        PropertyInfo(name: "isOn", controlType: .toggle),
+        PropertyInfo(name: "setOn", controlType: .toggle),
+        PropertyInfo(name: "onTintColor", controlType: .palette),
+        PropertyInfo(name: "thumbTintColor", controlType: .palette)
       ]
     case .UIStepper:
       return [
-        Property(name: "setIncrementImage", controlType: .toggle),
-        Property(name: "setDecrementImage", controlType: .toggle),
-        Property(name: "setDividerImage", controlType: .toggle)
+        PropertyInfo(name: "setIncrementImage", controlType: .toggle),
+        PropertyInfo(name: "setDecrementImage", controlType: .toggle),
+        PropertyInfo(name: "setDividerImage", controlType: .toggle)
       ]
     case .UITextField:
       return [
-        Property(name: "textColor", controlType: .palette),
-        Property(name: "placeholder", controlType: .toggle),
-        Property(name: "borderStyle", controlType: .select),
-        Property(name: "clearButtonMode", controlType: .select),
+        PropertyInfo(name: "textColor", controlType: .palette),
+        PropertyInfo(name: "placeholder", controlType: .toggle),
+        PropertyInfo(name: "borderStyle", controlType: .select),
+        PropertyInfo(name: "clearButtonMode", controlType: .select),
       ]
     case .UITableView:
       return [
-        Property(name: "style", controlType: .select),
-        Property(name: "separatorColor", controlType: .palette),
+        PropertyInfo(name: "style", controlType: .select),
+        PropertyInfo(name: "separatorColor", controlType: .palette),
       ]
     case .UICollectionView:
       return [
-        Property(name: "collectionViewLayout.itemSize", controlType: .slider),
-        Property(name: "collectionViewLayout.minimumLineSpacing", controlType: .slider),
-        Property(name: "collectionViewLayout.minimumInteritemSpacing",controlType: .slider),
-        Property(name: "collectionViewLayout.sectionInset", controlType: .slider),
-        Property(name: "collectionViewLayout.headerReferenceSize", controlType: .slider),
-        Property(name: "collectionViewLayout.footerReferenceSize", controlType: .slider),
+        PropertyInfo(name: "collectionViewLayout.itemSize", controlType: .slider),
+        PropertyInfo(name: "collectionViewLayout.minimumLineSpacing", controlType: .slider),
+        PropertyInfo(name: "collectionViewLayout.minimumInteritemSpacing",controlType: .slider),
+        PropertyInfo(name: "collectionViewLayout.sectionInset", controlType: .slider),
+        PropertyInfo(name: "collectionViewLayout.headerReferenceSize", controlType: .slider),
+        PropertyInfo(name: "collectionViewLayout.footerReferenceSize", controlType: .slider),
       ]
     case .UIImageView:
       return [
       ]
     case .UIPageControl:
       return [
-        Property(name: "currentPage", controlType: .slider),
-        Property(name: "numberOfPages", controlType: .slider),
+        PropertyInfo(name: "currentPage", controlType: .slider),
+        PropertyInfo(name: "numberOfPages", controlType: .slider),
       ]
     case .UISegmentedControl:
       return [

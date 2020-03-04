@@ -16,11 +16,7 @@ class ToggleCell: ControlCell {
   private lazy var toggleSwitch = UISwitch().then {
     $0.addTarget(self, action: #selector(switchChanged(_:)), for: .valueChanged)
   }
-  
-  // MARK: Properties
-  
-  private var currentObject: UIKitObject = .UIView
-  
+
   // MARK: Initialize
   
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -54,26 +50,24 @@ class ToggleCell: ControlCell {
   
   // MARK: Interface
   
-  override func configure(title: String, from object: UIKitObject) {
+  override func configure(object: UIKitObject, property: PropertyInfo) {
+    let title = property.name
     self.propertyLabel.configure(name: title)
     self.currentObject = object
+    self.currentProperty = property
     
     if let currentState = ObjectManager.shared.values(for: title) as? Bool {
       self.toggleSwitch.isOn = currentState
     } else {
       switch self.currentObject {
       case .UICollectionView, .UIView, .UITableView, .UISegmentedControl:
-        self.toggleSwitch.isOn = !self.relates(to: "isHidden") || self.relates(to: "clipsToBounds")
+        self.toggleSwitch.isOn = !title.contains("isHidden") || title.contains("clipsToBounds")
       default:
         self.toggleSwitch.isOn = false
       }
       
       ObjectManager.shared.addValue(self.toggleSwitch.isOn, for: title)
     }
-  }
-  
-  func relates(to propertyName: String) -> Bool {
-    return self.propertyLabel.property.contains(propertyName)
   }
   
   // MARK: Actions
