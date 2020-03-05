@@ -33,6 +33,31 @@ enum UIKitObject: String, CaseIterable, Hashable {
   case UIPageControl
   case UISegmentedControl
   
+  var objectsWithinInheritance: [Self] {
+    guard var currentType = NSClassFromString(self.rawValue) as? UIView.Type else { return [] }
+    
+    var objects = [self]
+    guard self != .UIView else { return objects }
+    
+    
+    while let superType = currentType.superclass() as? UIView.Type {
+      let stringObject = String(describing: type(of: superType.init()))
+      guard let object = UIKitObject(rawValue: stringObject) else {
+        currentType = superType
+        continue
+      }
+      objects.append(object)
+      if object == .UIView { break }
+      else { currentType = superType }
+    }
+    
+    return objects
+  }
+}
+
+// MARK:- Properties
+
+extension UIKitObject {
   var properties: [PropertyInfo] {
     switch self {
     case .UIView:
@@ -58,7 +83,7 @@ enum UIKitObject: String, CaseIterable, Hashable {
       return [
         PropertyInfo(name: "text", controlType: .textField),
         PropertyInfo(name: "textColor", controlType: .palette),
-        PropertyInfo(name: "numberOfLines", controlType: .slider)
+        PropertyInfo(name: "numberOfLines", controlType: .stepper)
       ]
     case.UISwitch:
       return [
@@ -99,35 +124,20 @@ enum UIKitObject: String, CaseIterable, Hashable {
       ]
     case .UIPageControl:
       return [
-        PropertyInfo(name: "currentPage", controlType: .slider),
-        PropertyInfo(name: "numberOfPages", controlType: .slider),
+        PropertyInfo(name: "currentPage", controlType: .stepper),
+        PropertyInfo(name: "numberOfPages", controlType: .stepper),
       ]
     case .UISegmentedControl:
       return [
       ]
     }
   }
-  
-  var objectsWithinInheritance: [Self] {
-    guard var currentType = NSClassFromString(self.rawValue) as? UIView.Type else { return [] }
+}
 
-    var objects = [self]
-    guard self != .UIView else { return objects }
-    
-    
-    while let superType = currentType.superclass() as? UIView.Type {
-      let stringObject = String(describing: type(of: superType.init()))
-      guard let object = UIKitObject(rawValue: stringObject) else {
-        currentType = superType
-        continue
-      }
-      objects.append(object)
-      if object == .UIView { break }
-      else { currentType = superType }
-    }
-    
-    return objects
-  }
+
+// MARK:- Instantiate
+
+extension UIKitObject {
   
   func makeInstance() -> UIView? {
     guard let classType = NSClassFromString(self.rawValue) else { return nil }
@@ -192,9 +202,7 @@ enum UIKitObject: String, CaseIterable, Hashable {
       let segmentedControl = segmentedControlType.init(items: ["First", "Second"])
       segmentedControl.selectedSegmentIndex = 0
       return segmentedControl
-    default:
-      return nil
     }
   }
-
+  
 }
