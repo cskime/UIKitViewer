@@ -79,15 +79,13 @@ class PaletteCell: ControlCell {
   // MARK: Actions
   
   @objc private func paletteTouched(_ sender: UIButton) {
-    self.delegate?.cell?(self, valueForColor: sender.backgroundColor)
+    self.delegate?.cell(self, valueForColor: sender.backgroundColor)
   }
   
   // MARK: Interface
   
-  override func configure(object: UIKitObject, property: PropertyInfo) {
-    self.propertyLabel.configure(name: property.name)
-    self.currentObject = object
-    self.currentProperty = property
+  override func configureContents() {
+    self.propertyLabel.configure(name: self.currentProperty.name)
   }
   
   func relates(to propertyName: String) -> Bool {

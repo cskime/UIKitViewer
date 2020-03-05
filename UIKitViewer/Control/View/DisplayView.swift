@@ -303,8 +303,6 @@ extension DisplayView {
     
     switch object {
     case .UIView:                 self.configureView(value: CGFloat(value), for: property)
-    case .UILabel:                self.configureLabel(value: Int(value), for: property)
-    case .UIPageControl:          self.configurePageControl(value: Int(value), for: property)
     case .UICollectionView:       self.configureCollectionView(value: CGFloat(value), for: property)
     default:
       return
@@ -316,28 +314,6 @@ extension DisplayView {
     case "alpha":           self.previewObject.alpha = value
     case "borderWidth":     self.previewObject.layer.borderWidth = value
     case "cornerRadius":    self.previewObject.layer.cornerRadius = value
-    default:
-      return
-    }
-  }
-  
-  private func configureLabel(value: Int, for property: String) {
-    guard let label = self.previewObject as? UILabel else { return }
-    
-    switch property {
-    case "numberOfLines":
-      label.numberOfLines = value
-    default:
-      return
-    }
-  }
-  
-  private func configurePageControl(value: Int, for property: String) {
-    guard let pageControl = self.previewObject as? UIPageControl else { return }
-    
-    switch property {
-    case "currentPage":     pageControl.currentPage = value
-    case "numberOfPages":   pageControl.numberOfPages = value
     default:
       return
     }
@@ -363,7 +339,7 @@ extension DisplayView {
 
 extension DisplayView {
   
-  func configure(rawValue: Int, property: String, of object: UIKitObject) {
+  func configure(rawValue: Int, for property: String, of object: UIKitObject) {
     let property = property.components(separatedBy: ".").last!
     
     switch object {
@@ -419,6 +395,43 @@ extension DisplayView {
       textField.borderStyle = UITextField.BorderStyle(rawValue: rawValue) ?? .none
     case "clearButtonMode":
       textField.clearButtonMode = UITextField.ViewMode(rawValue: rawValue) ?? .never
+    default:
+      return
+    }
+  }
+}
+
+// MARK:- Stepper Interfaces
+
+extension DisplayView {
+  func configure(value: Int, for property: String, of object: UIKitObject) {
+    let property = property.components(separatedBy: ".").last!
+    
+    switch object {
+    case .UIPageControl:    self.configurePageControl(value: value, for: property)
+    case .UILabel:          self.configureLabel(value: value, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configurePageControl(value: Int, for property: String) {
+    guard let pageControl = self.previewObject as? UIPageControl else { return }
+    
+    switch property {
+    case "currentPage":     pageControl.currentPage = value
+    case "numberOfPages":   pageControl.numberOfPages = value
+    default:
+      return
+    }
+  }
+  
+  private func configureLabel(value: Int, for property: String) {
+    guard let label = self.previewObject as? UILabel else { return }
+    
+    switch property {
+    case "numberOfLines":
+      label.numberOfLines = value
     default:
       return
     }

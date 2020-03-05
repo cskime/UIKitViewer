@@ -72,20 +72,18 @@ class SliderCell: ControlCell {
   
   // MARK: Interface
   
-  override func configure(object: UIKitObject, property: PropertyInfo) {
-    let title = property.name
-    self.propertyLabel.configure(name: title)
-    self.currentObject = object
-    self.currentProperty = property
+  override func configureContents() {
+    let property = self.currentProperty.name
+    let object = self.currentObject
+    self.propertyLabel.configure(name: property)
     
-    
-    if let sliderValues = ObjectManager.shared.values(for: title) as? SliderValueSet {
+    if let sliderValues = ControlModel.shared.value(for: property, of: object) as? SliderSetup {
       self.setupSlider(valueType: .custom(sliderValues.value),
                        minValue: sliderValues.minValue,
                        maxValue: sliderValues.maxValue)
     } else {
       let sliderValues = self.initializeSlider(for: self.propertyLabel.property)
-      ObjectManager.shared.addValue(sliderValues, for: title)
+      ControlModel.shared.setValue(sliderValues, for: property, of: object)
     }
   }
   
@@ -93,8 +91,10 @@ class SliderCell: ControlCell {
   
   @objc private func sliderChanged(_ sender: UISlider) {
     self.currentValue = sender.value
-    ObjectManager.shared.updateSliderValue(sender.value, for: self.propertyLabel.property)
-    delegate?.cell?(self, valueForSlider: sender.value)
+    ControlModel.shared.updateValue(sender.value,
+                                    for: self.currentProperty.name,
+                                    of: self.currentObject)
+    self.delegate?.cell(self, valueForSlider: sender.value)
   }
   
   // MARK: Methods
@@ -123,7 +123,7 @@ class SliderCell: ControlCell {
     self.currentValue = value
   }
   
-  private func initializeSlider(for title: String) -> SliderValueSet {
+  private func initializeSlider(for title: String) -> SliderSetup {
     switch title {
     case "alpha":
       self.setupSlider(valueType: .maximum, minValue: 0, maxValue: 1)
@@ -143,17 +143,13 @@ class SliderCell: ControlCell {
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
     case "footerReferenceSize":
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
-    case "currentPage":
-      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 10)
-    case "numberOfPages":
-      self.setupSlider(valueType: .minimum, minValue: 3, maxValue: 10)
-    case "numberOfLines":
-      self.setupSlider(valueType: .custom(1), minValue: 0, maxValue: 5)
     default:
       print("Unknown")
-      return (0, 0, 0)
+      return SliderSetup()
     }
-    return (self.slider.value, self.slider.minimumValue, self.slider.maximumValue)
+    return SliderSetup(value: self.slider.value,
+                       minValue: self.slider.minimumValue,
+                       maxValue: self.slider.maximumValue)
   }
   
   required init?(coder: NSCoder) {

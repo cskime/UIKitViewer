@@ -15,12 +15,11 @@
 		AC3B4116240E87A400822398 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B4115240E87A400822398 /* UITableView+Extension.swift */; };
 		AC3B4118240F7D0700822398 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B4117240F7D0700822398 /* UIColor+Extension.swift */; };
 		AC3B411C240F88D000822398 /* PropertyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B411B240F88D000822398 /* PropertyLabel.swift */; };
+		AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5076812410CD7B0002DCE9 /* StepperCell.swift */; };
 		AC5A1AF123EC2E6700729CFE /* SelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A1AF023EC2E6700729CFE /* SelectCell.swift */; };
-		ACBE31D2240FCE760013F18E /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACBE31D1240FCE760013F18E /* API.swift */; };
 		ACC64B8F240E2D18007CD967 /* ControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC64B8E240E2D18007CD967 /* ControlModel.swift */; };
 		ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4FDC223EFD17D00D6ED22 /* Common.swift */; };
 		ACE1202D23EA7DDF00D484EF /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1202C23EA7DDF00D484EF /* DisplayView.swift */; };
-		ACE1202F23EA805700D484EF /* ObjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1202E23EA805700D484EF /* ObjectManager.swift */; };
 		ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1203023EA8EE900D484EF /* PaletteCell.swift */; };
 		ACE1203523EA8EE900D484EF /* ToggleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1203223EA8EE900D484EF /* ToggleCell.swift */; };
 		ACE1203923EAA81100D484EF /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1203823EAA81100D484EF /* TextCell.swift */; };
@@ -47,12 +46,11 @@
 		AC3B4117240F7D0700822398 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		AC3B411B240F88D000822398 /* PropertyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyLabel.swift; sourceTree = "<group>"; };
 		AC3EB596875066DC775023B6 /* Pods_UIKitViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIKitViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AC5076812410CD7B0002DCE9 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		AC5A1AF023EC2E6700729CFE /* SelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCell.swift; sourceTree = "<group>"; };
-		ACBE31D1240FCE760013F18E /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		ACC64B8E240E2D18007CD967 /* ControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlModel.swift; sourceTree = "<group>"; };
 		ACD4FDC223EFD17D00D6ED22 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		ACE1202C23EA7DDF00D484EF /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
-		ACE1202E23EA805700D484EF /* ObjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectManager.swift; sourceTree = "<group>"; };
 		ACE1203023EA8EE900D484EF /* PaletteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
 		ACE1203223EA8EE900D484EF /* ToggleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToggleCell.swift; sourceTree = "<group>"; };
 		ACE1203823EAA81100D484EF /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
@@ -107,6 +105,7 @@
 				ACE1203223EA8EE900D484EF /* ToggleCell.swift */,
 				ACE1203823EAA81100D484EF /* TextCell.swift */,
 				AC5A1AF023EC2E6700729CFE /* SelectCell.swift */,
+				AC5076812410CD7B0002DCE9 /* StepperCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -134,7 +133,6 @@
 			children = (
 				ACE37E6B23E43D3500055BFE /* Assets.xcassets */,
 				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
-				ACBE31D1240FCE760013F18E /* API.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -196,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				ACC64B8E240E2D18007CD967 /* ControlModel.swift */,
-				ACE1202E23EA805700D484EF /* ObjectManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -369,8 +366,8 @@
 				AC3B4118240F7D0700822398 /* UIColor+Extension.swift in Sources */,
 				ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */,
 				ACE37E6723E43D3400055BFE /* MainViewController.swift in Sources */,
+				AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */,
 				ACC64B8F240E2D18007CD967 /* ControlModel.swift in Sources */,
-				ACE1202F23EA805700D484EF /* ObjectManager.swift in Sources */,
 				ACE1203523EA8EE900D484EF /* ToggleCell.swift in Sources */,
 				049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */,
 				AC0B8ABE23E98A700057EEBC /* CellProvider.swift in Sources */,
@@ -381,7 +378,6 @@
 				ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */,
 				AC0B8ABC23E987820057EEBC /* SliderCell.swift in Sources */,
 				AC5A1AF123EC2E6700729CFE /* SelectCell.swift in Sources */,
-				ACBE31D2240FCE760013F18E /* API.swift in Sources */,
 				AC3B411C240F88D000822398 /* PropertyLabel.swift in Sources */,
 				ACE37E6323E43D3400055BFE /* AppDelegate.swift in Sources */,
 				ACE13F6D240E236500376613 /* MainModel.swift in Sources */,

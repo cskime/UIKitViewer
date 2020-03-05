@@ -10,11 +10,12 @@ import UIKit
 import Then
 
 enum ControlType {
-  case slider // 수치변화하는 control
-  case palette // 색 고르는 control
-  case textField //몇 가지 중에 고르는 control
-  case toggle // true / false 중에 고르는 control
+  case slider
+  case palette
+  case textField
+  case toggle
   case select
+  case stepper
   
   var cell: ControlCell.Type {
     get {
@@ -24,24 +25,33 @@ enum ControlType {
       case .textField:  return TextCell.self
       case .toggle:     return ToggleCell.self
       case .select:     return SelectCell.self
+      case .stepper:    return StepperCell.self
       }
     }
   }
 }
 
-@objc protocol ControlCellDelegate {
-  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForColor color: UIColor?)
-  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float)
-  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool)
-  @objc optional func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String)
-  @objc optional func cell(_ tableViewCell: UITableViewCell, valuesForSelect values: [String])
+protocol ControlCellDelegate: class {
+  func cell(_ tableViewCell: UITableViewCell, valueForColor color: UIColor?)
+  func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float)
+  func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool)
+  func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String)
+  func cell(_ tableViewCell: UITableViewCell, valuesForSelect values: [String])
+  func cell(_ tableViewCell: UITableViewCell, valueForStepper value: Int)
 }
 
 class ControlCell: UITableViewCell {
   var currentObject: UIKitObject = .UIView
   var currentProperty: PropertyInfo = PropertyInfo(name: "", controlType: .slider)
+  
   weak var delegate: ControlCellDelegate?
-  func configure(object: UIKitObject, property: PropertyInfo) { }
+  
+  final func configure(object: UIKitObject, property: PropertyInfo) {
+    self.currentObject = object
+    self.currentProperty = property
+  }
+  
+  func configureContents() { }
 }
 
 class CellProvider: Then {
@@ -60,6 +70,7 @@ class CellProvider: Then {
     self.tableView.register(controlType.cell)
     guard let cell = self.tableView.dequeueCell(controlType.cell) else { return UITableViewCell() }
     cell.configure(object: objectInfo.object, property: propertyInfo)
+    cell.configureContents()
     cell.delegate = self.delegate
     return cell
   }

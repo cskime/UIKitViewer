@@ -53,24 +53,24 @@ class TextCell: ControlCell {
   
   // MARK: Interface
   
-  override func configure(object: UIKitObject, property: PropertyInfo) {
-    let title = property.name
+  override func configureContents() {
+    let title = self.currentProperty.name
+    let object = self.currentObject
     self.propertyLabel.configure(name: title)
-    self.currentObject = object
-    self.currentProperty = property
     
-    if let text = ObjectManager.shared.values(for: title) as? String {
+    
+    if let text = ControlModel.shared.value(for: title, of: object) as? String {
         self.textField.text = text
     } else {
       switch self.currentObject {
       case .UIButton:
-        self.textField.text = "Test Button"
+        self.textField.text = "Button"
       case .UILabel:
-        self.textField.text = "Test Label"
+        self.textField.text = "Label"
       default:
         break
       }
-      ObjectManager.shared.addValue(self.textField.text!, for: title)
+      ControlModel.shared.setValue(self.textField.text ?? "", for: title, of: object)
     }
   }
   
@@ -84,8 +84,10 @@ class TextCell: ControlCell {
 
 extension TextCell: UITextFieldDelegate {
   func textFieldDidChangeSelection(_ textField: UITextField) {
-    ObjectManager.shared.updateValue(textField.text!, for: self.propertyLabel.property)
-    self.delegate?.cell?(self, valueForTextField: textField.text ?? "")
+    ControlModel.shared.updateValue(textField.text ?? "",
+                                    for: self.currentProperty.name,
+                                    of: self.currentObject)
+    self.delegate?.cell(self, valueForTextField: textField.text ?? "")
   }
   
   func textFieldShouldReturn(_ textField: UITextField) -> Bool {

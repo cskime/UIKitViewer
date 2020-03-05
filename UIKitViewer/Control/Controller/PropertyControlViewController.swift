@@ -22,11 +22,11 @@ class PropertyControlViewController: UIViewController {
     $0.dataSource = self
     $0.allowsSelection = false
   }
-  private lazy var displayView = DisplayView(objectType: self.dataSource.first!.object)
+  private var displayView: DisplayView!
 
   // MARK: Model
 
-  private var dataSource = [ObjectInfo]()
+  private let controlModel = ControlModel.shared
 
   // MARK: Life Cycle
 
@@ -39,8 +39,12 @@ class PropertyControlViewController: UIViewController {
 
   init(object: UIKitObject) {
     super.init(nibName: nil, bundle: Bundle.main)
-    let model = ControlModel(object: object)
-    self.dataSource = model.objects
+    self.controlModel.setupDataSource(for: object)
+    self.displayView = DisplayView(objectType: object)
+  }
+  
+  deinit {
+    self.controlModel.removeAll()
   }
 
   required init?(coder: NSCoder) {
@@ -54,7 +58,9 @@ class PropertyControlViewController: UIViewController {
 
   private func setupAttributes() {
     self.view.backgroundColor = ColorReference.background
-    self.navigationItem.title = "\(self.dataSource.first!.object)"
+    
+    guard let targetObject = self.controlModel.targetObject else { return }
+    self.navigationItem.title = targetObject.rawValue
   }
 
   struct UI {
@@ -62,7 +68,7 @@ class PropertyControlViewController: UIViewController {
     static let paddingX: CGFloat = 48
   }
   private func setupConstraints() {
-    let subviews = [self.displayView, self.tableView]
+    let subviews = [self.displayView!, self.tableView]
     subviews.forEach { self.view.addSubview($0) }
 
     let guide = self.view.safeAreaLayoutGuide
@@ -83,21 +89,19 @@ class PropertyControlViewController: UIViewController {
 
 extension PropertyControlViewController: UITableViewDataSource {
   func numberOfSections(in tableView: UITableView) -> Int {
-//    return objectManager.dataSource.count
-    return self.dataSource.count
+    return self.controlModel.objects.count
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//    return objectManager.dataSource[section].name
-    return self.dataSource[section].object.rawValue
+    return self.controlModel.objects[section].object.rawValue
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.dataSource[section].properties.count
+    return self.controlModel.objects[section].properties.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let objectInfo = self.dataSource[indexPath.section]
+    let objectInfo = self.controlModel.objects[indexPath.section]
     let cell = self.cellProvider.createCell(with: objectInfo, for: indexPath)
     return cell
   }
@@ -136,26 +140,36 @@ extension PropertyControlViewController: ControlCellDelegate {
                                of: cell.currentObject)
   }
 
+  func cell(_ tableViewCell: UITableViewCell, valueForStepper value: Int) {
+    guard let cell = tableViewCell as? StepperCell else { return }
+    self.displayView.configure(value: value,
+                               for: cell.currentProperty.name,
+                               of: cell.currentObject)
+  }
 
   func cell(_ tableViewCell: UITableViewCell, valuesForSelect values: [String]) {
     guard let cell = tableViewCell as? SelectCell else { return }
+    self.presentActionSheet(values: values) { (rawValue, selected) in
+      cell.configure(selectedValue: selected)
+      self.displayView.configure(rawValue: rawValue,
+                                 for: cell.currentProperty.name,
+                                 of: cell.currentObject)
+    }
+  }
+  
+  private func presentActionSheet(values: [String], actionHandler: @escaping (Int, String) -> ()) {
+    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     var actions = [UIAlertAction]()
     values
       .enumerated()
       .forEach { (index, title) in
         let action = UIAlertAction(title: title, style: .default) { _ in
-          cell.configure(selectedValue: title)
-          self.displayView.configure(rawValue: index,
-                                     property: cell.currentProperty.name,
-                                     of: cell.currentObject)
+          actionHandler(index, title)
         }
         actions.append(action)
     }
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
     actions.append(cancelAction)
-
-
-    let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     actions.forEach { alert.addAction($0) }
     present(alert, animated: true)
   }

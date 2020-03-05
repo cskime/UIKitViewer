@@ -50,31 +50,32 @@ class ToggleCell: ControlCell {
   
   // MARK: Interface
   
-  override func configure(object: UIKitObject, property: PropertyInfo) {
-    let title = property.name
+  override func configureContents() {
+    let title = self.currentProperty.name
+    let object = self.currentObject
     self.propertyLabel.configure(name: title)
-    self.currentObject = object
-    self.currentProperty = property
     
-    if let currentState = ObjectManager.shared.values(for: title) as? Bool {
-      self.toggleSwitch.isOn = currentState
+    if let state = ControlModel.shared.value(for: title, of: object) as? Bool {
+      self.toggleSwitch.isOn = state
     } else {
-      switch self.currentObject {
+      switch object {
       case .UICollectionView, .UIView, .UITableView, .UISegmentedControl:
         self.toggleSwitch.isOn = !title.contains("isHidden") || title.contains("clipsToBounds")
       default:
         self.toggleSwitch.isOn = false
       }
       
-      ObjectManager.shared.addValue(self.toggleSwitch.isOn, for: title)
+      ControlModel.shared.setValue(self.toggleSwitch.isOn, for: title, of: object)
     }
   }
   
   // MARK: Actions
   
   @objc private func switchChanged(_ sender: UISwitch) {
-    ObjectManager.shared.addValue(sender.isOn, for: self.propertyLabel.property)
-    self.delegate?.cell?(self, valueForToggle: sender.isOn)
+    ControlModel.shared.updateValue(sender.isOn,
+                                    for: self.currentProperty.name,
+                                    of: self.currentObject)
+    self.delegate?.cell(self, valueForToggle: sender.isOn)
   }
   
   required init?(coder: NSCoder) {

@@ -50,12 +50,12 @@ class SelectCell: ControlCell {
   // MARK: Interface
   
   private var cases = [String]()
-  override func configure(object: UIKitObject, property: PropertyInfo) {
-    let title = property.name
+  
+  override func configureContents() {
+    let title = self.currentProperty.name
+    let object = self.currentObject
     self.propertyLabel.configure(name: title)
-    self.currentObject = object
-    self.currentProperty = property
-    
+  
     let initialTitle: String
     switch title {
     case "contentMode":
@@ -74,17 +74,19 @@ class SelectCell: ControlCell {
       return
     }
     
-    if let selected = ObjectManager.shared.values(for: title) as? String {
+    if let selected = ControlModel.shared.value(for: title, of: object) as? String {
       self.selectButton.setTitle(selected, for: .normal)
     } else {
       self.selectButton.setTitle(initialTitle, for: .normal)
-      ObjectManager.shared.addValue(initialTitle, for: title)
+      ControlModel.shared.setValue(initialTitle, for: title, of: object)
     }
   }
   
   func configure(selectedValue: String) {
     self.selectButton.setTitle(selectedValue, for: .normal)
-    ObjectManager.shared.updateValue(selectedValue, for: self.propertyLabel.property)
+    ControlModel.shared.updateValue(selectedValue,
+                                    for: self.currentProperty.name,
+                                    of: self.currentObject)
   }
   
   func relates(to propertyName: String) -> Bool {
@@ -94,7 +96,7 @@ class SelectCell: ControlCell {
   // MARK: Actions
   
   @objc func selectButtonTouched(_ sender: UIButton) {
-    self.delegate?.cell?(self, valuesForSelect: self.cases)
+    self.delegate?.cell(self, valuesForSelect: self.cases)
   }
   
   required init?(coder: NSCoder) {
