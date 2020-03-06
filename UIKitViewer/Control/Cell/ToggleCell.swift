@@ -43,6 +43,7 @@ class ToggleCell: ControlCell {
     }
     
     self.toggleSwitch.snp.makeConstraints {
+      $0.leading.greaterThanOrEqualTo(self.propertyLabel.snp.trailing).offset(UI.paddingX)
       $0.trailing.equalTo(self.contentView).offset(-UI.paddingX)
       $0.centerY.equalTo(self.propertyLabel)
     }
