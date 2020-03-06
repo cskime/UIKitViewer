@@ -80,10 +80,8 @@ class ControlModel {
     
     switch oldValueSet {
     case is SliderSetup:
-      guard var sliderSetup = oldValueSet as? SliderSetup,
-        let newValue = value as? Float else { return }
-      sliderSetup.value = newValue
-      self.controlValues[object]![property] = sliderSetup
+      guard let newValue = value as? SliderSetup else { return }
+      self.controlValues[object]![property] = newValue
     case is StepperSetup:
       guard let newValue = value as? StepperSetup else { return }
       self.controlValues[object]![property] = newValue

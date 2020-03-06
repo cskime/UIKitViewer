@@ -91,7 +91,10 @@ class SliderCell: ControlCell {
   
   @objc private func sliderChanged(_ sender: UISlider) {
     self.currentValue = sender.value
-    ControlModel.shared.updateValue(sender.value,
+    let newSliderSetup = SliderSetup(value: sender.value,
+                                     minValue: sender.minimumValue,
+                                     maxValue: sender.maximumValue)
+    ControlModel.shared.updateValue(newSliderSetup,
                                     for: self.currentProperty.name,
                                     of: self.currentObject)
     self.delegate?.cell(self, valueForSlider: sender.value)
