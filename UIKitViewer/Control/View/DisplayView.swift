@@ -298,10 +298,8 @@ extension DisplayView {
     guard let `switch` = self.previewObject as? UISwitch else { return }
     
     switch property {
-    case "isOn":
-      `switch`.isOn = isOn
-    case "setOn":
-      `switch`.setOn(isOn , animated: true)
+    case "isOn":    `switch`.isOn = isOn
+    case "setOn":   `switch`.setOn(isOn , animated: true)
     default:
       return
     }
