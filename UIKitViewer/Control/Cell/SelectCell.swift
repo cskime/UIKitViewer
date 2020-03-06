@@ -70,6 +70,9 @@ class SelectCell: ControlCell {
     case "clearButtonMode":
       initialTitle = UITextField.ViewMode.never.stringRepresentation
       self.cases = UITextField.ViewMode.allCases.map { $0.stringRepresentation }
+    case "buttonType":
+      initialTitle = UIButton.ButtonType.system.stringRepresentation
+      self.cases = UIButton.ButtonType.allCases.map { $0.stringRepresentation }
     default:
       return
     }

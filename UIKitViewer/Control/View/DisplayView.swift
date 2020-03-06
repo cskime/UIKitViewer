@@ -67,7 +67,7 @@ class DisplayView: UIView {
       guard let self = self else { return }
       
       switch self.previewType {
-      case .UILabel, .UIButton:
+      case .UILabel:
         $0.width.lessThanOrEqualToSuperview().dividedBy(2)
       case .UITextField:
         $0.width.equalToSuperview().dividedBy(2)
@@ -346,6 +346,7 @@ extension DisplayView {
     case .UIView:           self.configureView(rawValue: rawValue, for: property)
     case .UITableView:      self.configureTableView(rawValue: rawValue, for: property)
     case .UITextField:      self.configureTextField(rawValue: rawValue, for: property)
+    case .UIButton:         self.configureButton(rawValue: rawValue, for: property)
     default:
       return
     }
@@ -397,6 +398,32 @@ extension DisplayView {
       textField.clearButtonMode = UITextField.ViewMode(rawValue: rawValue) ?? .never
     default:
       return
+    }
+  }
+  
+  private func configureButton(rawValue: Int, for property: String) {
+    switch property {
+    case "buttonType":
+      let type = UIButton.ButtonType(rawValue: rawValue) ?? .system
+      self.replaceButtonType(to: type)
+    default:
+      return
+    }
+  }
+  
+  private func replaceButtonType(to type: UIButton.ButtonType) {
+    guard let currentButton = self.previewObject as? UIButton,
+      let currentTitle = currentButton.currentTitle else { return }
+    self.previewObject.removeConstraints(self.previewObject.constraints)
+    self.previewObject.removeFromSuperview()
+    
+    let newButton = UIButton(type: type)
+    newButton.setTitle(currentTitle, for: .normal)
+    self.previewObject = newButton
+    
+    self.addSubview(self.previewObject)
+    self.previewObject.snp.makeConstraints {
+      $0.center.equalToSuperview()
     }
   }
 }

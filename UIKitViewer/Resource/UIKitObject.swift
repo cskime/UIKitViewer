@@ -74,6 +74,7 @@ extension UIKitObject {
       ]
     case .UIButton:
       return [
+        PropertyInfo(name: "buttonType", controlType: .select),
         PropertyInfo(name: "setTitle", controlType: .textField),
         PropertyInfo(name: "setTitleColor", controlType: .palette),
         PropertyInfo(name: "setImage", controlType: .toggle),
@@ -155,10 +156,8 @@ extension UIKitObject {
       return label
     case .UIButton:
       guard let buttonType = classType as? UIButton.Type else { return nil }
-      let button = buttonType.init()
-      button.setTitle("Test Button", for: .normal)
-      button.setTitleColor(.black, for: .normal)
-      button.titleLabel?.font = .systemFont(ofSize: 24)
+      let button = buttonType.init(type: .system)
+      button.setTitle("Button", for: .normal)
       return button
     case .UISwitch:
       guard let switchType = classType as? UISwitch.Type else { return nil }

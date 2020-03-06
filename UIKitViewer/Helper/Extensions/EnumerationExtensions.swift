@@ -115,3 +115,32 @@ extension UITextField.ViewMode: EnumerationExtension {
     }
   }
 }
+
+extension UIButton.ButtonType: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [Self] {
+    return [
+      .custom,
+      .system,
+      .detailDisclosure,
+      .infoLight,
+      .infoDark,
+      .contactAdd,
+      .close,
+    ]
+  }
+  
+  var stringRepresentation: String {
+    switch self {
+    case .custom:             return "custom"
+    case .system:             return "system"
+    case .detailDisclosure:   return "detailDisclosure"
+    case .infoLight:          return "infoLight"
+    case .infoDark:           return "infoDark"
+    case .contactAdd:         return "contactAdd"
+    case .close:              return "close"
+    @unknown default:
+      fatalError("UIButton.ButtonType: Unknown Case")
+    }
+  }
+}
