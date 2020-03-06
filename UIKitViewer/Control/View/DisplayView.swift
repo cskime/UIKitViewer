@@ -13,6 +13,9 @@ import Then
 class DisplayView: UIView {
   
   private var previewObject = UIView()
+  private let valueDisplay = UILabel().then {
+    $0.font = .systemFont(ofSize: 20)
+  }
   private var previewType: UIKitObject = .UIView
   
   // MARK: Initialize
@@ -26,7 +29,6 @@ class DisplayView: UIView {
   private func setupUI() {
     self.setupAttributes()
     self.setupObject()
-    self.setupConstraint()
   }
   
   private func setupAttributes() {
@@ -39,7 +41,15 @@ class DisplayView: UIView {
   
   private func setupObject() {
     self.previewObject = self.previewType.makeInstance() ?? UIView()
+    self.addSubview(self.previewObject)
+    self.previewObject.snp.makeConstraints {
+      $0.center.equalToSuperview()
+    }
     
+    self.setupAdditionalAttributes()
+  }
+  
+  private func setupAdditionalAttributes() {
     switch self.previewType {
     case .UITextField:
       guard let textField = self.previewObject as? UITextField else { return }
@@ -52,20 +62,18 @@ class DisplayView: UIView {
       guard let collectionView = self.previewObject as? UICollectionView else { return }
       collectionView.dataSource = self
       collectionView.delegate = self
+    case .UIStepper:
+      guard let stepper = self.previewObject as? UIStepper else { return }
+      stepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
+      self.setupStepperDisplay(stepper)
     default:
       return
     }
+    self.setupAdditionalConstraint()
   }
   
-  private func setupConstraint() {
-    self.addSubview(self.previewObject)
+  private func setupAdditionalConstraint() {
     self.previewObject.snp.makeConstraints {
-      $0.center.equalToSuperview()
-    }
-    
-    self.previewObject.snp.makeConstraints { [weak self] in
-      guard let self = self else { return }
-      
       switch self.previewType {
       case .UILabel:
         $0.width.equalToSuperview().dividedBy(2)
@@ -79,6 +87,21 @@ class DisplayView: UIView {
     }
   }
   
+  private func setupStepperDisplay(_ stepper: UIStepper) {
+    self.addSubview(self.valueDisplay)
+    self.valueDisplay.text = stepper.value.description
+    self.valueDisplay.snp.makeConstraints {
+      $0.centerX.equalTo(self.previewObject)
+      $0.bottom.equalTo(self.previewObject.snp.top).offset(-8)
+    }
+  }
+  
+  // MARK: Actions
+  
+  @objc private func stepperChanged(_ sender: UIStepper) {
+    self.valueDisplay.text = String(format: "%.1f", sender.value)
+  }
+  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -89,7 +112,7 @@ class DisplayView: UIView {
 // MARK:- TextField Interfaces
 
 extension DisplayView {
-
+  
   func configure(text: String, for property: String, of object: UIKitObject) {
     let property = property.components(separatedBy: ".").last!
     
@@ -285,10 +308,11 @@ extension DisplayView {
     let image: UIImage? = isOn ? UIImage(named: "UIImageView") : nil
     
     switch property {
+    case "wraps":                 stepper.wraps = isOn
+    case "setBackgroundImage":    stepper.setBackgroundImage(image, for: .normal)
     case "setIncrementImage":     stepper.setIncrementImage(image, for: .normal)
     case "setDecrementImage":     stepper.setDecrementImage(image, for: .normal)
     case "setDividerImage":       stepper.setDividerImage(image, forLeftSegmentState: .normal, rightSegmentState: .normal)
-    case "setBackgroundImage":    stepper.setBackgroundImage(image, for: .normal)
     default:
       return
     }
@@ -479,15 +503,30 @@ extension DisplayView {
 // MARK:- Stepper Interfaces
 
 extension DisplayView {
-  func configure(value: Int, for property: String, of object: UIKitObject) {
+  func configure(value: Double, for property: String, of object: UIKitObject) {
     let property = property.components(separatedBy: ".").last!
     
     switch object {
-    case .UIPageControl:    self.configurePageControl(value: value, for: property)
-    case .UILabel:          self.configureLabel(value: value, for: property)
+    case .UIPageControl:    self.configurePageControl(value: Int(value), for: property)
+    case .UILabel:          self.configureLabel(value: Int(value), for: property)
+    case .UIStepper:        self.configureStepper(value: value, of: property)
     default:
       return
     }
+  }
+  
+  private func configureStepper(value: Double, of property: String) {
+    guard let stepper = self.previewObject as? UIStepper else { return }
+    
+    switch property {
+    case "minimumValue":    stepper.minimumValue = value
+    case "maximumValue":    stepper.maximumValue = value
+    case "stepValue":       stepper.stepValue = value
+    default:
+      return
+    }
+    
+    self.valueDisplay.text = stepper.value.description
   }
   
   private func configurePageControl(value: Int, for property: String) {

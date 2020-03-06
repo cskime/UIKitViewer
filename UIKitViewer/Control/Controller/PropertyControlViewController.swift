@@ -140,7 +140,7 @@ extension PropertyControlViewController: ControlCellDelegate {
                                of: cell.currentObject)
   }
 
-  func cell(_ tableViewCell: UITableViewCell, valueForStepper value: Int) {
+  func cell(_ tableViewCell: UITableViewCell, valueForStepper value: Double) {
     guard let cell = tableViewCell as? StepperCell else { return }
     self.displayView.configure(value: value,
                                for: cell.currentProperty.name,

@@ -37,7 +37,7 @@ protocol ControlCellDelegate: class {
   func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool)
   func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String)
   func cell(_ tableViewCell: UITableViewCell, valuesForSelect values: [String])
-  func cell(_ tableViewCell: UITableViewCell, valueForStepper value: Int)
+  func cell(_ tableViewCell: UITableViewCell, valueForStepper value: Double)
 }
 
 class ControlCell: UITableViewCell {

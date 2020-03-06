@@ -18,7 +18,13 @@ class StepperCell: ControlCell {
     get { return self.stepper.value }
     set {
       self.stepper.value = newValue
-      self.valueLabel.text = Int(newValue).description
+      switch self.currentObject {
+      case .UIPageControl:
+        self.valueLabel.text = Int(newValue).description
+      default:
+        self.valueLabel.text = newValue.description
+      }
+      
     }
   }
   
@@ -115,10 +121,18 @@ class StepperCell: ControlCell {
       self.setupStepper(value: 0, minValue: 0, maxValue: 2)
     case "numberOfPages":
       self.setupStepper(value: 3, minValue: 0, maxValue: 7)
+    case "minimumValue":
+      self.setupStepper(value: 0, minValue: 0, maxValue: 5)
+    case "maximumValue":
+      self.setupStepper(value: 5, minValue: 0, maxValue: 5)
+    case "stepValue":
+      self.setupStepper(value: 1, minValue: 0.2, maxValue: 1)
+      self.stepper.stepValue = 0.2
     default:
       print("Unknown")
       return StepperSetup()
     }
+    self.delegate?.cell(self, valueForStepper: self.stepper.value)
     return StepperSetup(value: self.stepper.value,
                         minValue: self.stepper.minimumValue,
                         maxValue: self.stepper.maximumValue)
@@ -136,7 +150,7 @@ class StepperCell: ControlCell {
     self.currentValue = sender.value
     self.postPageControlNotification(userInfo: ["numberOfPages": sender.value])
     self.updateStepperSetup(sender)
-    self.delegate?.cell(self, valueForStepper: Int(sender.value))
+    self.delegate?.cell(self, valueForStepper: sender.value)
   }
   
   private func updateStepperSetup(_ stepper: UIStepper) {

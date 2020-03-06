@@ -100,6 +100,11 @@ extension UIKitObject {
       ]
     case .UIStepper:
       return [
+        PropertyInfo(name: "wraps", controlType: .toggle),
+        PropertyInfo(name: "minimumValue", controlType: .stepper),
+        PropertyInfo(name: "maximumValue", controlType: .stepper),
+        PropertyInfo(name: "stepValue", controlType: .stepper),
+        PropertyInfo(name: "setBackgroundImage", controlType: .toggle),
         PropertyInfo(name: "setIncrementImage", controlType: .toggle),
         PropertyInfo(name: "setDecrementImage", controlType: .toggle),
         PropertyInfo(name: "setDividerImage", controlType: .toggle)
