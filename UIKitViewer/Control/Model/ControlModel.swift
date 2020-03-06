@@ -21,11 +21,11 @@ struct SliderSetup {
 }
 
 struct StepperSetup {
-  var value: Int
-  var minValue: Int
-  var maxValue: Int
+  var value: Double
+  var minValue: Double
+  var maxValue: Double
   
-  init(value: Int = 0, minValue: Int = 0, maxValue: Int = 0) {
+  init(value: Double = 0, minValue: Double = 0, maxValue: Double = 0) {
     self.value = value
     self.minValue = minValue
     self.maxValue = maxValue
@@ -85,10 +85,8 @@ class ControlModel {
       sliderSetup.value = newValue
       self.controlValues[object]![property] = sliderSetup
     case is StepperSetup:
-      guard var stepperSetup = oldValueSet as? StepperSetup,
-        let newValue = value as? Int else { return }
-      stepperSetup.value = newValue
-      self.controlValues[object]![property] = stepperSetup
+      guard let newValue = value as? StepperSetup else { return }
+      self.controlValues[object]![property] = newValue
     case is Bool, is String:
       self.controlValues[object]![property] = value
     default:

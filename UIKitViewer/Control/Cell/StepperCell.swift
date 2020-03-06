@@ -14,10 +14,11 @@ class StepperCell: ControlCell {
   
   // MARK: Properties
   
-  private var currentValue: Int {
-    get { return Int(self.stepper.value) }
+  private var currentValue: Double {
+    get { return self.stepper.value }
     set {
-      self.valueLabel.text = Int(self.stepper.value).description
+      self.stepper.value = newValue
+      self.valueLabel.text = Int(newValue).description
     }
   }
   
@@ -39,6 +40,10 @@ class StepperCell: ControlCell {
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     self.setupConstraints()
+  }
+  
+  deinit {
+    NotificationCenter.default.removeObserver(self)
   }
   
   struct UI {
@@ -73,49 +78,94 @@ class StepperCell: ControlCell {
     let title = self.currentProperty.name
     let object = self.currentObject
     self.propertyLabel.configure(name: title)
-    
+    self.configureStepper(title: title, object: object)
+    self.addPageControlObserver(to: title)
+  }
+  
+  private func configureStepper(title: String, object: UIKitObject) {
     if let stepperValues = ControlModel.shared.value(for: title, of: object) as? StepperSetup {
-      self.setupStepper(value: stepperValues.value, maxValue: stepperValues.maxValue)
+      self.setupStepper(value: stepperValues.value,
+                        minValue: stepperValues.minValue,
+                        maxValue: stepperValues.maxValue)
     } else {
       let stepperValues = self.initializeStepper(for: title)
       ControlModel.shared.setValue(stepperValues, for: title, of: object)
     }
   }
   
-  // MARK: Methods
-  
-  private func setupStepper(value: Int = 0, minValue: Int = 0, maxValue: Int) {
-    self.stepper.minimumValue = Double(minValue)
-    self.stepper.maximumValue = Double(maxValue)
-    self.stepper.value = Double(value)
-    self.valueLabel.text = value.description
+  private let pageControlNumberOfPagesDidChangeNotification = NSNotification.Name(rawValue: "pageControlNumberOfPagesDidChange")
+  private func addPageControlObserver(to property: String) {
+    if property.contains("currentPage") {
+      NotificationCenter
+        .default
+        .addObserver(self,
+                     selector: #selector(updateCurrentPageStepper),
+                     name: self.pageControlNumberOfPagesDidChangeNotification,
+                     object: nil)
+    }
   }
+  
+  // MARK: Methods
   
   private func initializeStepper(for property: String) -> StepperSetup {
     switch property {
     case "numberOfLines":
-      self.setupStepper(value: 1, maxValue: 5)
+      self.setupStepper(value: 1, minValue: 0, maxValue: 5)
     case "currentPage":
-      self.setupStepper(maxValue: 7)
+      self.setupStepper(value: 0, minValue: 0, maxValue: 2)
     case "numberOfPages":
-      self.setupStepper(value: 3, maxValue: 7)
+      self.setupStepper(value: 3, minValue: 0, maxValue: 7)
     default:
       print("Unknown")
       return StepperSetup()
     }
-    return StepperSetup(value: Int(self.stepper.value),
-                        minValue: Int(self.stepper.minimumValue),
-                        maxValue: Int(self.stepper.maximumValue))
+    return StepperSetup(value: self.stepper.value,
+                        minValue: self.stepper.minimumValue,
+                        maxValue: self.stepper.maximumValue)
+  }
+  
+  private func setupStepper(value: Double, minValue: Double, maxValue: Double) {
+    self.stepper.minimumValue = minValue
+    self.stepper.maximumValue = maxValue
+    self.currentValue = value
   }
   
   // MARK: Actions
   
   @objc private func stepperChanged(_ sender: UIStepper) {
-    self.currentValue = Int(sender.value)
-    ControlModel.shared.updateValue(Int(sender.value),
+    self.currentValue = sender.value
+    self.postPageControlNotification(userInfo: ["numberOfPages": sender.value])
+    self.updateStepperSetup(sender)
+    self.delegate?.cell(self, valueForStepper: Int(sender.value))
+  }
+  
+  private func updateStepperSetup(_ stepper: UIStepper) {
+    let newStepperSetup = StepperSetup(value: stepper.value,
+                                       minValue: stepper.minimumValue,
+                                       maxValue: stepper.maximumValue)
+    ControlModel.shared.updateValue(newStepperSetup,
                                     for: self.currentProperty.name,
                                     of: self.currentObject)
-    self.delegate?.cell(self, valueForStepper: self.currentValue)
+  }
+  
+  private func postPageControlNotification(userInfo: [String: Double]? = nil) {
+    if self.currentProperty.name.contains(userInfo?.keys.first ?? "") {
+      NotificationCenter.default.post(name: self.pageControlNumberOfPagesDidChangeNotification,
+                                      object: nil,
+                                      userInfo: userInfo)
+    }
+  }
+  
+  @objc private func updateCurrentPageStepper(_ noti: Notification) {
+    guard self.propertyLabel.property.contains("currentPage"),
+      let userInfo = noti.userInfo as? [String: Double],
+      let numberOfPages = userInfo["numberOfPages"]
+      else { return }
+    let currentPage = self.currentValue
+    let maxPage = numberOfPages - 1
+    self.stepper.maximumValue = maxPage
+    self.currentValue = numberOfPages > currentPage ? currentPage : maxPage
+    self.updateStepperSetup(self.stepper)
   }
   
   // MARK: Useless
