@@ -144,3 +144,54 @@ extension UIButton.ButtonType: EnumerationExtension {
     }
   }
 }
+
+extension NSLineBreakMode: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [Self] {
+    return [
+      .byWordWrapping,
+      .byCharWrapping,
+      .byClipping,
+      .byTruncatingHead,
+      .byTruncatingTail,
+      .byTruncatingMiddle,
+    ]
+  }
+  
+  var stringRepresentation: String {
+    switch self {
+    case .byWordWrapping:     return "byWordWrapping"
+    case .byCharWrapping:     return "byCharWrapping"
+    case .byClipping:         return "byClipping"
+    case .byTruncatingHead:   return "byTruncatingHead"
+    case .byTruncatingTail:   return "byTruncatingTail"
+    case .byTruncatingMiddle: return "byTruncatingMiddle"
+    @unknown default:
+      fatalError("NSLineBreakMode: Unknown Case")
+    }
+  }
+}
+
+extension NSTextAlignment: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [Self] {
+    return [
+      .left,
+      .center,
+      .right,
+      .justified,
+      .natural
+    ]
+  }
+  var stringRepresentation: String {
+    switch self {
+    case .left:             return "left"
+    case .right:            return "right"
+    case .center:           return "center"
+    case .justified:        return "justified"
+    case .natural:          return "natural"
+    @unknown default:
+      fatalError("NSTextAlignment: Unknown Case")
+    }
+  }
+}

@@ -34,6 +34,7 @@ class PropertyLabel: UIStackView {
   
   private let propertyName = UILabel().then {
     $0.font = .systemFont(ofSize: 18)
+    $0.adjustsFontSizeToFitWidth = true
   }
   
   private let ownerName = UILabel().then {

@@ -73,6 +73,12 @@ class SelectCell: ControlCell {
     case "buttonType":
       initialTitle = UIButton.ButtonType.system.stringRepresentation
       self.cases = UIButton.ButtonType.allCases.map { $0.stringRepresentation }
+    case "lineBreakMode":
+      initialTitle = NSLineBreakMode.byTruncatingTail.stringRepresentation
+      self.cases = NSLineBreakMode.allCases.map { $0.stringRepresentation }
+    case "textAlignment":
+      initialTitle = NSTextAlignment.left.stringRepresentation
+      self.cases = NSTextAlignment.allCases.map { $0.stringRepresentation }
     default:
       return
     }

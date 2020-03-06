@@ -17,7 +17,7 @@ class SliderCell: ControlCell {
   private var currentValue: Float {
     get { return self.slider.value }
     set {
-      self.valueLabel.text = String(format: "%.2f", newValue)
+      self.valueLabel.text = String(format: "%.1f", newValue)
       self.slider.value = newValue
     }
   }
@@ -146,6 +146,8 @@ class SliderCell: ControlCell {
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
     case "footerReferenceSize":
       self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
+    case "minimumScaleFactor":
+      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 1)
     default:
       print("Unknown")
       return SliderSetup()

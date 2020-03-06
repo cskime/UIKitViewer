@@ -68,7 +68,7 @@ class DisplayView: UIView {
       
       switch self.previewType {
       case .UILabel:
-        $0.width.lessThanOrEqualToSuperview().dividedBy(2)
+        $0.width.equalToSuperview().dividedBy(2)
       case .UITextField:
         $0.width.equalToSuperview().dividedBy(2)
       case .UIImageView, .UIView, .UITableView, .UICollectionView:
@@ -226,9 +226,23 @@ extension DisplayView {
     switch object {
     case .UIView:           self.configureView(isOn: isOn, of: property)
     case .UIButton:         self.configureButton(isOn: isOn, of: property)
+    case .UILabel:          self.configureLabel(isOn: isOn, of: property)
     case .UITextField:      self.configureTextField(isOn: isOn, of: property)
     case .UIStepper:        self.configureStepper(isOn: isOn, of: property)
     case .UISwitch:         self.configureSwitch(isOn: isOn, of: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureLabel(isOn: Bool, of property: String) {
+    guard let label = self.previewObject as? UILabel else { return }
+    
+    switch property {
+    case "adjustsFontSizeToFitWidth":
+      label.adjustsFontSizeToFitWidth = isOn
+    case "allowsDefaultTighteningForTruncation":
+      label.allowsDefaultTighteningForTruncation = isOn
     default:
       return
     }
@@ -300,10 +314,30 @@ extension DisplayView {
   
   func configure(value: Float, for property: String, of object: UIKitObject) {
     let property = property.components(separatedBy: ".").last!
+    let value = CGFloat(value)
     
     switch object {
-    case .UIView:                 self.configureView(value: CGFloat(value), for: property)
-    case .UICollectionView:       self.configureCollectionView(value: CGFloat(value), for: property)
+    case .UIView:             self.configureView(value: value, for: property)
+    case .UILabel:            self.configureLabel(value: value, for: property)
+    case .UICollectionView:   self.configureCollectionView(value: value, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureLabel(value: CGFloat, for property: String) {
+    guard let label = self.previewObject as? UILabel else { return }
+    
+    switch property {
+    case "minimumScaleFactor":
+      if label.adjustsFontSizeToFitWidth {
+        label.minimumScaleFactor = value
+        func adjustScaleFactorDynamically() {
+          label.adjustsFontSizeToFitWidth = false
+          label.adjustsFontSizeToFitWidth = true
+        }
+        adjustScaleFactorDynamically()
+      }
     default:
       return
     }
@@ -347,6 +381,22 @@ extension DisplayView {
     case .UITableView:      self.configureTableView(rawValue: rawValue, for: property)
     case .UITextField:      self.configureTextField(rawValue: rawValue, for: property)
     case .UIButton:         self.configureButton(rawValue: rawValue, for: property)
+    case .UILabel:          self.configureLabel(rawValue: rawValue, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureLabel(rawValue: Int, for property: String) {
+    guard let label = self.previewObject as? UILabel else { return }
+    
+    switch property {
+    case "lineBreakMode":
+      let mode = NSLineBreakMode(rawValue: rawValue) ?? .byTruncatingTail
+      label.lineBreakMode = mode
+    case "textAlignment":
+      let alignment = NSTextAlignment(rawValue: rawValue) ?? .left
+      label.textAlignment = alignment
     default:
       return
     }

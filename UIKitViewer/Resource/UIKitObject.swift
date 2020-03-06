@@ -84,7 +84,12 @@ extension UIKitObject {
       return [
         PropertyInfo(name: "text", controlType: .textField),
         PropertyInfo(name: "textColor", controlType: .palette),
-        PropertyInfo(name: "numberOfLines", controlType: .stepper)
+        PropertyInfo(name: "textAlignment", controlType: .select),
+        PropertyInfo(name: "numberOfLines", controlType: .stepper),
+        PropertyInfo(name: "lineBreakMode", controlType: .select),
+        PropertyInfo(name: "allowsDefaultTighteningForTruncation", controlType: .toggle),
+        PropertyInfo(name: "adjustsFontSizeToFitWidth", controlType: .toggle),
+        PropertyInfo(name: "minimumScaleFactor", controlType: .slider),
       ]
     case.UISwitch:
       return [
@@ -151,8 +156,7 @@ extension UIKitObject {
     case .UILabel:
       guard let labelType = classType as? UILabel.Type else { return nil }
       let label = labelType.init()
-      label.text = "Test Label"
-      label.font = .systemFont(ofSize: 24)
+      label.text = "Label"
       return label
     case .UIButton:
       guard let buttonType = classType as? UIButton.Type else { return nil }
