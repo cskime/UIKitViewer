@@ -56,8 +56,28 @@ class SelectCell: ControlCell {
     let object = self.currentObject
     self.propertyLabel.configure(name: title)
   
+    let initialTitle = self.setupCases(for: self.propertyLabel.property)
+    
+    if let selected = ControlModel.shared.value(for: title, of: object) as? String {
+      self.selectButton.setTitle(selected, for: .normal)
+    } else {
+      self.selectButton.setTitle(initialTitle, for: .normal)
+      ControlModel.shared.setValue(initialTitle, for: title, of: object)
+    }
+  }
+  
+  func updateSelectedValue(_ selectedValue: String) {
+    self.selectButton.setTitle(selectedValue, for: .normal)
+    ControlModel.shared.updateValue(selectedValue,
+                                    for: self.currentProperty.name,
+                                    of: self.currentObject)
+  }
+  
+  // MARK: Selected Setup
+  
+  private func setupCases(for property: String) -> String {
     let initialTitle: String
-    switch title {
+    switch property {
     case "contentMode":
       initialTitle = UIView.ContentMode.scaleToFill.stringRepresentation
       self.cases = UIView.ContentMode.allCases.map { $0.stringRepresentation }
@@ -67,7 +87,7 @@ class SelectCell: ControlCell {
     case "borderStyle":
       initialTitle = UITextField.BorderStyle.none.stringRepresentation
       self.cases = UITextField.BorderStyle.allCases.map { $0.stringRepresentation }
-    case "clearButtonMode":
+    case "clearButtonMode", "leftViewMode", "rightViewMode":
       initialTitle = UITextField.ViewMode.never.stringRepresentation
       self.cases = UITextField.ViewMode.allCases.map { $0.stringRepresentation }
     case "buttonType":
@@ -80,26 +100,9 @@ class SelectCell: ControlCell {
       initialTitle = NSTextAlignment.left.stringRepresentation
       self.cases = NSTextAlignment.allCases.map { $0.stringRepresentation }
     default:
-      return
+      initialTitle = ""
     }
-    
-    if let selected = ControlModel.shared.value(for: title, of: object) as? String {
-      self.selectButton.setTitle(selected, for: .normal)
-    } else {
-      self.selectButton.setTitle(initialTitle, for: .normal)
-      ControlModel.shared.setValue(initialTitle, for: title, of: object)
-    }
-  }
-  
-  func configure(selectedValue: String) {
-    self.selectButton.setTitle(selectedValue, for: .normal)
-    ControlModel.shared.updateValue(selectedValue,
-                                    for: self.currentProperty.name,
-                                    of: self.currentObject)
-  }
-  
-  func relates(to propertyName: String) -> Bool {
-    return self.propertyLabel.property.contains(propertyName)
+    return initialTitle
   }
   
   // MARK: Actions

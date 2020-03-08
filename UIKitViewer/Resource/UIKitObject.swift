@@ -111,10 +111,16 @@ extension UIKitObject {
       ]
     case .UITextField:
       return [
+        PropertyInfo(name: "placeholder", controlType: .textField),
         PropertyInfo(name: "textColor", controlType: .palette),
-        PropertyInfo(name: "placeholder", controlType: .toggle),
+        PropertyInfo(name: "textAlignment", controlType: .select),
+        PropertyInfo(name: "adjustsFontSizeToFitWidth", controlType: .toggle),
+        PropertyInfo(name: "minimumFontSize", controlType: .slider),
         PropertyInfo(name: "borderStyle", controlType: .select),
+        PropertyInfo(name: "clearsOnBeginEditing", controlType: .toggle),
         PropertyInfo(name: "clearButtonMode", controlType: .select),
+        PropertyInfo(name: "leftViewMode", controlType: .select),
+        PropertyInfo(name: "rightViewMode", controlType: .select),
       ]
     case .UITableView:
       return [

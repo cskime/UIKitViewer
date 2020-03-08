@@ -152,6 +152,8 @@ extension DisplayView {
     switch property {
     case "text":
       textField.text = text
+    case "placeholder":
+      textField.placeholder = text
     default:
       return
     }
@@ -284,8 +286,10 @@ extension DisplayView {
     guard let textField = self.previewObject as? UITextField else { return }
     
     switch property {
-    case "placeholder":
-      textField.placeholder = isOn ? "placeholder" : ""
+    case "adjustsFontSizeToFitWidth":
+      textField.adjustsFontSizeToFitWidth = isOn
+    case "clearsOnBeginEditing":
+      textField.clearsOnBeginEditing = isOn
     default:
       return
     }
@@ -342,6 +346,25 @@ extension DisplayView {
     case .UIView:             self.configureView(value: value, for: property)
     case .UILabel:            self.configureLabel(value: value, for: property)
     case .UICollectionView:   self.configureCollectionView(value: value, for: property)
+    case .UITextField:        self.configureTextField(value: value, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureTextField(value: CGFloat, for property: String) {
+    guard let textField = self.previewObject as? UITextField else { return }
+    
+    switch property {
+    case "minimumFontSize":
+      if textField.adjustsFontSizeToFitWidth {
+        textField.minimumFontSize = value
+        func adjustFontSizeDynamically() {
+          textField.adjustsFontSizeToFitWidth = false
+          textField.adjustsFontSizeToFitWidth = true
+        }
+        adjustFontSizeDynamically()
+      }
     default:
       return
     }
@@ -463,11 +486,28 @@ extension DisplayView {
   private func configureTextField(rawValue: Int, for property: String) {
     guard let textField = self.previewObject as? UITextField else { return }
     
+    let lrView = UIView().then {
+      $0.frame = CGRect(x: 0, y: 0, width: 24, height: 24)
+      $0.backgroundColor = .gray
+    }
+    textField.leftView = lrView
+    textField.rightView = lrView
+    
     switch property {
     case "borderStyle":
       textField.borderStyle = UITextField.BorderStyle(rawValue: rawValue) ?? .none
     case "clearButtonMode":
       textField.clearButtonMode = UITextField.ViewMode(rawValue: rawValue) ?? .never
+    case "leftViewMode":
+      let mode = UITextField.ViewMode(rawValue: rawValue) ?? .never
+      textField.leftView = mode == .never ? nil : lrView
+      textField.leftViewMode = mode
+    case "rightViewMode":
+      let mode = UITextField.ViewMode(rawValue: rawValue) ?? .never
+      textField.rightView = mode == .never ? nil : lrView
+      textField.rightViewMode = mode
+    case "textAlignment":
+      textField.textAlignment = NSTextAlignment(rawValue: rawValue) ?? .left
     default:
       return
     }

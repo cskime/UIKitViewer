@@ -150,7 +150,7 @@ extension PropertyControlViewController: ControlCellDelegate {
   func cell(_ tableViewCell: UITableViewCell, valuesForSelect values: [String]) {
     guard let cell = tableViewCell as? SelectCell else { return }
     self.presentActionSheet(values: values) { (rawValue, selected) in
-      cell.configure(selectedValue: selected)
+      cell.updateSelectedValue(selected)
       self.displayView.configure(rawValue: rawValue,
                                  for: cell.currentProperty.name,
                                  of: cell.currentObject)
