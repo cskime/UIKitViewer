@@ -77,13 +77,13 @@ class SliderCell: ControlCell {
     let object = self.currentObject
     self.propertyLabel.configure(name: property)
     
-    if let sliderValues = ControlModel.shared.value(for: property, of: object) as? SliderSetup {
-      self.setupSlider(valueType: .custom(sliderValues.value),
-                       minValue: sliderValues.minValue,
-                       maxValue: sliderValues.maxValue)
+    if let sliderSetup = ControlModel.shared.value(for: property, of: object) as? SliderSetup {
+      self.setupSlider(with: sliderSetup)
     } else {
-      let sliderValues = self.initializeSlider(for: self.propertyLabel.property)
-      ControlModel.shared.setValue(sliderValues, for: property, of: object)
+      let sliderSetup = self.initialSetup(for: self.propertyLabel.property,
+                                           of: object)
+      self.setupSlider(with: sliderSetup)
+      ControlModel.shared.setValue(sliderSetup, for: property, of: object)
     }
   }
   
@@ -100,65 +100,76 @@ class SliderCell: ControlCell {
     self.delegate?.cell(self, valueForSlider: sender.value)
   }
   
-  // MARK: Methods
-  
-  private enum SliderValue {
-    case minimum
-    case maximum
-    case median
-    case custom(Float)
-  }
-  private func setupSlider(valueType: SliderValue, minValue: Float, maxValue: Float) {
-    self.slider.minimumValue = minValue
-    self.slider.maximumValue = maxValue
-    
-    let value: Float
-    switch valueType {
-    case .minimum:
-      value = self.slider.minimumValue
-    case .maximum:
-      value = self.slider.maximumValue
-    case .median:
-      value = (self.slider.minimumValue + self.slider.maximumValue) / 2
-    case .custom(let customValue):
-      value = customValue
-    }
-    self.currentValue = value
-  }
-  
-  private func initializeSlider(for title: String) -> SliderSetup {
-    switch title {
-    case "alpha":
-      self.setupSlider(valueType: .maximum, minValue: 0, maxValue: 1)
-    case "borderWidth":
-      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 16)
-    case "cornerRadius":
-      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 100)
-    case "itemSize":
-      self.setupSlider(valueType: .custom(50), minValue: 20, maxValue: 80)
-    case "minimumLineSpacing":
-      self.setupSlider(valueType: .minimum, minValue: 10, maxValue: 32)
-    case "minimumInteritemSpacing":
-      self.setupSlider(valueType: .minimum, minValue: 10, maxValue: 32)
-    case "sectionInset":
-      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 32)
-    case "headerReferenceSize":
-      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
-    case "footerReferenceSize":
-      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 0)
-    case "minimumScaleFactor":
-      self.setupSlider(valueType: .minimum, minValue: 0, maxValue: 1)
-    default:
-      print("Unknown")
-      return SliderSetup()
-    }
-    return SliderSetup(value: self.slider.value,
-                       minValue: self.slider.minimumValue,
-                       maxValue: self.slider.maximumValue)
-  }
-  
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
+}
+
+// MARK: Slider Setup
+
+extension SliderCell {
+  private func setupSlider(with setup: SliderSetup) {
+    self.slider.minimumValue = setup.minValue
+    self.slider.maximumValue = setup.maxValue
+    self.currentValue = setup.value
+  }
+  
+  private func initialSetup(for property: String, of object: UIKitObject) -> SliderSetup {
+    switch object {
+    case .UIView:
+      return self.initialSetupToView(for: property)
+    case .UILabel:
+      return self.initialSetupToLabel(for: property)
+    case .UITextField:
+      return self.initialSetupToTextField(for: property)
+    case .UICollectionView:
+      return self.initialSetupToCollectionView(for: property)
+    default:
+      return SliderSetup()
+    }
+  }
+  
+  private func initialSetupToView(for property: String) -> SliderSetup {
+    let values: (value: Float, minValue: Float, maxValue: Float)
+    switch property {
+    case "alpha":                     values = (0, 0, 1)
+    case "borderWidth":               values = (0, 0, 16)
+    case "cornerRadius":              values = (0, 0, 100)
+    default:                          values = (0, 0, 0)
+    }
+    return SliderSetup(value: values.0, minValue: values.1, maxValue: values.2)
+  }
+  
+  private func initialSetupToLabel(for property: String) -> SliderSetup {
+    let values: (value: Float, minValue: Float, maxValue: Float)
+    switch property {
+    case "minimumScaleFactor":        values = (0, 0, 1)
+    default:                          values = (0, 0, 0)
+    }
+    return SliderSetup(value: values.0, minValue: values.1, maxValue: values.2)
+  }
+  
+  private func initialSetupToTextField(for property: String) -> SliderSetup {
+    let values: (value: Float, minValue: Float, maxValue: Float)
+    switch property {
+    case "minimumFontSize":           values = (0, 0, 17)
+    default:                          values = (0, 0, 0)
+    }
+    return SliderSetup(value: values.0, minValue: values.1, maxValue: values.2)
+  }
+  
+  private func initialSetupToCollectionView(for property: String) -> SliderSetup {
+    let values: (value: Float, minValue: Float, maxValue: Float)
+    switch property {
+    case "itemSize":                  values = (50, 20, 80)
+    case "minimumLineSpacing":        values = (10, 10, 32)
+    case "minimumInteritemSpacing":   values = (10, 10, 32)
+    case "sectionInset":              values = (0, 0, 32)
+    case "headerReferenceSize":       values = (0, 0, 0)
+    case "footerReferenceSize":       values = (0, 0, 0)
+    default:                          values = (0, 0, 0)
+    }
+    return SliderSetup(value: values.0, minValue: values.1, maxValue: values.2)
+  }
 }
