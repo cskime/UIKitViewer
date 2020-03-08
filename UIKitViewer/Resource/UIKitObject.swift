@@ -143,6 +143,9 @@ extension UIKitObject {
       return [
         PropertyInfo(name: "currentPage", controlType: .stepper),
         PropertyInfo(name: "numberOfPages", controlType: .stepper),
+        PropertyInfo(name: "hidesForSinglePage", controlType: .toggle),
+        PropertyInfo(name: "pageIndicatorTintColor", controlType: .palette),
+        PropertyInfo(name: "currentPageIndicatorTintColor", controlType: .palette),
       ]
     case .UISegmentedControl:
       return [

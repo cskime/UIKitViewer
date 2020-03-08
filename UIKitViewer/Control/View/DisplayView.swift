@@ -174,6 +174,20 @@ extension DisplayView {
     case .UISwitch:           self.configureSwitch(color: color, for: property)
     case .UITextField:        self.configureTextField(color: color, for: property)
     case .UITableView:        self.configureTableView(color: color, for: property)
+    case .UIPageControl:      self.configurePageControl(color: color, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configurePageControl(color: UIColor?, for property: String) {
+    guard let pageControl = self.previewObject as? UIPageControl else { return }
+    
+    switch property {
+    case "pageIndicatorTintColor":
+      pageControl.pageIndicatorTintColor = color
+    case "currentPageIndicatorTintColor":
+      pageControl.currentPageIndicatorTintColor = color
     default:
       return
     }
@@ -255,6 +269,18 @@ extension DisplayView {
     case .UITextField:      self.configureTextField(isOn: isOn, of: property)
     case .UIStepper:        self.configureStepper(isOn: isOn, of: property)
     case .UISwitch:         self.configureSwitch(isOn: isOn, of: property)
+    case .UIPageControl:    self.configurePageControl(isOn: isOn, of: property)
+    default:
+      return
+    }
+  }
+  
+  private func configurePageControl(isOn: Bool, of property: String) {
+    guard let pageControl = self.previewObject as? UIPageControl else { return }
+    
+    switch property {
+    case "hidesForSinglePage":
+      pageControl.hidesForSinglePage = isOn
     default:
       return
     }
