@@ -24,14 +24,14 @@ enum UIKitObject: String, CaseIterable, Hashable {
   case UIView
   case UIButton
   case UILabel
+  case UIImageView
+  case UIPageControl
+  case UISegmentedControl
   case UISwitch
   case UIStepper
   case UITextField
   case UITableView
   case UICollectionView
-  case UIImageView
-  case UIPageControl
-  case UISegmentedControl
   
   var objectsWithinInheritance: [Self] {
     guard var currentType = NSClassFromString(self.rawValue) as? UIView.Type else { return [] }
