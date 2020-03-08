@@ -133,7 +133,7 @@ extension SliderCell {
   private func initialSetupToView(for property: String) -> SliderSetup {
     let values: (value: Float, minValue: Float, maxValue: Float)
     switch property {
-    case "alpha":                     values = (0, 0, 1)
+    case "alpha":                     values = (1, 0, 1)
     case "borderWidth":               values = (0, 0, 16)
     case "cornerRadius":              values = (0, 0, 100)
     default:                          values = (0, 0, 0)
