@@ -206,7 +206,9 @@ extension UIKitObject {
     case .UICollectionView:
       guard let collectionViewType = classType as? UICollectionView.Type else { return nil }
       let collectionView = collectionViewType.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-      collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+      collectionView.register(PreviewCollectionViewCell.self)
+      collectionView.register(PreviewCollectionHeaderView.self, kind: .header)
+      collectionView.register(PreviewCollectionFooterView.self, kind: .footer)
       collectionView.backgroundColor = .clear
       return collectionView
     case .UIImageView:

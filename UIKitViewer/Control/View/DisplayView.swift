@@ -471,6 +471,8 @@ extension DisplayView {
     case "minimumInteritemSpacing":     layout.minimumInteritemSpacing = value
     case "minimumLineSpacing":          layout.minimumLineSpacing = value
     case "sectionInset":                layout.sectionInset = .init(top: value, left: value, bottom: value, right: value)
+    case "headerReferenceSize":         layout.headerReferenceSize = CGSize(width: value, height: value)
+    case "footerReferenceSize":         layout.footerReferenceSize = CGSize(width: value, height: value)
     default:
       return
     }
@@ -697,20 +699,37 @@ extension DisplayView: UITableViewDelegate {
 // MARK:- UICollectionViewDataSource
 
 extension DisplayView: UICollectionViewDataSource {
-  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 20
+  
+  private var colors: [UIColor] { return [#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0.7185149789, green: 0.8868054748, blue: 0.8961318135, alpha: 1), #colorLiteral(red: 0.1960784346, green: 0.3411764801, blue: 0.1019607857, alpha: 1)] }
+  
+  func numberOfSections(in collectionView: UICollectionView) -> Int {
+    return 2
   }
   
-  var colorsForItem: UIColor? {
-    get {
-      let colors = [#colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.2196078449, green: 0.007843137719, blue: 0.8549019694, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), #colorLiteral(red: 0.9607843161, green: 0.7058823705, blue: 0.200000003, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 0.6679978967, green: 0.4751212597, blue: 0.2586010993, alpha: 1), #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)]
-      return colors.randomElement()
-    }
+  func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return self.colors.count
   }
+  
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-    cell.backgroundColor = self.colorsForItem
+    guard let cell = collectionView.dequeueCell(PreviewCollectionViewCell.self, indexPath: indexPath) else { return UICollectionViewCell() }
+    cell.setText("Item \(indexPath.item)")
+    cell.backgroundColor = self.colors[indexPath.item]
     return cell
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    let reusableView: UICollectionReusableView
+    if kind.contains("Header") {
+      let header = collectionView.dequeueReusableView(PreviewCollectionHeaderView.self, kind: kind, indexPath: indexPath)
+      header.setText("Header \(indexPath.section)")
+      reusableView = header
+    } else {
+      let footer = collectionView.dequeueReusableView(PreviewCollectionFooterView.self, kind: kind, indexPath: indexPath)
+      footer.setText("Footer \(indexPath.section)")
+      reusableView = footer
+    }
+    reusableView.backgroundColor = self.colors[indexPath.section]
+    return reusableView
   }
 }
 

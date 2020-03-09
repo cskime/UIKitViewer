@@ -163,11 +163,11 @@ extension SliderCell {
     let values: (value: Float, minValue: Float, maxValue: Float)
     switch property {
     case "itemSize":                  values = (50, 20, 80)
-    case "minimumLineSpacing":        values = (10, 10, 32)
-    case "minimumInteritemSpacing":   values = (10, 10, 32)
+    case "minimumLineSpacing":        values = (10, 0, 32)
+    case "minimumInteritemSpacing":   values = (10, 0, 32)
     case "sectionInset":              values = (0, 0, 32)
-    case "headerReferenceSize":       values = (0, 0, 0)
-    case "footerReferenceSize":       values = (0, 0, 0)
+    case "headerReferenceSize":       values = (0, 0, 32)
+    case "footerReferenceSize":       values = (0, 0, 32)
     default:                          values = (0, 0, 0)
     }
     return SliderSetup(value: values.0, minValue: values.1, maxValue: values.2)

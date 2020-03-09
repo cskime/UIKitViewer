@@ -18,6 +18,8 @@
 		AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5076812410CD7B0002DCE9 /* StepperCell.swift */; };
 		AC5A1AF123EC2E6700729CFE /* SelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A1AF023EC2E6700729CFE /* SelectCell.swift */; };
 		ACC64B8F240E2D18007CD967 /* ControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC64B8E240E2D18007CD967 /* ControlModel.swift */; };
+		ACC7153E2416835400D01C31 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC7153D2416835400D01C31 /* PreviewCollectionViewCell.swift */; };
+		ACC71540241684D600D01C31 /* PreviewCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC7153F241684D600D01C31 /* PreviewCollectionReusableView.swift */; };
 		ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4FDC223EFD17D00D6ED22 /* Common.swift */; };
 		ACE1202D23EA7DDF00D484EF /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1202C23EA7DDF00D484EF /* DisplayView.swift */; };
 		ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1203023EA8EE900D484EF /* PaletteCell.swift */; };
@@ -49,6 +51,8 @@
 		AC5076812410CD7B0002DCE9 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		AC5A1AF023EC2E6700729CFE /* SelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCell.swift; sourceTree = "<group>"; };
 		ACC64B8E240E2D18007CD967 /* ControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlModel.swift; sourceTree = "<group>"; };
+		ACC7153D2416835400D01C31 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
+		ACC7153F241684D600D01C31 /* PreviewCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionReusableView.swift; sourceTree = "<group>"; };
 		ACD4FDC223EFD17D00D6ED22 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		ACE1202C23EA7DDF00D484EF /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		ACE1203023EA8EE900D484EF /* PaletteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
@@ -176,6 +180,7 @@
 			children = (
 				ACE13F6A240E22E100376613 /* Model */,
 				AC0B8AB823E982900057EEBC /* View */,
+				ACC7153C2416833800D01C31 /* PreviewCell */,
 				AC3B411D240F931300822398 /* Cell */,
 				ACB74E3223E97F47001AE814 /* Controller */,
 			);
@@ -188,6 +193,15 @@
 				049505C023E84D4E00790D15 /* PropertyControlViewController.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		ACC7153C2416833800D01C31 /* PreviewCell */ = {
+			isa = PBXGroup;
+			children = (
+				ACC7153D2416835400D01C31 /* PreviewCollectionViewCell.swift */,
+				ACC7153F241684D600D01C31 /* PreviewCollectionReusableView.swift */,
+			);
+			path = PreviewCell;
 			sourceTree = "<group>";
 		};
 		ACE13F6A240E22E100376613 /* Model */ = {
@@ -365,6 +379,7 @@
 			files = (
 				AC3B4118240F7D0700822398 /* UIColor+Extension.swift in Sources */,
 				ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */,
+				ACC7153E2416835400D01C31 /* PreviewCollectionViewCell.swift in Sources */,
 				ACE37E6723E43D3400055BFE /* MainViewController.swift in Sources */,
 				AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */,
 				ACC64B8F240E2D18007CD967 /* ControlModel.swift in Sources */,
@@ -372,6 +387,7 @@
 				049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */,
 				AC0B8ABE23E98A700057EEBC /* CellProvider.swift in Sources */,
 				AC3B4116240E87A400822398 /* UITableView+Extension.swift in Sources */,
+				ACC71540241684D600D01C31 /* PreviewCollectionReusableView.swift in Sources */,
 				ACE1202D23EA7DDF00D484EF /* DisplayView.swift in Sources */,
 				ACE1203923EAA81100D484EF /* TextCell.swift in Sources */,
 				ACE13F6F240E257A00376613 /* UIKitObject.swift in Sources */,
