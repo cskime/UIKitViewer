@@ -125,7 +125,10 @@ extension UIKitObject {
     case .UITableView:
       return [
         PropertyInfo(name: "style", controlType: .select),
+        PropertyInfo(name: "separatorStyle", controlType: .select),
         PropertyInfo(name: "separatorColor", controlType: .palette),
+        PropertyInfo(name: "setEditing", controlType: .toggle),
+        PropertyInfo(name: "isEditing", controlType: .toggle),
       ]
     case .UICollectionView:
       return [

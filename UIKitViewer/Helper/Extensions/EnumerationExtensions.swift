@@ -72,6 +72,24 @@ extension UITableView.Style: EnumerationExtension {
   }
 }
 
+extension UITableViewCell.SeparatorStyle {
+  public typealias AllCases = [Self]
+  public static var allCases: [Self] {
+    return [
+      .none,
+      .singleLine
+    ]
+  }
+  var stringRepresentation: String {
+    switch self {
+    case .none:        return "none"
+    case .singleLine:   return "singleLine"
+    default:
+      fatalError("UITableView.SeparatorStyle: Unknown Case")
+    }
+  }
+}
+
 extension UITextField.BorderStyle: EnumerationExtension {
   public typealias AllCases = [Self]
   public static var allCases: [Self] {

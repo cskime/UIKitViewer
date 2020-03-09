@@ -270,6 +270,20 @@ extension DisplayView {
     case .UIStepper:        self.configureStepper(isOn: isOn, of: property)
     case .UISwitch:         self.configureSwitch(isOn: isOn, of: property)
     case .UIPageControl:    self.configurePageControl(isOn: isOn, of: property)
+    case .UITableView:      self.configureTableView(isOn: isOn, of: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureTableView(isOn: Bool, of property: String) {
+    guard let tableView = self.previewObject as? UITableView else { return }
+    
+    switch property {
+    case "setEditing":
+      tableView.setEditing(isOn, animated: true)
+    case "isEditing":
+      tableView.isEditing = isOn
     default:
       return
     }
@@ -483,10 +497,14 @@ extension DisplayView {
   }
   
   private func configureTableView(rawValue: Int, for property: String) {
+    guard let tableView = self.previewObject as? UITableView else { return }
     switch property {
     case "style":
       let style = UITableView.Style(rawValue: rawValue) ?? .plain
       self.replaceTableViewStyle(to: style)
+    case "separatorStyle":
+      let style = UITableViewCell.SeparatorStyle(rawValue: rawValue) ?? .singleLine
+      tableView.separatorStyle = style
     default:
       return
     }
@@ -631,16 +649,16 @@ extension DisplayView: UITableViewDataSource {
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 2
+    return 3
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 2
+    return 3
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell()
-    cell.textLabel?.text = "Section : \(indexPath.section), Row: \(indexPath.row)"
+    cell.textLabel?.text = "Row \(indexPath.row)"
     //    cell.textLabel?.font = .systemFont(ofSize: 12)
     return cell
   }

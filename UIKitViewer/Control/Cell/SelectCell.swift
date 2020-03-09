@@ -84,6 +84,9 @@ class SelectCell: ControlCell {
     case "style":
       initialTitle = UITableView.Style.plain.stringRepresentation
       self.cases = UITableView.Style.allCases.map { $0.stringRepresentation }
+    case "separatorStyle":
+      initialTitle = UITableViewCell.SeparatorStyle.singleLine.stringRepresentation
+      self.cases = UITableViewCell.SeparatorStyle.allCases.map { $0.stringRepresentation }
     case "borderStyle":
       initialTitle = UITextField.BorderStyle.none.stringRepresentation
       self.cases = UITextField.BorderStyle.allCases.map { $0.stringRepresentation }
