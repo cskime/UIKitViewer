@@ -75,3 +75,7 @@ class CellProvider: Then {
     return cell
   }
 }
+
+extension ControlCell {
+  static var requestDisplayedObjectNotification = Notification.Name("requestDisplayedObjectNotification")
+}

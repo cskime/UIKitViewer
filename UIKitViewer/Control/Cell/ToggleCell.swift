@@ -59,14 +59,20 @@ class ToggleCell: ControlCell {
     if let state = ControlModel.shared.value(for: title, of: object) as? Bool {
       self.toggleSwitch.isOn = state
     } else {
-      switch object {
-      case .UICollectionView, .UIView, .UITableView, .UISegmentedControl:
-        self.toggleSwitch.isOn = !title.contains("isHidden") || title.contains("clipsToBounds")
-      default:
-        self.toggleSwitch.isOn = false
+      self.configureDefaultValue(for: title, of: object)
+    }
+  }
+  
+  private func configureDefaultValue(for property: String, of object: UIKitObject) {
+    if property.contains("clipsToBounds") {
+      self.addObserverForDisplay()
+      self.requestForDisplay {
+        ControlModel.shared.setValue(self.toggleSwitch.isOn, for: property, of: object)
+        self.removeObserverForDisplay()
       }
-      
-      ControlModel.shared.setValue(self.toggleSwitch.isOn, for: title, of: object)
+    } else {
+      self.toggleSwitch.isOn = false
+      ControlModel.shared.setValue(self.toggleSwitch.isOn, for: property, of: object)
     }
   }
   
@@ -77,6 +83,34 @@ class ToggleCell: ControlCell {
                                     for: self.currentProperty.name,
                                     of: self.currentObject)
     self.delegate?.cell(self, valueForToggle: sender.isOn)
+  }
+  
+  // MARK: Notification
+  
+  private var requestCompletion: ()->() = { }
+  private func requestForDisplay(completion: @escaping ()->()) {
+    NotificationCenter.default.post(name: ControlCell.requestDisplayedObjectNotification,
+                                    object: self.currentObject)
+    self.requestCompletion = completion
+  }
+      
+  private func addObserverForDisplay() {
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(responseForDisplay(_:)),
+                                           name: self.currentObject.responseDisplayedObjectNotification,
+                                           object: nil)
+  }
+  
+  private func removeObserverForDisplay() {
+    NotificationCenter.default.removeObserver(self,
+                                              name: self.currentObject.responseDisplayedObjectNotification,
+                                              object: nil)
+  }
+  
+  @objc private func responseForDisplay(_ noti: Notification) {
+    guard let object = noti.object as? UIView else { return }
+    self.toggleSwitch.isOn = object.clipsToBounds
+    self.requestCompletion()
   }
   
   required init?(coder: NSCoder) {

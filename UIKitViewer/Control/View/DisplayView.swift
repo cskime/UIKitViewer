@@ -24,6 +24,7 @@ class DisplayView: UIView {
     super.init(frame: .zero)
     self.previewType = objectType
     self.setupUI()
+    self.addObserverForControl()
   }
   
   private func setupUI() {
@@ -100,6 +101,28 @@ class DisplayView: UIView {
   
   @objc private func stepperChanged(_ sender: UIStepper) {
     self.valueDisplay.text = String(format: "%.1f", sender.value)
+  }
+  
+  // MARK: Notification
+
+  private func addObserverForControl() {
+    NotificationCenter.default.addObserver(self,
+                                           selector: #selector(responseForControl(_:)),
+                                           name: ControlCell.requestDisplayedObjectNotification,
+                                           object: nil)
+  }
+  
+  private func removeObserverForControl() {
+    NotificationCenter.default.removeObserver(self,
+                                              name: ControlCell.requestDisplayedObjectNotification,
+                                              object: nil)
+  }
+  
+  @objc private func responseForControl(_ noti: Notification) {
+    guard let object = noti.object as? UIKitObject else { return }
+    NotificationCenter.default.post(name: object.responseDisplayedObjectNotification,
+                                    object: self.previewObject)
+    self.removeObserverForControl()
   }
   
   required init?(coder: NSCoder) {
