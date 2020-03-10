@@ -154,20 +154,19 @@ class StepperCell: ControlCell {
   
   private func postPageControlNotification(userInfo: [String: Double]? = nil) {
     if self.currentProperty.name.contains(userInfo?.keys.first ?? "") {
-      NotificationCenter.default.post(name: self.pageControlNumberOfPagesDidChangeNotification,
+      NotificationCenter.default.post(name: StepperCell.pageControlNumberOfPagesDidChangeNotification,
                                       object: nil,
                                       userInfo: userInfo)
     }
   }
   
-  private let pageControlNumberOfPagesDidChangeNotification = NSNotification.Name(rawValue: "pageControlNumberOfPagesDidChange")
   private func addPageControlObserver(to property: String) {
     if property.contains("currentPage") {
       NotificationCenter
         .default
         .addObserver(self,
                      selector: #selector(updateCurrentPageStepper),
-                     name: self.pageControlNumberOfPagesDidChangeNotification,
+                     name: StepperCell.pageControlNumberOfPagesDidChangeNotification,
                      object: nil)
     }
   }

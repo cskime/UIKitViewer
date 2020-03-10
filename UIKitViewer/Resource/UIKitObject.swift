@@ -53,10 +53,6 @@ enum UIKitObject: String, CaseIterable, Hashable {
     
     return objects
   }
-  
-  var responseDisplayedObjectNotification: Notification.Name {
-    return Notification.Name(rawValue: "\(self).responseDisplayedObjectNotification")
-  }
 }
 
 // MARK:- Properties
