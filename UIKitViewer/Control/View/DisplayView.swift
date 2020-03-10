@@ -66,36 +66,26 @@ class DisplayView: UIView {
     case .UITextField:
       guard let textField = self.previewObject as? UITextField else { return }
       textField.delegate = self
+      self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
     case .UITableView:
       guard let tableView = self.previewObject as? UITableView else { return }
       tableView.dataSource = self
       tableView.delegate = self
     case .UICollectionView:
       guard let collectionView = self.previewObject as? UICollectionView else { return }
+      collectionView.register(PreviewCollectionViewCell.self)
+      collectionView.register(PreviewCollectionHeaderView.self, kind: .header)
+      collectionView.register(PreviewCollectionFooterView.self, kind: .footer)
       collectionView.dataSource = self
       collectionView.delegate = self
     case .UIStepper:
       guard let stepper = self.previewObject as? UIStepper else { return }
       stepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
       self.setupStepperDisplay(stepper)
+    case .UIPageControl:
+      self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
     default:
       return
-    }
-//    self.setupAdditionalConstraint()
-  }
-  
-  private func setupAdditionalConstraint() {
-    self.previewObject.snp.makeConstraints {
-      switch self.previewType {
-      case .UILabel:
-        $0.width.equalToSuperview().dividedBy(2)
-      case .UITextField:
-        $0.width.equalToSuperview().dividedBy(2)
-      case .UIImageView, .UIView, .UITableView, .UICollectionView:
-        $0.size.equalToSuperview().multipliedBy(0.9)
-      default:
-        return
-      }
     }
   }
   

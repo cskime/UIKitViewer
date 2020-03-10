@@ -10,9 +10,13 @@ import UIKit
 
 enum ImageReference {
   static let clearColor = UIImage(named: "ClearColor")
+  enum ObjectThumbnail {
+    static let imageView = UIImage(systemName: "photo")
+  }
 }
 
 enum ColorReference {
+  static let borderColor: UIColor? = #colorLiteral(red: 0.8999999762, green: 0.8999999762, blue: 0.8999999762, alpha: 1)
   static let background: UIColor? = UIColor(red: 242, green: 242, blue: 247)
   static let subText: UIColor = UIColor(red: 130, green: 130, blue: 130)
   

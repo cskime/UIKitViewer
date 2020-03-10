@@ -81,9 +81,7 @@ extension MainViewController: UICollectionViewDataSource {
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueCell(ThumbnailCell.self, indexPath: indexPath) else { return UICollectionViewCell() }
-    cell.configure(title: self.dataSource[indexPath.item].rawValue)
-    return cell
+    return collectionView.dequeueCell(ThumbnailCell.self, indexPath: indexPath) ?? UICollectionViewCell()
   }
 }
 //MARK: - UICollectionViewDelegateFlowLayout
@@ -94,5 +92,15 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
     let object = self.dataSource[indexPath.item]
     let operationVC = PropertyControlViewController(object: object)
     navigationController?.pushViewController(operationVC, animated: true)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    guard let cell = cell as? ThumbnailCell else { return }
+    cell.configure(with: self.dataSource[indexPath.item])
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    guard let cell = cell as? ThumbnailCell else { return }
+    cell.removeThumbnail()
   }
 }

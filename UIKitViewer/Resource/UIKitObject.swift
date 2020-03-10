@@ -174,7 +174,6 @@ extension UIKitObject {
     case .UIView:
       guard let viewType = classType as? UIView.Type else { return nil }
       let view = viewType.init()
-      view.backgroundColor = .gray
       return view
     case .UILabel:
       guard let labelType = classType as? UILabel.Type else { return nil }
@@ -203,27 +202,20 @@ extension UIKitObject {
       return textField
     case .UITableView:
       guard let tableViewType = classType as? UITableView.Type else { return nil }
-      let tableView = tableViewType.init(frame: .zero, style: .plain)
-      return tableView
+      return tableViewType.init(frame: .zero, style: .plain)
     case .UICollectionView:
       guard let collectionViewType = classType as? UICollectionView.Type else { return nil }
-      let collectionView = collectionViewType.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-      collectionView.register(PreviewCollectionViewCell.self)
-      collectionView.register(PreviewCollectionHeaderView.self, kind: .header)
-      collectionView.register(PreviewCollectionFooterView.self, kind: .footer)
-      collectionView.backgroundColor = .clear
-      return collectionView
+      return collectionViewType.init(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     case .UIImageView:
       guard let imageViewType = classType as? UIImageView.Type else { return nil }
       let imageView = imageViewType.init()
-      imageView.image = UIImage(named: "UIImageView")
+      imageView.image = ImageReference.ObjectThumbnail.imageView
       return imageView
     case .UIPageControl:
       guard let pageControlType = classType as? UIPageControl.Type else { return nil }
       let pageControl = pageControlType.init()
       pageControl.numberOfPages = 3
       pageControl.currentPage = 0
-      pageControl.backgroundColor = .gray
       return pageControl
     case .UISegmentedControl:
       guard let segmentedControlType = classType as? UISegmentedControl.Type else { return nil }
