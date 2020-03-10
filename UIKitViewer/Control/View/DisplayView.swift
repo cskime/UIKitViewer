@@ -65,6 +65,8 @@ class DisplayView: UIView {
   
   private func setupAdditionalAttributes() {
     switch self.previewType {
+    case .UISwitch:
+      self.previewObject.isUserInteractionEnabled = false
     case .UITextField:
       guard let textField = self.previewObject as? UITextField else { return }
       textField.delegate = self

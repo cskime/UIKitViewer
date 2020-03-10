@@ -61,6 +61,8 @@ class ToggleCell: ControlCell {
     } else {
       self.configureDefaultValue(for: title, of: object)
     }
+    
+    self.addSwitchObserverr(to: title)
   }
   
   private func configureDefaultValue(for property: String, of object: UIKitObject) {
@@ -83,9 +85,44 @@ class ToggleCell: ControlCell {
                                     for: self.currentProperty.name,
                                     of: self.currentObject)
     self.delegate?.cell(self, valueForToggle: sender.isOn)
+    self.postSwitchIsOnNotification()
   }
   
-  // MARK: Notification
+  // MARK: Notification to Switch isOn
+  
+  private func postSwitchIsOnNotification() {
+    let userInfo: [String: Bool]
+    if self.currentProperty.name.contains("isOn") {
+      userInfo = ["setOn": !self.toggleSwitch.isOn]
+    } else if self.currentProperty.name.contains("setOn") {
+      userInfo = ["isOn": !self.toggleSwitch.isOn]
+    } else {
+      return
+    }
+    NotificationCenter.default.post(name: ToggleCell.switchIsOnDidChangeNotification,
+                                    object: nil,
+                                    userInfo: userInfo)
+  }
+  
+  private func addSwitchObserverr(to property: String) {
+    if property.contains("isOn") || property.contains("setOn") {
+      NotificationCenter.default.addObserver(self,
+                                             selector: #selector(disableSwitchIsOn(_:)),
+                                             name: ToggleCell.switchIsOnDidChangeNotification,
+                                             object: nil)
+    }
+  }
+  
+  @objc private func disableSwitchIsOn(_ noti: Notification) {
+    guard let userInfo = noti.userInfo as? [String: Bool],
+      let targetProperty = userInfo.keys.first,
+      targetProperty.contains(self.currentProperty.name),
+      let isEnabled = userInfo[self.currentProperty.name] else { return }
+    self.toggleSwitch.isEnabled = isEnabled
+  }
+  
+  
+  // MARK: Notification to Display View
   
   private var requestCompletion: ()->() = { }
   private func requestForDisplay(completion: @escaping ()->()) {

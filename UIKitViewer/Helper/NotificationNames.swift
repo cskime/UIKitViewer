@@ -27,3 +27,9 @@ extension StepperCell {
     return Notification.Name(rawValue: "pageControlNumberOfPagesDidChange")
   }
 }
+
+extension ToggleCell {
+  static var switchIsOnDidChangeNotification: Notification.Name {
+    return Notification.Name(rawValue: "switchIsOnDidChangeNotification")
+  }
+}
