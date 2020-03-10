@@ -12,7 +12,7 @@ class PaletteCell: ControlCell {
   
   // MARK: Views
   
-  private let colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.8078431487, green: 0.02745098062, blue: 0.3333333433, alpha: 1), #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1), #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1), #colorLiteral(red: 1, green: 0.3927565978, blue: 0, alpha: 1)]
+  private let colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1), #colorLiteral(red: 1, green: 0.1695385382, blue: 0.0930312496, alpha: 1), #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1), #colorLiteral(red: 0, green: 0.5628422499, blue: 0.3188166618, alpha: 1)]
   private var colorButtons = [UIButton]()
   
   private let propertyLabel = PropertyLabel()
@@ -39,7 +39,6 @@ class PaletteCell: ControlCell {
       }
       self.colorButtons.append(button)
     }
-    self.colorButtons.first?.alpha = 1
     self.setupConstraints()
   }
   
@@ -99,6 +98,7 @@ class PaletteCell: ControlCell {
         self.highlightSelectedButton($0)
       }
     } else {
+      self.highlightSelectedButton(defaultColorButton)
       ControlModel.shared.setValue(defaultColorButton.tag, for: title, of: object)
     }
   }
@@ -160,7 +160,10 @@ class PaletteCell: ControlCell {
   }
   
   private func highlightSelectedButton(_ sender: UIButton) {
-    self.colorButtons.forEach { $0.alpha = $0.tag == sender.tag ? 1 : UI.deselectedAlpha }
+    self.colorButtons.forEach {
+      $0.alpha = $0.tag == sender.tag ? 1 : UI.deselectedAlpha
+      $0.transform = $0.tag == sender.tag ? .init(scaleX: 1.2, y: 1.2) : .identity
+    }
   }
   
 }
