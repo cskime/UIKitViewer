@@ -131,11 +131,19 @@ class PaletteCell: ControlCell {
     case "onTintColor":
       return defaultColor.Switch.onTintColor
     case "thumbTintColor":
-      return defaultColor.Switch.thumbTintColor
+      if self.currentObject == .UISwitch {
+        return defaultColor.Switch.thumbTintColor
+      } else {
+        return defaultColor.Slider.thumbTintColor
+      }
     case "pageIndicatorTintColor":
       return defaultColor.PageControl.pageIndicatorTintColor
     case "currentPageIndicatorTintColor":
       return defaultColor.PageControl.currentPageIndicatorTintColor
+    case "minimumTrackTintColor":
+      return defaultColor.Slider.minimumTrackTintColor
+    case "maximumTrackTintColor":
+      return defaultColor.Slider.maximumTrackTintColor
     default:
       return .clear
     }

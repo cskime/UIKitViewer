@@ -125,6 +125,8 @@ class ThumbnailCell: UICollectionViewCell {
       `switch`.isOn = true
     } else if let textField = object as? UITextField {
       textField.borderStyle = .roundedRect
+    } else if let slider = object as? UISlider {
+      slider.value = 0.4
     }
   }
 }

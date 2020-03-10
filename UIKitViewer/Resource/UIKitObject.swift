@@ -200,9 +200,6 @@ extension UIKitObject {
     case .UISlider:
       guard let sliderType = classType as? UISlider.Type else { return nil }
       let slider = sliderType.init()
-      slider.minimumValue = 0
-      slider.maximumValue = 1
-      slider.value = 0.4
       return slider
     case .UIStepper:
       guard let stepperType = classType as? UIStepper.Type else { return nil }

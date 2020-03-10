@@ -43,6 +43,11 @@ enum ColorReference {
       static let onTintColor: UIColor = #colorLiteral(red: 0.1191028133, green: 0.7923710942, blue: 0.3873175979, alpha: 1)
       static let thumbTintColor: UIColor = .white
     }
+    enum Slider {
+      static let thumbTintColor: UIColor = .white
+      static let minimumTrackTintColor: UIColor = #colorLiteral(red: 0, green: 0.5383808613, blue: 1, alpha: 1)
+      static let maximumTrackTintColor: UIColor = #colorLiteral(red: 0.9075521827, green: 0.908038497, blue: 0.9146741629, alpha: 1)
+    }
     enum TextField {
       static let textColor: UIColor = .black
     }
