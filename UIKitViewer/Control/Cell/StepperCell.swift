@@ -110,9 +110,9 @@ class StepperCell: ControlCell {
     case "numberOfPages":
       self.setupStepper(value: 3, minValue: 0, maxValue: 7)
     case "minimumValue":
-      self.setupStepper(value: 0, minValue: 0, maxValue: 5)
+      self.setupStepper(value: 0, minValue: -5, maxValue: 5)
     case "maximumValue":
-      self.setupStepper(value: 5, minValue: 0, maxValue: 5)
+      self.setupStepper(value: 5, minValue: -5, maxValue: 5)
     case "stepValue":
       self.setupStepper(value: 1, minValue: 0.2, maxValue: 1)
       self.stepper.stepValue = 0.2
