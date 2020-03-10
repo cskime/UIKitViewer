@@ -62,7 +62,7 @@ class ToggleCell: ControlCell {
       self.configureDefaultValue(for: title, of: object)
     }
     
-    self.addSwitchObserverr(to: title)
+    self.addSwitchObserver(to: title)
   }
   
   private func configureDefaultValue(for property: String, of object: UIKitObject) {
@@ -104,7 +104,7 @@ class ToggleCell: ControlCell {
                                     userInfo: userInfo)
   }
   
-  private func addSwitchObserverr(to property: String) {
+  private func addSwitchObserver(to property: String) {
     if property.contains("isOn") || property.contains("setOn") {
       NotificationCenter.default.addObserver(self,
                                              selector: #selector(disableSwitchIsOn(_:)),
