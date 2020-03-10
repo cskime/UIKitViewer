@@ -28,6 +28,7 @@ enum UIKitObject: String, CaseIterable, Hashable {
   case UIPageControl
   case UISegmentedControl
   case UISwitch
+  case UISlider
   case UIStepper
   case UITextField
   case UITableView
@@ -97,6 +98,16 @@ extension UIKitObject {
         PropertyInfo(name: "setOn", controlType: .toggle),
         PropertyInfo(name: "onTintColor", controlType: .palette),
         PropertyInfo(name: "thumbTintColor", controlType: .palette)
+      ]
+    case .UISlider:
+      return [
+        PropertyInfo(name: "minimumValue", controlType: .stepper),
+        PropertyInfo(name: "maximumValue", controlType: .stepper),
+        PropertyInfo(name: "minimumValueImage", controlType: .toggle),
+        PropertyInfo(name: "maximumValueImage", controlType: .toggle),
+        PropertyInfo(name: "thumbTintColor", controlType: .palette),
+        PropertyInfo(name: "minimumTrackTintColor", controlType: .palette),
+        PropertyInfo(name: "maximumTrackTintColor", controlType: .palette),
       ]
     case .UIStepper:
       return [
@@ -186,6 +197,13 @@ extension UIKitObject {
       let `switch` = switchType.init()
       `switch`.isOn = false
       return `switch`
+    case .UISlider:
+      guard let sliderType = classType as? UISlider.Type else { return nil }
+      let slider = sliderType.init()
+      slider.minimumValue = 0
+      slider.maximumValue = 1
+      slider.value = 0.4
+      return slider
     case .UIStepper:
       guard let stepperType = classType as? UIStepper.Type else { return nil }
       let stepper = stepperType.init()

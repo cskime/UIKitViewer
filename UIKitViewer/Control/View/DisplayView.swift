@@ -51,6 +51,8 @@ class DisplayView: UIView {
         $0.width.equalToSuperview().dividedBy(2)
       case .UITextField:
         $0.width.equalToSuperview().dividedBy(2)
+      case .UISlider:
+        $0.width.equalToSuperview().dividedBy(1.5)
       case .UIImageView, .UIView, .UITableView, .UICollectionView:
         $0.size.equalToSuperview().multipliedBy(0.9)
       default:
@@ -81,7 +83,11 @@ class DisplayView: UIView {
     case .UIStepper:
       guard let stepper = self.previewObject as? UIStepper else { return }
       stepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
-      self.setupStepperDisplay(stepper)
+      self.setupValueMonitor(value: stepper.value.description)
+    case .UISlider:
+      guard let slider = self.previewObject as? UISlider else { return }
+      slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
+      self.setupValueMonitor(value: slider.value.description)
     case .UIPageControl:
       self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
     default:
@@ -89,9 +95,9 @@ class DisplayView: UIView {
     }
   }
   
-  private func setupStepperDisplay(_ stepper: UIStepper) {
+  private func setupValueMonitor(value: String) {
     self.addSubview(self.valueDisplay)
-    self.valueDisplay.text = stepper.value.description
+    self.valueDisplay.text = value
     self.valueDisplay.snp.makeConstraints {
       $0.centerX.equalTo(self.previewObject)
       $0.bottom.equalTo(self.previewObject.snp.top).offset(-8)
@@ -101,6 +107,10 @@ class DisplayView: UIView {
   // MARK: Actions
   
   @objc private func stepperChanged(_ sender: UIStepper) {
+    self.valueDisplay.text = String(format: "%.1f", sender.value)
+  }
+  
+  @objc private func sliderChanged(_ sender: UISlider) {
     self.valueDisplay.text = String(format: "%.1f", sender.value)
   }
   
@@ -196,9 +206,22 @@ extension DisplayView {
     case .UIButton:           self.configureButton(color: color, for: property)
     case .UILabel:            self.configureLabel(color: color, for: property)
     case .UISwitch:           self.configureSwitch(color: color, for: property)
+    case .UISlider:           self.configureSlider(color: color, for: property)
     case .UITextField:        self.configureTextField(color: color, for: property)
     case .UITableView:        self.configureTableView(color: color, for: property)
     case .UIPageControl:      self.configurePageControl(color: color, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureSlider(color: UIColor?, for property: String) {
+    guard let slider = self.previewObject as? UISlider else { return }
+    
+    switch property {
+    case "thumbTintColor":                slider.thumbTintColor = color
+    case "minimumTrackTintColor":         slider.minimumTrackTintColor = color
+    case "maximumTrackTintColor":         slider.maximumTrackTintColor = color
     default:
       return
     }
@@ -292,10 +315,24 @@ extension DisplayView {
     case .UILabel:          self.configureLabel(isOn: isOn, of: property)
     case .UITextField:      self.configureTextField(isOn: isOn, of: property)
     case .UIStepper:        self.configureStepper(isOn: isOn, of: property)
+    case .UISlider:         self.configureSlider(isOn: isOn, of: property)
     case .UISwitch:         self.configureSwitch(isOn: isOn, of: property)
     case .UIPageControl:    self.configurePageControl(isOn: isOn, of: property)
     case .UITableView:      self.configureTableView(isOn: isOn, of: property)
     case .UICollectionView: self.configureCollectionView(isOn: isOn, of: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureSlider(isOn: Bool, of property: String) {
+    guard let slider = self.previewObject as? UISlider else { return }
+    
+    switch property {
+    case "minimumValueImage":
+      slider.minimumValueImage = isOn ? ImageReference.minus : nil
+    case "maximumValueImage":
+      slider.maximumValueImage = isOn ? ImageReference.plus : nil
     default:
       return
     }
@@ -633,9 +670,23 @@ extension DisplayView {
     case .UIPageControl:    self.configurePageControl(value: Int(value), for: property)
     case .UILabel:          self.configureLabel(value: Int(value), for: property)
     case .UIStepper:        self.configureStepper(value: value, of: property)
+    case .UISlider:         self.configureSlider(value: Float(value), of: property)
     default:
       return
     }
+  }
+  
+  private func configureSlider(value: Float, of property: String) {
+    guard let slider = self.previewObject as? UISlider else { return }
+    
+    switch property {
+    case "minimumValue":    slider.minimumValue = value
+    case "maximumValue":    slider.maximumValue = value
+    default:
+      return
+    }
+    
+    self.valueDisplay.text = String(format: "%.1f", slider.value)
   }
   
   private func configureStepper(value: Double, of property: String) {

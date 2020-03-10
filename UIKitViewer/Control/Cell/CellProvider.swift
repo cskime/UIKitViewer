@@ -69,9 +69,9 @@ class CellProvider: Then {
     
     self.tableView.register(controlType.cell)
     guard let cell = self.tableView.dequeueCell(controlType.cell) else { return UITableViewCell() }
+    cell.delegate = self.delegate
     cell.configure(object: objectInfo.object, property: propertyInfo)
     cell.configureContents()
-    cell.delegate = self.delegate
     return cell
   }
 }

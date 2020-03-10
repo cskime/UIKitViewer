@@ -20,6 +20,7 @@
 		ACC64B8F240E2D18007CD967 /* ControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC64B8E240E2D18007CD967 /* ControlModel.swift */; };
 		ACC7153E2416835400D01C31 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC7153D2416835400D01C31 /* PreviewCollectionViewCell.swift */; };
 		ACC71540241684D600D01C31 /* PreviewCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC7153F241684D600D01C31 /* PreviewCollectionReusableView.swift */; };
+		ACC715422417B11B00D01C31 /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC715412417B11B00D01C31 /* NotificationNames.swift */; };
 		ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD4FDC223EFD17D00D6ED22 /* Common.swift */; };
 		ACE1202D23EA7DDF00D484EF /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1202C23EA7DDF00D484EF /* DisplayView.swift */; };
 		ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1203023EA8EE900D484EF /* PaletteCell.swift */; };
@@ -53,6 +54,7 @@
 		ACC64B8E240E2D18007CD967 /* ControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlModel.swift; sourceTree = "<group>"; };
 		ACC7153D2416835400D01C31 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		ACC7153F241684D600D01C31 /* PreviewCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionReusableView.swift; sourceTree = "<group>"; };
+		ACC715412417B11B00D01C31 /* NotificationNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationNames.swift; sourceTree = "<group>"; };
 		ACD4FDC223EFD17D00D6ED22 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		ACE1202C23EA7DDF00D484EF /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		ACE1203023EA8EE900D484EF /* PaletteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaletteCell.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 			children = (
 				ACD4FDC223EFD17D00D6ED22 /* Common.swift */,
 				AC3B4113240E812600822398 /* Identifiable.swift */,
+				ACC715412417B11B00D01C31 /* NotificationNames.swift */,
 				ACE13F6B240E22F400376613 /* Extensions */,
 			);
 			path = Helper;
@@ -394,6 +397,7 @@
 				ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */,
 				AC0B8ABC23E987820057EEBC /* SliderCell.swift in Sources */,
 				AC5A1AF123EC2E6700729CFE /* SelectCell.swift in Sources */,
+				ACC715422417B11B00D01C31 /* NotificationNames.swift in Sources */,
 				AC3B411C240F88D000822398 /* PropertyLabel.swift in Sources */,
 				ACE37E6323E43D3400055BFE /* AppDelegate.swift in Sources */,
 				ACE13F6D240E236500376613 /* MainModel.swift in Sources */,

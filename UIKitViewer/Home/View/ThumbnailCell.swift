@@ -79,7 +79,7 @@ class ThumbnailCell: UICollectionViewCell {
       layout.minimumLineSpacing = 8
       layout.minimumInteritemSpacing = 8
       collectionView.collectionViewLayout = layout
-    case .UITextField:
+    case .UITextField, .UISlider:
       self.constraintToCenter(previewObject)
       previewObject.snp.makeConstraints {
         $0.width.equalTo(self.contentView.snp.width).dividedBy(2)
