@@ -294,6 +294,19 @@ extension DisplayView {
     case .UISwitch:         self.configureSwitch(isOn: isOn, of: property)
     case .UIPageControl:    self.configurePageControl(isOn: isOn, of: property)
     case .UITableView:      self.configureTableView(isOn: isOn, of: property)
+    case .UICollectionView: self.configureCollectionView(isOn: isOn, of: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureCollectionView(isOn: Bool, of property: String) {
+    guard let collectionView = self.previewObject as? UICollectionView,
+      let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+    
+    switch property {
+    case "sectionHeadersPinToVisibleBounds":      layout.sectionHeadersPinToVisibleBounds = isOn
+    case "sectionFootersPinToVisibleBounds":      layout.sectionFootersPinToVisibleBounds = isOn
     default:
       return
     }

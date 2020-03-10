@@ -142,6 +142,8 @@ extension UIKitObject {
         PropertyInfo(name: "collectionViewLayout.sectionInset", controlType: .slider),
         PropertyInfo(name: "collectionViewLayout.headerReferenceSize", controlType: .slider),
         PropertyInfo(name: "collectionViewLayout.footerReferenceSize", controlType: .slider),
+        PropertyInfo(name: "collectionViewLayout.sectionHeadersPinToVisibleBounds", controlType: .toggle),
+        PropertyInfo(name: "collectionViewLayout.sectionFootersPinToVisibleBounds", controlType: .toggle),
       ]
     case .UIImageView:
       return [
