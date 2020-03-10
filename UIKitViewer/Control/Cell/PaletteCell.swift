@@ -28,17 +28,18 @@ class PaletteCell: ControlCell {
   }
   
   private func setupUI() {
-    self.colors.forEach { (color) in
+    self.colors.enumerated().forEach { (index, color) in
       let button = UIButton().then { (button) in
+        button.tag = index + 10
         button.backgroundColor = color
+        button.alpha = UI.deselectedAlpha
         button.addTarget(self, action: #selector(paletteTouched(_:)), for: .touchUpInside)
         button.layer.cornerRadius = 8
         button.clipsToBounds = true
       }
       self.colorButtons.append(button)
     }
-    self.colorButtons.first?.setBackgroundImage(UIImage(named: "ClearColor"), for: .normal)
-    self.colorButtons.first?.layer.borderWidth = 0.8
+    self.colorButtons.first?.alpha = 1
     self.setupConstraints()
   }
   
@@ -46,20 +47,27 @@ class PaletteCell: ControlCell {
     static let paddingY: CGFloat = 8
     static let paddingX: CGFloat = 20
     static let spacing: CGFloat = 8
+    static let deselectedAlpha: CGFloat = 0.3
+  }
+  private let stackView = UIStackView().then {
+    $0.axis = .horizontal
+    $0.alignment = .fill
+    $0.distribution = .fillProportionally
+    $0.spacing = 20
   }
   private func setupConstraints() {
-    let stackView = UIStackView().then {
-      $0.axis = .horizontal
-      $0.alignment = .fill
-      $0.distribution = .fillEqually
-      $0.spacing = 24
-    }
-    colorButtons.forEach {
+    self.colorButtons.forEach {
       stackView.addArrangedSubview($0)
       $0.widthAnchor.constraint(equalTo: $0.heightAnchor, multiplier: 1.0).isActive = true
     }
     
-    [self.propertyLabel, stackView].forEach { self.contentView.addSubview($0) }
+    let divider = UIView().then {
+      $0.backgroundColor = .gray
+    }
+    self.stackView.insertArrangedSubview(divider, at: 1)
+    divider.snp.makeConstraints { $0.width.equalTo(1) }
+    
+    [self.propertyLabel, self.stackView].forEach { self.contentView.addSubview($0) }
     
     self.propertyLabel.snp.makeConstraints {
       $0.top.leading
@@ -67,7 +75,7 @@ class PaletteCell: ControlCell {
         .inset(UIEdgeInsets(top: UI.paddingY, left: UI.paddingX, bottom: 0, right: 0))
     }
     
-    stackView.snp.makeConstraints {
+    self.stackView.snp.makeConstraints {
       $0.top.equalTo(self.propertyLabel.snp.bottom).offset(UI.spacing)
       $0.leading.equalTo(self.propertyLabel).offset(UI.spacing)
       $0.trailing.bottom
@@ -76,20 +84,75 @@ class PaletteCell: ControlCell {
     }
   }
   
-  // MARK: Actions
-  
-  @objc private func paletteTouched(_ sender: UIButton) {
-    self.delegate?.cell(self, valueForColor: sender.backgroundColor)
-  }
-  
   // MARK: Interface
   
   override func configureContents() {
-    self.propertyLabel.configure(name: self.currentProperty.name)
+    let title = self.currentProperty.name
+    let object = self.currentObject
+    self.propertyLabel.configure(name: title)
+    
+    guard let defaultColorButton = self.colorButtons.first else { return }
+    self.initializeDefaultColor(to: defaultColorButton)
+    
+    if let selectedTag = ControlModel.shared.value(for: title, of: object) as? Int {
+      self.colorButtons.filter { $0.tag == selectedTag }.forEach {
+        self.highlightSelectedButton($0)
+      }
+    } else {
+      ControlModel.shared.setValue(defaultColorButton.tag, for: title, of: object)
+    }
   }
   
-  func relates(to propertyName: String) -> Bool {
-    return self.propertyLabel.property.contains(propertyName)
+  private func initializeDefaultColor(to button: UIButton) {
+    let defaultColor = self.defaultColor(ColorReference.Default.self)
+    button.backgroundColor = defaultColor
+    let clearImage = defaultColor == .clear ? ImageReference.clearColor : nil
+    button.setBackgroundImage(clearImage, for: .normal)
+    let hasBorderWidth = (defaultColor == .clear) ||
+      (defaultColor == .white) ||
+      (defaultColor == ColorReference.Default.PageControl.pageIndicatorTintColor)
+    button.layer.borderWidth = hasBorderWidth ? 0.8 : 0
+  }
+  
+  private func defaultColor(_ defaultColor: ColorReference.Default.Type) -> UIColor {
+    switch self.currentProperty.name {
+    case "backgroundColor":
+      return defaultColor.View.backgroundColor
+    case "tintColor":
+      return defaultColor.View.tintColor
+    case "layer.borderColor":
+      return defaultColor.View.borderColor
+    case "setTitleColor":
+      return defaultColor.Button.titleColor
+    case "textColor":
+      return defaultColor.Label.textColor
+    case "separatorColor":
+      return defaultColor.TableView.separatorColor
+    case "onTintColor":
+      return defaultColor.Switch.onTintColor
+    case "thumbTintColor":
+      return defaultColor.Switch.thumbTintColor
+    case "pageIndicatorTintColor":
+      return defaultColor.PageControl.pageIndicatorTintColor
+    case "currentPageIndicatorTintColor":
+      return defaultColor.PageControl.currentPageIndicatorTintColor
+    default:
+      return .clear
+    }
+  }
+  
+  // MARK: Actions
+  
+  @objc private func paletteTouched(_ sender: UIButton) {
+    self.highlightSelectedButton(sender)
+    self.delegate?.cell(self, valueForColor: sender.backgroundColor)
+    ControlModel.shared.updateValue(sender.tag,
+                                    for: self.currentProperty.name,
+                                    of: self.currentObject)
+  }
+  
+  private func highlightSelectedButton(_ sender: UIButton) {
+    self.colorButtons.forEach { $0.alpha = $0.tag == sender.tag ? 1 : UI.deselectedAlpha }
   }
   
 }

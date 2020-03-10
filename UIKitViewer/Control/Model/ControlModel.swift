@@ -85,10 +85,8 @@ class ControlModel {
     case is StepperSetup:
       guard let newValue = value as? StepperSetup else { return }
       self.controlValues[object]![property] = newValue
-    case is Bool, is String:
-      self.controlValues[object]![property] = value
     default:
-      return
+      self.controlValues[object]![property] = value
     }
   }
   
