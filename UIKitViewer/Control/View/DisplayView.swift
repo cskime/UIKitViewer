@@ -45,6 +45,17 @@ class DisplayView: UIView {
     self.addSubview(self.previewObject)
     self.previewObject.snp.makeConstraints {
       $0.center.equalToSuperview()
+      
+      switch self.previewType {
+      case .UILabel:
+        $0.width.equalToSuperview().dividedBy(2)
+      case .UITextField:
+        $0.width.equalToSuperview().dividedBy(2)
+      case .UIImageView, .UIView, .UITableView, .UICollectionView:
+        $0.size.equalToSuperview().multipliedBy(0.9)
+      default:
+        return
+      }
     }
     
     self.setupAdditionalAttributes()
@@ -70,7 +81,7 @@ class DisplayView: UIView {
     default:
       return
     }
-    self.setupAdditionalConstraint()
+//    self.setupAdditionalConstraint()
   }
   
   private func setupAdditionalConstraint() {
