@@ -36,7 +36,7 @@ class DisplayView: UIView {
     self.layer.cornerRadius = 8
     self.layer.borderWidth = 1
     self.layer.borderColor = UIColor.lightGray.cgColor
-    self.backgroundColor = .white
+    self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
     self.clipsToBounds = true
   }
   
@@ -47,13 +47,13 @@ class DisplayView: UIView {
       $0.center.equalToSuperview()
       
       switch self.previewType {
-      case .UILabel:
-        $0.width.equalToSuperview().dividedBy(2)
-      case .UITextField:
+      case .UILabel, .UITextField:
         $0.width.equalToSuperview().dividedBy(2)
       case .UISlider:
         $0.width.equalToSuperview().dividedBy(1.5)
-      case .UIImageView, .UIView, .UITableView, .UICollectionView:
+      case .UIImageView, .UIView:
+        $0.size.equalToSuperview().multipliedBy(0.7)
+      case .UITableView, .UICollectionView:
         $0.size.equalToSuperview().multipliedBy(0.9)
       default:
         return
