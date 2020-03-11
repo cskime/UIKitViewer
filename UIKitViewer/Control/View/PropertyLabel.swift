@@ -38,7 +38,7 @@ class PropertyLabel: UIStackView {
   }
   
   private let ownerName = UILabel().then {
-    $0.font = .systemFont(ofSize: 16)
+    $0.font = .systemFont(ofSize: 14)
     $0.textColor = ColorReference.subText
   }
   
@@ -50,7 +50,7 @@ class PropertyLabel: UIStackView {
   }
   
   private func setupUI() {
-    [self.propertyName, self.ownerName].forEach {
+    [self.ownerName, self.propertyName].forEach {
       self.addArrangedSubview($0)
     }
     
