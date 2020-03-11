@@ -12,7 +12,7 @@ class PaletteCell: ControlCell {
   
   // MARK: Views
   
-  private let colors = [#colorLiteral(red: 0, green: 0, blue: 0, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1), #colorLiteral(red: 1, green: 0.1695385382, blue: 0.0930312496, alpha: 1), #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1), #colorLiteral(red: 0, green: 0.5628422499, blue: 0.3188166618, alpha: 1)]
+  private let colors: [UIColor] = [.clear, .black, .white, .red, .green, .blue]
   private var colorButtons = [UIButton]()
   
   private let propertyLabel = PropertyLabel()
@@ -32,10 +32,10 @@ class PaletteCell: ControlCell {
       let button = UIButton().then { (button) in
         button.tag = index + 10
         button.backgroundColor = color
-        button.alpha = UI.deselectedAlpha
         button.addTarget(self, action: #selector(paletteTouched(_:)), for: .touchUpInside)
         button.layer.cornerRadius = 8
         button.clipsToBounds = true
+        button.layer.borderWidth = color == .white ? 0.5 : 0
       }
       self.colorButtons.append(button)
     }
@@ -52,7 +52,7 @@ class PaletteCell: ControlCell {
     $0.axis = .horizontal
     $0.alignment = .fill
     $0.distribution = .fillProportionally
-    $0.spacing = 20
+    $0.spacing = 24
   }
   private func setupConstraints() {
     self.colorButtons.forEach {
@@ -111,7 +111,7 @@ class PaletteCell: ControlCell {
     let hasBorderWidth = (defaultColor == .clear) ||
       (defaultColor == .white) ||
       (defaultColor == ColorReference.Default.PageControl.pageIndicatorTintColor)
-    button.layer.borderWidth = hasBorderWidth ? 0.8 : 0
+    button.layer.borderWidth = hasBorderWidth ? 0.5 : 0
   }
   
   private func defaultColor(_ defaultColor: ColorReference.Default.Type) -> UIColor {
@@ -161,8 +161,7 @@ class PaletteCell: ControlCell {
   
   private func highlightSelectedButton(_ sender: UIButton) {
     self.colorButtons.forEach {
-      $0.alpha = $0.tag == sender.tag ? 1 : UI.deselectedAlpha
-      $0.transform = $0.tag == sender.tag ? .init(scaleX: 1.2, y: 1.2) : .identity
+      $0.transform = $0.tag == sender.tag ? .init(scaleX: 1.3, y: 1.3) : .identity
     }
   }
   
