@@ -220,7 +220,7 @@ extension UIKitObject {
     case .UIImageView:
       guard let imageViewType = classType as? UIImageView.Type else { return nil }
       let imageView = imageViewType.init()
-      imageView.image = ImageReference.ObjectThumbnail.imageView
+      imageView.image = ImageReference.dummy
       return imageView
     case .UIPageControl:
       guard let pageControlType = classType as? UIPageControl.Type else { return nil }

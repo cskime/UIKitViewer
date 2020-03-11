@@ -413,7 +413,7 @@ extension DisplayView {
   
   private func configureButton(isOn: Bool, of property: String) {
     guard let button = self.previewObject as? UIButton else { return }
-    let image: UIImage? = isOn ? UIImage(named: "UIImageView") : nil
+    let image: UIImage? = isOn ? ImageReference.dummy : nil
     
     switch property {
     case "setImage":              button.setImage(image, for: .normal)
@@ -425,7 +425,7 @@ extension DisplayView {
   
   private func configureStepper(isOn: Bool, of property: String) {
     guard let stepper = self.previewObject as? UIStepper else { return }
-    let image: UIImage? = isOn ? UIImage(named: "UIImageView") : nil
+    let image: UIImage? = isOn ? ImageReference.dummy : nil
     
     switch property {
     case "wraps":                 stepper.wraps = isOn

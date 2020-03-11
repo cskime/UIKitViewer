@@ -87,7 +87,8 @@ class ThumbnailCell: UICollectionViewCell {
     case .UIImageView:
       self.constraintToFit(previewObject)
       guard let imageView = previewObject as? UIImageView else { return }
-      imageView.image = ImageReference.ObjectThumbnail.imageView
+      imageView.contentMode = .scaleAspectFit
+      imageView.image = ImageReference.dummy
     default:
       self.constraintToFit(previewObject)
     }

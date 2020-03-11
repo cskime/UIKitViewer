@@ -9,13 +9,10 @@
 import UIKit
 
 enum ImageReference {
+  static let dummy = UIImage(named: "DummyImage")
   static let clearColor = UIImage(named: "ClearColor")
   static let minus = UIImage(systemName: "minus")
   static let plus = UIImage(systemName: "plus")
-  
-  enum ObjectThumbnail {
-    static let imageView = UIImage(systemName: "photo")
-  }
 }
 
 enum ColorReference {
