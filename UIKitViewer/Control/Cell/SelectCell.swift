@@ -102,6 +102,9 @@ class SelectCell: ControlCell {
     case "textAlignment":
       initialTitle = NSTextAlignment.left.stringRepresentation
       self.cases = NSTextAlignment.allCases.map { $0.stringRepresentation }
+    case "scrollDirection":
+      initialTitle = UICollectionView.ScrollDirection.vertical.stringRepresentation
+      self.cases = UICollectionView.ScrollDirection.allCases.map { $0.stringRepresentation }
     default:
       initialTitle = ""
     }

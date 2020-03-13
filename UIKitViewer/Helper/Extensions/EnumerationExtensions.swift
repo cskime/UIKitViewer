@@ -213,3 +213,22 @@ extension NSTextAlignment: EnumerationExtension {
     }
   }
 }
+
+extension UICollectionView.ScrollDirection {
+  public typealias AllCases = [Self]
+  public static var allCases: [Self] {
+    return [
+      .vertical,
+      .horizontal
+    ]
+  }
+  
+  var stringRepresentation: String {
+    switch self {
+    case .vertical:             return "vertical"
+    case .horizontal:           return "horizontal"
+    @unknown default:
+      fatalError("NSTextAlignment: Unknown Case")
+    }
+  }
+}

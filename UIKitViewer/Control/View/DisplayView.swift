@@ -545,6 +545,20 @@ extension DisplayView {
     case .UITextField:      self.configureTextField(rawValue: rawValue, for: property)
     case .UIButton:         self.configureButton(rawValue: rawValue, for: property)
     case .UILabel:          self.configureLabel(rawValue: rawValue, for: property)
+    case .UICollectionView: self.configureCollectionView(rawValue: rawValue, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureCollectionView(rawValue: Int, for property: String) {
+    guard let collectionView = self.previewObject as? UICollectionView,
+    let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
+    
+    switch property {
+    case "scrollDirection":
+      let direction = UICollectionView.ScrollDirection(rawValue: rawValue) ?? .vertical
+      flowLayout.scrollDirection = direction
     default:
       return
     }

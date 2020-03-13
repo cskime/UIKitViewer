@@ -143,6 +143,7 @@ extension UIKitObject {
       ]
     case .UICollectionView:
       return [
+        PropertyInfo(name: "collectionViewLayout.scrollDirection", controlType: .select),
         PropertyInfo(name: "collectionViewLayout.itemSize", controlType: .slider),
         PropertyInfo(name: "collectionViewLayout.minimumLineSpacing", controlType: .slider),
         PropertyInfo(name: "collectionViewLayout.minimumInteritemSpacing",controlType: .slider),
