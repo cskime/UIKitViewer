@@ -10,7 +10,7 @@ import UIKit
 
 enum ImageReference {
   static let dummy = UIImage(named: "DummyImage")
-  static let clearColor = UIImage(named: "ClearColor")
+  static let clearColor = UIImage(named: "clearcolor")
   static let minus = UIImage(systemName: "minus")
   static let plus = UIImage(systemName: "plus")
 }

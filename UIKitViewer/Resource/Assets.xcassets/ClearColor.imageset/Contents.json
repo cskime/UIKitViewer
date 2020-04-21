@@ -5,18 +5,18 @@
       "scale" : "1x"
     },
     {
+      "filename" : "clearcolor.png",
       "idiom" : "universal",
-      "filename" : "ClearColor.png",
       "scale" : "2x"
     },
     {
+      "filename" : "clearcolor-1.png",
       "idiom" : "universal",
-      "filename" : "ClearColor-1.png",
       "scale" : "3x"
     }
   ],
   "info" : {
-    "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "version" : 1
   }
 }

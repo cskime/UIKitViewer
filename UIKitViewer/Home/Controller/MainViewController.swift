@@ -60,7 +60,7 @@ final class MainViewController: UIViewController {
   private func setupAttributes() {
     self.view.backgroundColor = .systemBackground
     self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-    self.navigationItem.title = "UIKit Viewer"
+    self.navigationItem.title = "UIKit"
     collectionView.dataSource = self
     collectionView.delegate = self
   }
