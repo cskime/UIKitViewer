@@ -33,6 +33,7 @@ enum UIKitObject: String, CaseIterable, Hashable {
   case UITextField
   case UITableView
   case UICollectionView
+  case UIActivityIndicatorView
   
   var objectsWithinInheritance: [Self] {
     guard var currentType = NSClassFromString(self.rawValue) as? UIView.Type else { return [] }
@@ -167,6 +168,14 @@ extension UIKitObject {
     case .UISegmentedControl:
       return [
       ]
+    case .UIActivityIndicatorView:
+      return [
+        PropertyInfo(name: "startAnimating", controlType: .methodCall),
+        PropertyInfo(name: "stopAnimating", controlType: .methodCall),
+        PropertyInfo(name: "hidesWhenStopped", controlType: .toggle),
+        PropertyInfo(name: "style", controlType: .select),
+        PropertyInfo(name: "color", controlType: .palette)
+      ]
     }
   }
 }
@@ -234,6 +243,10 @@ extension UIKitObject {
       let segmentedControl = segmentedControlType.init(items: ["First", "Second"])
       segmentedControl.selectedSegmentIndex = 0
       return segmentedControl
+    case .UIActivityIndicatorView:
+      guard let activityIndicatorType = classType as? UIActivityIndicatorView.Type else { return nil }
+      let activityIndicator = activityIndicatorType.init()
+      return activityIndicator
     }
   }
   

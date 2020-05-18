@@ -20,7 +20,7 @@ class PropertyControlViewController: UIViewController {
 
   private lazy var tableView = UITableView(frame: .zero, style: .grouped).then {
     $0.dataSource = self
-    $0.allowsSelection = false
+    $0.delegate = self
   }
   private var displayView: DisplayView!
 
@@ -105,7 +105,14 @@ extension PropertyControlViewController: UITableViewDataSource {
     let cell = self.cellProvider.createCell(with: objectInfo, for: indexPath)
     return cell
   }
+}
 
+// MARK:- UITableViewDelegate
+
+extension PropertyControlViewController: UITableViewDelegate {
+  func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    return tableView.cellForRow(at: indexPath) is MethodCell ? indexPath : nil
+  }
 }
 
 // MARK:- ControlCellDelegate
@@ -174,4 +181,9 @@ extension PropertyControlViewController: ControlCellDelegate {
     present(alert, animated: true)
   }
 
+  func cellWillCallMethod(_ tableViewCell: UITableViewCell) {
+    guard let cell = tableViewCell as? MethodCell else { return }
+    self.displayView.callMethod(method: cell.currentProperty.name,
+                                of: cell.currentObject)
+  }
 }

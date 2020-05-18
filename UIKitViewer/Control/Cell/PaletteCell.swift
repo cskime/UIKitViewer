@@ -144,6 +144,8 @@ class PaletteCell: ControlCell {
       return defaultColor.Slider.minimumTrackTintColor
     case "maximumTrackTintColor":
       return defaultColor.Slider.maximumTrackTintColor
+    case "color":
+      return defaultColor.ActivityIndicator.color
     default:
       return .clear
     }

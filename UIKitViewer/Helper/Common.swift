@@ -51,6 +51,9 @@ enum ColorReference {
     enum TableView {
       static let separatorColor: UIColor = #colorLiteral(red: 0.8027285933, green: 0.8032106161, blue: 0.810041368, alpha: 1)
     }
+    enum ActivityIndicator {
+      static let color: UIColor = .systemGray
+    }
   }
 }
 
