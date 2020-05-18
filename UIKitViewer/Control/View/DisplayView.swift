@@ -92,6 +92,8 @@ class DisplayView: UIView {
       self.setupValueMonitor(value: slider.value.description)
     case .UIPageControl:
       self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+    case .UIDatePicker:
+      self.previewObject.transform = .init(scaleX: 0.8, y: 0.8)
     default:
       return
     }
@@ -574,6 +576,20 @@ extension DisplayView {
     case .UICollectionView: self.configureCollectionView(rawValue: rawValue, for: property)
     case .UIActivityIndicatorView:
       self.configureActivityIndicator(rawValue: rawValue, for: property)
+    case .UIDatePicker:
+      self.configureDatePicker(rawValue: rawValue, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureDatePicker(rawValue: Int, for property: String) {
+    guard let datePicker = self.previewObject as? UIDatePicker else { return }
+    
+    switch property {
+    case "datePickerMode":
+      let mode = UIDatePicker.Mode(rawValue: rawValue) ?? .dateAndTime
+      datePicker.datePickerMode = mode
     default:
       return
     }

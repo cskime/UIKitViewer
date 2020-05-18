@@ -94,6 +94,10 @@ class ThumbnailCell: UICollectionViewCell {
       guard let imageView = previewObject as? UIImageView else { return }
       imageView.contentMode = .scaleAspectFit
       imageView.image = ImageReference.dummy
+    case .UIDatePicker:
+      guard let picker = previewObject as? UIDatePicker else { return }
+      picker.transform = .init(scaleX: 0.5, y: 0.5)
+      self.constraintToCenter(picker)
     default:
       self.constraintToFit(previewObject)
     }

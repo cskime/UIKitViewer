@@ -101,6 +101,9 @@ class SelectCell: ControlCell {
     case "clearButtonMode", "leftViewMode", "rightViewMode":
       initialTitle = UITextField.ViewMode.never.stringRepresentation
       self.cases = UITextField.ViewMode.allCases.map { $0.stringRepresentation }
+    case "datePickerMode" where self.currentObject == .UIDatePicker:
+      initialTitle = UIDatePicker.Mode.dateAndTime.stringRepresentation
+      self.cases = UIDatePicker.Mode.allCases.map { $0.stringRepresentation }
     case "buttonType":
       initialTitle = UIButton.ButtonType.system.stringRepresentation
       self.cases = UIButton.ButtonType.allCases.map { $0.stringRepresentation }

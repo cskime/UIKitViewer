@@ -251,3 +251,26 @@ extension UIActivityIndicatorView.Style: EnumerationExtension {
     }
   }
 }
+
+extension UIDatePicker.Mode: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [UIDatePicker.Mode] {
+    return [
+      .time,
+      .date,
+      .dateAndTime,
+      .countDownTimer
+    ]
+  }
+  
+  var stringRepresentation: String {
+    switch self {
+    case .time:           return "time"
+    case .date:           return "date"
+    case .dateAndTime:    return "dateAndTime"
+    case .countDownTimer: return "countDownTimer"
+    @unknown default:
+      fatalError("UIDatePicker.Mode: Unknown Case")
+    }
+  }
+}
