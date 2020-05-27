@@ -22,15 +22,15 @@
 - `UIButton`과 `UIImageView`
 
   <p align="center">
-    <img src="images/button.gif" alt="Page Description" width="49%">
-    <img src="images/imageview.gif" alt="Page Description" width="49%">
+    <img src="images/button.gif" alt="Page Description" width="40%">
+    <img src="images/imageview.gif" alt="Page Description" width="40%">
   </p>
 
 - `UITableView`과 `UICollectionView`
 
   <p align="center">
-    <img src="images/tableview.gif" alt="Page Description" width="49%">
-    <img src="images/collectionview.gif" alt="Page Description" width="49%">
+    <img src="images/tableview.gif" alt="Page Description" width="40%">
+    <img src="images/collectionview.gif" alt="Page Description" width="40%">
   </p>
 
 ## Trouble Shooting
