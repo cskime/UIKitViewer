@@ -34,6 +34,7 @@ enum UIKitObject: String, CaseIterable, Hashable {
   case UITableView
   case UICollectionView
   case UIActivityIndicatorView
+  case UIDatePicker
   
   var objectsWithinInheritance: [Self] {
     guard var currentType = NSClassFromString(self.rawValue) as? UIView.Type else { return [] }
@@ -176,6 +177,12 @@ extension UIKitObject {
         PropertyInfo(name: "style", controlType: .select),
         PropertyInfo(name: "color", controlType: .palette)
       ]
+    case .UIDatePicker:
+      return [
+        PropertyInfo(name: "datePickerMode", controlType: .select),
+        PropertyInfo(name: "datePickerStyle", controlType: .select),
+        PropertyInfo(name: "preferredDatePickerStyle", controlType: .select),
+      ]
     }
   }
 }
@@ -247,7 +254,10 @@ extension UIKitObject {
       guard let activityIndicatorType = classType as? UIActivityIndicatorView.Type else { return nil }
       let activityIndicator = activityIndicatorType.init()
       return activityIndicator
+    case .UIDatePicker:
+      guard let datePickerType = classType as? UIDatePicker.Type else { return nil }
+      let datePicker = datePickerType.init()
+      return datePicker
     }
   }
-  
 }
