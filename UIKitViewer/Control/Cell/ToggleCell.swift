@@ -73,7 +73,11 @@ class ToggleCell: ControlCell {
         self.removeObserverForDisplay()
       }
     } else {
-      self.toggleSwitch.isOn = false
+      if object == .UIActivityIndicatorView, property.contains("hides") {
+        self.toggleSwitch.isOn = true
+      } else {
+        self.toggleSwitch.isOn = false
+      }
       ControlModel.shared.setValue(self.toggleSwitch.isOn, for: property, of: object)
     }
   }

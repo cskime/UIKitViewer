@@ -82,8 +82,16 @@ class SelectCell: ControlCell {
       initialTitle = UIView.ContentMode.scaleToFill.stringRepresentation
       self.cases = UIView.ContentMode.allCases.map { $0.stringRepresentation }
     case "style":
-      initialTitle = UITableView.Style.plain.stringRepresentation
-      self.cases = UITableView.Style.allCases.map { $0.stringRepresentation }
+      switch self.currentObject {
+      case .UITableView:
+        initialTitle = UITableView.Style.plain.stringRepresentation
+        self.cases = UITableView.Style.allCases.map { $0.stringRepresentation }
+      case .UIActivityIndicatorView:
+        initialTitle = UIActivityIndicatorView.Style.medium.stringRepresentation
+        self.cases = UIActivityIndicatorView.Style.allCases.map { $0.stringRepresentation }
+      default:
+        return ""
+      }
     case "separatorStyle":
       initialTitle = UITableViewCell.SeparatorStyle.singleLine.stringRepresentation
       self.cases = UITableViewCell.SeparatorStyle.allCases.map { $0.stringRepresentation }
@@ -93,6 +101,9 @@ class SelectCell: ControlCell {
     case "clearButtonMode", "leftViewMode", "rightViewMode":
       initialTitle = UITextField.ViewMode.never.stringRepresentation
       self.cases = UITextField.ViewMode.allCases.map { $0.stringRepresentation }
+    case "datePickerMode" where self.currentObject == .UIDatePicker:
+      initialTitle = UIDatePicker.Mode.dateAndTime.stringRepresentation
+      self.cases = UIDatePicker.Mode.allCases.map { $0.stringRepresentation }
     case "buttonType":
       initialTitle = UIButton.ButtonType.system.stringRepresentation
       self.cases = UIButton.ButtonType.allCases.map { $0.stringRepresentation }

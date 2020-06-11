@@ -16,6 +16,7 @@ enum ControlType {
   case toggle
   case select
   case stepper
+  case methodCall
   
   var cell: ControlCell.Type {
     get {
@@ -26,6 +27,7 @@ enum ControlType {
       case .toggle:     return ToggleCell.self
       case .select:     return SelectCell.self
       case .stepper:    return StepperCell.self
+      case .methodCall: return MethodCell.self
       }
     }
   }
@@ -38,6 +40,7 @@ protocol ControlCellDelegate: class {
   func cell(_ tableViewCell: UITableViewCell, valueForTextField text: String)
   func cell(_ tableViewCell: UITableViewCell, valuesForSelect values: [String])
   func cell(_ tableViewCell: UITableViewCell, valueForStepper value: Double)
+  func cellWillCallMethod(_ tableViewCell: UITableViewCell)
 }
 
 class ControlCell: UITableViewCell {

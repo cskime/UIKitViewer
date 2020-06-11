@@ -66,6 +66,11 @@ class ThumbnailCell: UICollectionViewCell {
     switch object {
     case .UISegmentedControl, .UISwitch, .UIStepper, .UIButton, .UILabel:
       self.constraintToCenter(previewObject)
+    case .UIActivityIndicatorView:
+      guard let activityIndicator = previewObject as? UIActivityIndicatorView else { return }
+      activityIndicator.hidesWhenStopped = false
+      activityIndicator.style = .large
+      self.constraintToCenter(activityIndicator)
     case .UICollectionView:
       self.constraintToFit(previewObject)
       guard let collectionView = previewObject as? UICollectionView else { return }
@@ -89,6 +94,10 @@ class ThumbnailCell: UICollectionViewCell {
       guard let imageView = previewObject as? UIImageView else { return }
       imageView.contentMode = .scaleAspectFit
       imageView.image = ImageReference.dummy
+    case .UIDatePicker:
+      guard let picker = previewObject as? UIDatePicker else { return }
+      picker.transform = .init(scaleX: 0.5, y: 0.5)
+      self.constraintToCenter(picker)
     default:
       self.constraintToFit(previewObject)
     }

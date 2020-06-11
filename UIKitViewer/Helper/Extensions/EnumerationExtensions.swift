@@ -214,7 +214,7 @@ extension NSTextAlignment: EnumerationExtension {
   }
 }
 
-extension UICollectionView.ScrollDirection {
+extension UICollectionView.ScrollDirection: EnumerationExtension {
   public typealias AllCases = [Self]
   public static var allCases: [Self] {
     return [
@@ -228,7 +228,49 @@ extension UICollectionView.ScrollDirection {
     case .vertical:             return "vertical"
     case .horizontal:           return "horizontal"
     @unknown default:
-      fatalError("NSTextAlignment: Unknown Case")
+      fatalError("UICollectionView.ScrollDirection: Unknown Case")
+    }
+  }
+}
+
+extension UIActivityIndicatorView.Style: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [Self] {
+    return [
+      .medium,
+      .large
+    ]
+  }
+  
+  var stringRepresentation: String {
+    switch self {
+    case .medium:   return "medium"
+    case .large:    return "large"
+    default:
+      fatalError("UIActivityIndicator: Unknown Case")
+    }
+  }
+}
+
+extension UIDatePicker.Mode: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [UIDatePicker.Mode] {
+    return [
+      .time,
+      .date,
+      .dateAndTime,
+      .countDownTimer
+    ]
+  }
+  
+  var stringRepresentation: String {
+    switch self {
+    case .time:           return "time"
+    case .date:           return "date"
+    case .dateAndTime:    return "dateAndTime"
+    case .countDownTimer: return "countDownTimer"
+    @unknown default:
+      fatalError("UIDatePicker.Mode: Unknown Case")
     }
   }
 }
