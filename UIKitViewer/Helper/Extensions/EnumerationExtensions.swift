@@ -274,3 +274,25 @@ extension UIDatePicker.Mode: EnumerationExtension {
     }
   }
 }
+
+@available(iOS 13.4, *)
+extension UIDatePickerStyle: EnumerationExtension {
+  public typealias AllCases = [Self]
+  public static var allCases: [UIDatePickerStyle] {
+    return [
+      .automatic,
+      .wheels,
+      .compact
+    ]
+  }
+  
+  var stringRepresentation: String {
+    switch self {
+    case .automatic:    return "automatic"
+    case .wheels:       return "wheels"
+    case .compact:      return "compact"
+    @unknown default:
+      fatalError("UIDatePickerStyle: Unknown Case")
+    }
+  }
+}

@@ -178,11 +178,12 @@ extension UIKitObject {
         PropertyInfo(name: "color", controlType: .palette)
       ]
     case .UIDatePicker:
-      return [
-        PropertyInfo(name: "datePickerMode", controlType: .select),
-        PropertyInfo(name: "datePickerStyle", controlType: .select),
-        PropertyInfo(name: "preferredDatePickerStyle", controlType: .select),
-      ]
+      var properties = [PropertyInfo]()
+      properties.append(PropertyInfo(name: "datePickerMode", controlType: .select))
+//      if #available(iOS 13.4, *) {
+//        properties.append(PropertyInfo(name: "preferredDatePickerStyle", controlType: .select))
+//      }
+      return properties
     }
   }
 }

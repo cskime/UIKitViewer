@@ -590,6 +590,11 @@ extension DisplayView {
     case "datePickerMode":
       let mode = UIDatePicker.Mode(rawValue: rawValue) ?? .dateAndTime
       datePicker.datePickerMode = mode
+    case "preferredDatePickerStyle":
+      if #available(iOS 13.4, *) {
+        let style = UIDatePickerStyle(rawValue: rawValue) ?? .automatic
+        datePicker.preferredDatePickerStyle = style
+      }
     default:
       return
     }

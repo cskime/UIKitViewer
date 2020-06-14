@@ -104,6 +104,13 @@ class SelectCell: ControlCell {
     case "datePickerMode" where self.currentObject == .UIDatePicker:
       initialTitle = UIDatePicker.Mode.dateAndTime.stringRepresentation
       self.cases = UIDatePicker.Mode.allCases.map { $0.stringRepresentation }
+    case "preferredDatePickerStyle":
+      if #available(iOS 13.4, *) {
+        initialTitle = UIDatePickerStyle.automatic.stringRepresentation
+        self.cases = UIDatePickerStyle.allCases.map { $0.stringRepresentation }
+      } else {
+        initialTitle = ""
+      }
     case "buttonType":
       initialTitle = UIButton.ButtonType.system.stringRepresentation
       self.cases = UIButton.ButtonType.allCases.map { $0.stringRepresentation }
