@@ -92,6 +92,8 @@ class DisplayView: UIView {
       self.setupValueMonitor(value: slider.value.description)
     case .UIPageControl:
       self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+    case .UIDatePicker:
+      self.previewObject.transform = .init(scaleX: 0.8, y: 0.8)
     default:
       return
     }
@@ -212,6 +214,19 @@ extension DisplayView {
     case .UITextField:        self.configureTextField(color: color, for: property)
     case .UITableView:        self.configureTableView(color: color, for: property)
     case .UIPageControl:      self.configurePageControl(color: color, for: property)
+    case .UIActivityIndicatorView:
+      self.configureActivityIndicator(color: color, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureActivityIndicator(color: UIColor?, for property: String) {
+    guard let activityIndicator = self.previewObject as? UIActivityIndicatorView else { return }
+    
+    switch property {
+    case "color":
+      activityIndicator.color = color
     default:
       return
     }
@@ -322,6 +337,19 @@ extension DisplayView {
     case .UIPageControl:    self.configurePageControl(isOn: isOn, of: property)
     case .UITableView:      self.configureTableView(isOn: isOn, of: property)
     case .UICollectionView: self.configureCollectionView(isOn: isOn, of: property)
+    case .UIActivityIndicatorView:
+      self.configureActivityIndicator(isOn: isOn, of: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureActivityIndicator(isOn: Bool, of property: String) {
+    guard let activityIndicator = self.previewObject as? UIActivityIndicatorView else { return }
+    
+    switch property {
+    case "hidesWhenStopped":
+      activityIndicator.hidesWhenStopped = isOn
     default:
       return
     }
@@ -546,6 +574,39 @@ extension DisplayView {
     case .UIButton:         self.configureButton(rawValue: rawValue, for: property)
     case .UILabel:          self.configureLabel(rawValue: rawValue, for: property)
     case .UICollectionView: self.configureCollectionView(rawValue: rawValue, for: property)
+    case .UIActivityIndicatorView:
+      self.configureActivityIndicator(rawValue: rawValue, for: property)
+    case .UIDatePicker:
+      self.configureDatePicker(rawValue: rawValue, for: property)
+    default:
+      return
+    }
+  }
+  
+  private func configureDatePicker(rawValue: Int, for property: String) {
+    guard let datePicker = self.previewObject as? UIDatePicker else { return }
+    
+    switch property {
+    case "datePickerMode":
+      let mode = UIDatePicker.Mode(rawValue: rawValue) ?? .dateAndTime
+      datePicker.datePickerMode = mode
+    case "preferredDatePickerStyle":
+      if #available(iOS 13.4, *) {
+        let style = UIDatePickerStyle(rawValue: rawValue) ?? .automatic
+        datePicker.preferredDatePickerStyle = style
+      }
+    default:
+      return
+    }
+  }
+  
+  private func configureActivityIndicator(rawValue: Int, for property: String) {
+    guard let activityIndicator = self.previewObject as? UIActivityIndicatorView else { return }
+    
+    switch property {
+    case "style":
+      let style = UIActivityIndicatorView.Style(rawValue: rawValue + 100) ?? .medium
+      activityIndicator.style = style
     default:
       return
     }
@@ -736,6 +797,32 @@ extension DisplayView {
     switch property {
     case "numberOfLines":
       label.numberOfLines = value
+    default:
+      return
+    }
+  }
+}
+
+// MARK:- Method Call Interface
+
+extension DisplayView {
+  func callMethod(method: String, of object: UIKitObject) {
+    switch object {
+    case .UIActivityIndicatorView:
+      self.callFromActivitiIndicator(method: method)
+    default:
+      return
+    }
+  }
+  
+  private func callFromActivitiIndicator(method: String) {
+    guard let activityIndicator = self.previewObject as? UIActivityIndicatorView else { return }
+    
+    switch method {
+    case "startAnimating":
+      activityIndicator.startAnimating()
+    case "stopAnimating":
+      activityIndicator.stopAnimating()
     default:
       return
     }

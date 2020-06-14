@@ -17,6 +17,7 @@
 		AC3B411C240F88D000822398 /* PropertyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B411B240F88D000822398 /* PropertyLabel.swift */; };
 		AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5076812410CD7B0002DCE9 /* StepperCell.swift */; };
 		AC5A1AF123EC2E6700729CFE /* SelectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC5A1AF023EC2E6700729CFE /* SelectCell.swift */; };
+		ACC1ED0F247271BF009F4C1A /* MethodCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC1ED0E247271BF009F4C1A /* MethodCell.swift */; };
 		ACC64B8F240E2D18007CD967 /* ControlModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC64B8E240E2D18007CD967 /* ControlModel.swift */; };
 		ACC7153E2416835400D01C31 /* PreviewCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC7153D2416835400D01C31 /* PreviewCollectionViewCell.swift */; };
 		ACC71540241684D600D01C31 /* PreviewCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACC7153F241684D600D01C31 /* PreviewCollectionReusableView.swift */; };
@@ -51,6 +52,7 @@
 		AC3EB596875066DC775023B6 /* Pods_UIKitViewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIKitViewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC5076812410CD7B0002DCE9 /* StepperCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepperCell.swift; sourceTree = "<group>"; };
 		AC5A1AF023EC2E6700729CFE /* SelectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SelectCell.swift; sourceTree = "<group>"; };
+		ACC1ED0E247271BF009F4C1A /* MethodCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MethodCell.swift; sourceTree = "<group>"; };
 		ACC64B8E240E2D18007CD967 /* ControlModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlModel.swift; sourceTree = "<group>"; };
 		ACC7153D2416835400D01C31 /* PreviewCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionViewCell.swift; sourceTree = "<group>"; };
 		ACC7153F241684D600D01C31 /* PreviewCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCollectionReusableView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				ACE1203823EAA81100D484EF /* TextCell.swift */,
 				AC5A1AF023EC2E6700729CFE /* SelectCell.swift */,
 				AC5076812410CD7B0002DCE9 /* StepperCell.swift */,
+				ACC1ED0E247271BF009F4C1A /* MethodCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 				049505BF23E8329300790D15 /* ThumbnailCell.swift in Sources */,
 				ACE1203B23EBF59E00D484EF /* EnumerationExtensions.swift in Sources */,
 				ACE13F69240E20D400376613 /* UICollectionView+Extension.swift in Sources */,
+				ACC1ED0F247271BF009F4C1A /* MethodCell.swift in Sources */,
 				AC3B4114240E812600822398 /* Identifiable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
