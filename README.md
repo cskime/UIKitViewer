@@ -26,7 +26,7 @@ UIKitViewer is UIKit objects player for begineers. You can preview objects like 
 
 ### from [Qussk](https://github.com/Qussk)
 
-> Fastcampus
+> Fastcampus iOS School 11th (2020.04 ~ 2020.09)
 
 - iOS 개발공부에 도움이 많이 됐어요 !
 - 앱이 직관적이라서 사용하기 편했어요 ! 
