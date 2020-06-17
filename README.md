@@ -22,3 +22,12 @@ UIKitViewer is UIKit objects player for begineers. You can preview objects like 
 
 - iOS 개발은 처음인데 한 방에 이해했어요!
 - iOS 개발을 더 잘해야 겠다는 생각이 듭니다
+
+
+### from [ByoungilYoun](https://github.com/ByoungilYoun)  
+
+> FastCampus iOS School 11th
+
+- UICollectionView 를 잘 몰랐었는데 이 어플이 도움이 많이 되었습니다!
+- 또한 아직 배우지 못한 내용을 미리 만져보면서 실습할수 있어서 좋았습니다.
+
