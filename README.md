@@ -37,3 +37,10 @@ UIKitViewer is UIKit objects player for begineers. You can preview objects like 
 - Code로 어떻게 나오는지 나오게 해주셨으면 좋겠어요.
 - Storyboard 상에서 어떤 메뉴에 있는지 알 수 있었으면 좋겠어요.
 - tintColor의 수정 같은 경우에 직접적으로 보여지는게 있었으면 좋겠어요.
+
+### from [ByoungilYoun](https://github.com/ByoungilYoun)  
+
+> Fastcampus iOS School 11th (2020.04 ~ 2020.09)
+
+- UICollectionView 를 잘 몰랐었는데 이 어플이 도움이 많이 되었습니다!
+- 또한 아직 배우지 못한 내용을 미리 만져보면서 실습할수 있어서 좋았습니다.
