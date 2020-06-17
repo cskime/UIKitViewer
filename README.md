@@ -23,7 +23,6 @@ UIKitViewer is UIKit objects player for begineers. You can preview objects like 
 - iOS 개발은 처음인데 한 방에 이해했어요!
 - iOS 개발을 더 잘해야 겠다는 생각이 듭니다
 
-
 ### from [Qussk](https://github.com/Qussk)
 
 > Fastcampus iOS School 11th (2020.04 ~ 2020.09)
@@ -31,5 +30,10 @@ UIKitViewer is UIKit objects player for begineers. You can preview objects like 
 - iOS 개발공부에 도움이 많이 됐어요 !
 - 앱이 직관적이라서 사용하기 편했어요 ! 
 
+### from [Shooooting](https://github.com/shooooting)
 
+> Fastcampus iOS School 11th (2020.04 ~ 2020.09)
 
+- Code로 어떻게 나오는지 나오게 해주셨으면 좋겠어요.
+- Storyboard 상에서 어떤 메뉴에 있는지 알 수 있었으면 좋겠어요.
+- tintColor의 수정 같은 경우에 직접적으로 보여지는게 있었으면 좋겠어요.
