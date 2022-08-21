@@ -1,5 +1,5 @@
 //
-//  MainViewCellCollectionViewCell.swift
+//  ObjectPreviewCell.swift
 //  UIKitViewer
 //
 //  Created by mac on 2020/02/03.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ThumbnailCell: UICollectionViewCell {
+class ObjectPreviewCell: UICollectionViewCell {
   
   private let imageView = UIImageView().then {
     $0.contentMode = .scaleAspectFit
@@ -143,7 +143,7 @@ class ThumbnailCell: UICollectionViewCell {
 
 // MARK:- UICollectionViewDataSource
 
-extension ThumbnailCell: UICollectionViewDataSource {
+extension ObjectPreviewCell: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return 9
   }
