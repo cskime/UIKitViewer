@@ -11,6 +11,7 @@
 		049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505C023E84D4E00790D15 /* PropertyControlViewController.swift */; };
 		65B9C47C28B2073F0087238C /* TypeCastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9C47B28B2073F0087238C /* TypeCastable.swift */; };
 		65B9C48A28B216FD0087238C /* PropertyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9C48928B216FD0087238C /* PropertyInfo.swift */; };
+		65B9C48C28B21F1F0087238C /* UIKitObject+preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9C48B28B21F1F0087238C /* UIKitObject+preview.swift */; };
 		AC0B8ABC23E987820057EEBC /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABB23E987820057EEBC /* SliderCell.swift */; };
 		AC0B8ABE23E98A700057EEBC /* CellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABD23E98A700057EEBC /* CellProvider.swift */; };
 		AC3B4114240E812600822398 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B4113240E812600822398 /* Identifiable.swift */; };
@@ -46,6 +47,7 @@
 		2B6F35BD279819609666BABB /* Pods-UIKitViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKitViewer.debug.xcconfig"; path = "Target Support Files/Pods-UIKitViewer/Pods-UIKitViewer.debug.xcconfig"; sourceTree = "<group>"; };
 		65B9C47B28B2073F0087238C /* TypeCastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCastable.swift; sourceTree = "<group>"; };
 		65B9C48928B216FD0087238C /* PropertyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyInfo.swift; sourceTree = "<group>"; };
+		65B9C48B28B21F1F0087238C /* UIKitObject+preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKitObject+preview.swift"; sourceTree = "<group>"; };
 		AC0B8ABB23E987820057EEBC /* SliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
 		AC0B8ABD23E98A700057EEBC /* CellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProvider.swift; sourceTree = "<group>"; };
 		AC3B4113240E812600822398 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
+				65B9C48B28B21F1F0087238C /* UIKitObject+preview.swift */,
 				65B9C48928B216FD0087238C /* PropertyInfo.swift */,
 			);
 			path = Model;
@@ -388,6 +391,7 @@
 				ACE13F6F240E257A00376613 /* UIKitObject.swift in Sources */,
 				ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */,
 				AC0B8ABC23E987820057EEBC /* SliderCell.swift in Sources */,
+				65B9C48C28B21F1F0087238C /* UIKitObject+preview.swift in Sources */,
 				AC5A1AF123EC2E6700729CFE /* SelectCell.swift in Sources */,
 				ACC715422417B11B00D01C31 /* NotificationNames.swift in Sources */,
 				AC3B411C240F88D000822398 /* PropertyLabel.swift in Sources */,
