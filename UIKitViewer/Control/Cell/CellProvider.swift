@@ -66,14 +66,14 @@ class CellProvider: Then {
   
   weak var delegate: ControlCellDelegate?
   
-  func createCell(with objectInfo: ObjectInfo, for indexPath: IndexPath) -> UITableViewCell {
-    let propertyInfo = objectInfo.properties[indexPath.row]
+  func createCell(with object: UIKitObject, for indexPath: IndexPath) -> UITableViewCell {
+    let propertyInfo = object.properties[indexPath.row]
     let controlType = propertyInfo.controlType
     
-    self.tableView.register(controlType.cell)
-    guard let cell = self.tableView.dequeueCell(controlType.cell) else { return UITableViewCell() }
-    cell.delegate = self.delegate
-    cell.configure(object: objectInfo.object, property: propertyInfo)
+    tableView.register(controlType.cell)
+    guard let cell = tableView.dequeueCell(controlType.cell) else { return UITableViewCell() }
+    cell.delegate = delegate
+    cell.configure(object: object, property: propertyInfo)
     cell.configureContents()
     return cell
   }
