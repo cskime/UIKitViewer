@@ -20,7 +20,7 @@ final class ObjectPreviewCell: UICollectionViewCell {
     }
     
     private func drawPreview(_ object: UIKitObject) {
-        guard let previewObject = object.makeInstance() else { return }
+        guard let previewObject = object.preview else { return }
         previewObject.tag = Constant.previewObjectTag
         previewObject.isUserInteractionEnabled = false
         contentView.addSubview(previewObject)

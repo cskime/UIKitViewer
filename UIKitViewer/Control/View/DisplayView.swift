@@ -41,7 +41,7 @@ class DisplayView: UIView {
     }
     
     private func setupObject() {
-        self.previewObject = self.previewType.makeInstance() ?? UIView()
+        self.previewObject = self.previewType.preview ?? UIView()
         self.addSubview(self.previewObject)
         self.previewObject.snp.makeConstraints {
             $0.center.equalToSuperview()
