@@ -44,7 +44,7 @@ protocol ControlCellDelegate: class {
 }
 
 class ControlCell: UITableViewCell {
-  var currentObject: UIKitObject = .UIView
+  var currentObject: UIKitObject = .view
   var currentProperty: PropertyInfo = PropertyInfo(name: "", controlType: .slider)
   
   weak var delegate: ControlCellDelegate?

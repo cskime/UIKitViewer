@@ -73,7 +73,7 @@ class ToggleCell: ControlCell {
         self.removeObserverForDisplay()
       }
     } else {
-      if object == .UIActivityIndicatorView, property.contains("hides") {
+      if object == .activityIndicatorView, property.contains("hides") {
         self.toggleSwitch.isOn = true
       } else {
         self.toggleSwitch.isOn = false

@@ -16,7 +16,7 @@ class DisplayView: UIView {
     private let valueDisplay = UILabel().then {
         $0.font = .systemFont(ofSize: 20)
     }
-    private var previewType: UIKitObject = .UIView
+    private var previewType: UIKitObject = .view
     
     // MARK: Initialize
     
@@ -47,13 +47,13 @@ class DisplayView: UIView {
             $0.center.equalToSuperview()
             
             switch self.previewType {
-            case .UILabel, .UITextField:
+            case .label, .textField:
                 $0.width.equalToSuperview().dividedBy(2)
-            case .UISlider:
+            case .slider:
                 $0.width.equalToSuperview().dividedBy(1.5)
-            case .UIImageView, .UIView:
+            case .imageView, .view:
                 $0.size.equalToSuperview().multipliedBy(0.7)
-            case .UITableView, .UICollectionView:
+            case .tableView, .collectionView:
                 $0.size.equalToSuperview().multipliedBy(0.9)
             default:
                 return
@@ -65,34 +65,34 @@ class DisplayView: UIView {
     
     private func setupAdditionalAttributes() {
         switch self.previewType {
-        case .UISwitch:
+        case .switch:
             self.previewObject.isUserInteractionEnabled = false
-        case .UITextField:
+        case .textField:
             guard let textField = self.previewObject as? UITextField else { return }
             textField.delegate = self
             self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
-        case .UITableView:
+        case .tableView:
             guard let tableView = self.previewObject as? UITableView else { return }
             tableView.dataSource = self
             tableView.delegate = self
-        case .UICollectionView:
+        case .collectionView:
             guard let collectionView = self.previewObject as? UICollectionView else { return }
             collectionView.register(PreviewCollectionViewCell.self)
             collectionView.register(PreviewCollectionHeaderView.self, kind: .header)
             collectionView.register(PreviewCollectionFooterView.self, kind: .footer)
             collectionView.dataSource = self
             collectionView.delegate = self
-        case .UIStepper:
+        case .stepper:
             guard let stepper = self.previewObject as? UIStepper else { return }
             stepper.addTarget(self, action: #selector(stepperChanged(_:)), for: .valueChanged)
             self.setupValueMonitor(value: stepper.value.description)
-        case .UISlider:
+        case .slider:
             guard let slider = self.previewObject as? UISlider else { return }
             slider.addTarget(self, action: #selector(sliderChanged(_:)), for: .valueChanged)
             self.setupValueMonitor(value: slider.value.description)
-        case .UIPageControl:
+        case .pageControl:
             self.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
-        case .UIDatePicker:
+        case .datePicker:
             self.previewObject.transform = .init(scaleX: 0.8, y: 0.8)
         default:
             return
@@ -155,9 +155,9 @@ extension DisplayView {
         let property = property.components(separatedBy: ".").last!
         
         switch object {
-        case .UIButton:       self.configureButton(title: text, for: property)
-        case .UILabel:        self.configureLabel(text: text, for: property)
-        case .UITextField:    self.configureTextField(text: text, for: property)
+        case .button:       self.configureButton(title: text, for: property)
+        case .label:        self.configureLabel(text: text, for: property)
+        case .textField:    self.configureTextField(text: text, for: property)
         default: return
         }
     }
@@ -206,15 +206,15 @@ extension DisplayView {
         let property = property.components(separatedBy: ".").last!
         
         switch object {
-        case .UIView:             self.configureView(color: color, for: property)
-        case .UIButton:           self.configureButton(color: color, for: property)
-        case .UILabel:            self.configureLabel(color: color, for: property)
-        case .UISwitch:           self.configureSwitch(color: color, for: property)
-        case .UISlider:           self.configureSlider(color: color, for: property)
-        case .UITextField:        self.configureTextField(color: color, for: property)
-        case .UITableView:        self.configureTableView(color: color, for: property)
-        case .UIPageControl:      self.configurePageControl(color: color, for: property)
-        case .UIActivityIndicatorView:
+        case .view:             self.configureView(color: color, for: property)
+        case .button:           self.configureButton(color: color, for: property)
+        case .label:            self.configureLabel(color: color, for: property)
+        case .switch:           self.configureSwitch(color: color, for: property)
+        case .slider:           self.configureSlider(color: color, for: property)
+        case .textField:        self.configureTextField(color: color, for: property)
+        case .tableView:        self.configureTableView(color: color, for: property)
+        case .pageControl:      self.configurePageControl(color: color, for: property)
+        case .activityIndicatorView:
             self.configureActivityIndicator(color: color, for: property)
         default:
             return
@@ -327,17 +327,17 @@ extension DisplayView {
         let property = property.components(separatedBy: ".").last!
         
         switch object {
-        case .UIView:           self.configureView(isOn: isOn, of: property)
-        case .UIButton:         self.configureButton(isOn: isOn, of: property)
-        case .UILabel:          self.configureLabel(isOn: isOn, of: property)
-        case .UITextField:      self.configureTextField(isOn: isOn, of: property)
-        case .UIStepper:        self.configureStepper(isOn: isOn, of: property)
-        case .UISlider:         self.configureSlider(isOn: isOn, of: property)
-        case .UISwitch:         self.configureSwitch(isOn: isOn, of: property)
-        case .UIPageControl:    self.configurePageControl(isOn: isOn, of: property)
-        case .UITableView:      self.configureTableView(isOn: isOn, of: property)
-        case .UICollectionView: self.configureCollectionView(isOn: isOn, of: property)
-        case .UIActivityIndicatorView:
+        case .view:           self.configureView(isOn: isOn, of: property)
+        case .button:         self.configureButton(isOn: isOn, of: property)
+        case .label:          self.configureLabel(isOn: isOn, of: property)
+        case .textField:      self.configureTextField(isOn: isOn, of: property)
+        case .stepper:        self.configureStepper(isOn: isOn, of: property)
+        case .slider:         self.configureSlider(isOn: isOn, of: property)
+        case .switch:         self.configureSwitch(isOn: isOn, of: property)
+        case .pageControl:    self.configurePageControl(isOn: isOn, of: property)
+        case .tableView:      self.configureTableView(isOn: isOn, of: property)
+        case .collectionView: self.configureCollectionView(isOn: isOn, of: property)
+        case .activityIndicatorView:
             self.configureActivityIndicator(isOn: isOn, of: property)
         default:
             return
@@ -487,10 +487,10 @@ extension DisplayView {
         let value = CGFloat(value)
         
         switch object {
-        case .UIView:             self.configureView(value: value, for: property)
-        case .UILabel:            self.configureLabel(value: value, for: property)
-        case .UICollectionView:   self.configureCollectionView(value: value, for: property)
-        case .UITextField:        self.configureTextField(value: value, for: property)
+        case .view:             self.configureView(value: value, for: property)
+        case .label:            self.configureLabel(value: value, for: property)
+        case .collectionView:   self.configureCollectionView(value: value, for: property)
+        case .textField:        self.configureTextField(value: value, for: property)
         default:
             return
         }
@@ -568,15 +568,15 @@ extension DisplayView {
         let property = property.components(separatedBy: ".").last!
         
         switch object {
-        case .UIView:           self.configureView(rawValue: rawValue, for: property)
-        case .UITableView:      self.configureTableView(rawValue: rawValue, for: property)
-        case .UITextField:      self.configureTextField(rawValue: rawValue, for: property)
-        case .UIButton:         self.configureButton(rawValue: rawValue, for: property)
-        case .UILabel:          self.configureLabel(rawValue: rawValue, for: property)
-        case .UICollectionView: self.configureCollectionView(rawValue: rawValue, for: property)
-        case .UIActivityIndicatorView:
+        case .view:           self.configureView(rawValue: rawValue, for: property)
+        case .tableView:      self.configureTableView(rawValue: rawValue, for: property)
+        case .textField:      self.configureTextField(rawValue: rawValue, for: property)
+        case .button:         self.configureButton(rawValue: rawValue, for: property)
+        case .label:          self.configureLabel(rawValue: rawValue, for: property)
+        case .collectionView: self.configureCollectionView(rawValue: rawValue, for: property)
+        case .activityIndicatorView:
             self.configureActivityIndicator(rawValue: rawValue, for: property)
-        case .UIDatePicker:
+        case .datePicker:
             self.configureDatePicker(rawValue: rawValue, for: property)
         default:
             return
@@ -744,10 +744,10 @@ extension DisplayView {
         let property = property.components(separatedBy: ".").last!
         
         switch object {
-        case .UIPageControl:    self.configurePageControl(value: Int(value), for: property)
-        case .UILabel:          self.configureLabel(value: Int(value), for: property)
-        case .UIStepper:        self.configureStepper(value: value, of: property)
-        case .UISlider:         self.configureSlider(value: Float(value), of: property)
+        case .pageControl:    self.configurePageControl(value: Int(value), for: property)
+        case .label:          self.configureLabel(value: Int(value), for: property)
+        case .stepper:        self.configureStepper(value: value, of: property)
+        case .slider:         self.configureSlider(value: Float(value), of: property)
         default:
             return
         }
@@ -808,7 +808,7 @@ extension DisplayView {
 extension DisplayView {
     func callMethod(method: String, of object: UIKitObject) {
         switch object {
-        case .UIActivityIndicatorView:
+        case .activityIndicatorView:
             self.callFromActivitiIndicator(method: method)
         default:
             return

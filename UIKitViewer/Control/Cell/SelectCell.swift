@@ -83,10 +83,10 @@ class SelectCell: ControlCell {
       self.cases = UIView.ContentMode.allCases.map { $0.stringRepresentation }
     case "style":
       switch self.currentObject {
-      case .UITableView:
+      case .tableView:
         initialTitle = UITableView.Style.plain.stringRepresentation
         self.cases = UITableView.Style.allCases.map { $0.stringRepresentation }
-      case .UIActivityIndicatorView:
+      case .activityIndicatorView:
         initialTitle = UIActivityIndicatorView.Style.medium.stringRepresentation
         self.cases = UIActivityIndicatorView.Style.allCases.map { $0.stringRepresentation }
       default:
@@ -101,7 +101,7 @@ class SelectCell: ControlCell {
     case "clearButtonMode", "leftViewMode", "rightViewMode":
       initialTitle = UITextField.ViewMode.never.stringRepresentation
       self.cases = UITextField.ViewMode.allCases.map { $0.stringRepresentation }
-    case "datePickerMode" where self.currentObject == .UIDatePicker:
+    case "datePickerMode" where self.currentObject == .datePicker:
       initialTitle = UIDatePicker.Mode.dateAndTime.stringRepresentation
       self.cases = UIDatePicker.Mode.allCases.map { $0.stringRepresentation }
     case "preferredDatePickerStyle":

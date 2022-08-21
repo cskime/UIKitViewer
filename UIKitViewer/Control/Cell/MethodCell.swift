@@ -60,7 +60,7 @@ class MethodCell: ControlCell {
   
   @objc private func callTouched(_ sender: UIButton) {
     switch self.currentObject {
-    case .UIActivityIndicatorView:
+    case .activityIndicatorView:
       self.delegate?.cellWillCallMethod(self)
     default:
       return

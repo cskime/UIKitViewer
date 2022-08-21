@@ -26,16 +26,16 @@ final class ObjectPreviewCell: UICollectionViewCell {
         contentView.addSubview(previewObject)
         
         switch object {
-        case .UISegmentedControl, .UISwitch, .UIStepper, .UIButton, .UILabel:
+        case .segmentedControl, .switch, .stepper, .button, .label:
             constraintToCenter(previewObject)
             
-        case .UIActivityIndicatorView:
+        case .activityIndicatorView:
             guard let activityIndicator = previewObject as? UIActivityIndicatorView else { return }
             activityIndicator.hidesWhenStopped = false
             activityIndicator.style = .large
             constraintToCenter(activityIndicator)
             
-        case .UICollectionView:
+        case .collectionView:
             constraintToFit(previewObject)
             guard let collectionView = previewObject as? UICollectionView else { return }
             collectionView.backgroundColor = .clear
@@ -49,19 +49,19 @@ final class ObjectPreviewCell: UICollectionViewCell {
             layout.minimumInteritemSpacing = Metric.itemSpacing
             collectionView.collectionViewLayout = layout
             
-        case .UITextField, .UISlider:
+        case .textField, .slider:
             constraintToCenter(previewObject)
             previewObject.snp.makeConstraints {
                 $0.width.equalTo(contentView.snp.width).dividedBy(2)
             }
             
-        case .UIImageView:
+        case .imageView:
             constraintToFit(previewObject)
             guard let imageView = previewObject as? UIImageView else { return }
             imageView.contentMode = .scaleAspectFit
             imageView.image = ImageReference.dummy
             
-        case .UIDatePicker:
+        case .datePicker:
             guard let picker = previewObject as? UIDatePicker else { return }
             picker.transform = .init(scaleX: 0.5, y: 0.5)
             constraintToCenter(picker)

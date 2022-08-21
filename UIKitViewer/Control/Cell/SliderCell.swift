@@ -117,13 +117,13 @@ extension SliderCell {
   
   private func initialSetup(for property: String, of object: UIKitObject) -> SliderSetup {
     switch object {
-    case .UIView:
+    case .view:
       return self.initialSetupToView(for: property)
-    case .UILabel:
+    case .label:
       return self.initialSetupToLabel(for: property)
-    case .UITextField:
+    case .textField:
       return self.initialSetupToTextField(for: property)
-    case .UICollectionView:
+    case .collectionView:
       return self.initialSetupToCollectionView(for: property)
     default:
       return SliderSetup()
