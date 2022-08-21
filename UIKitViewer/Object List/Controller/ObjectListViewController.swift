@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ObjectListViewController.swift
 //  UIKitViewer
 //
 //  Created by cskim on 2020/01/31.
@@ -10,7 +10,7 @@ import UIKit
 import Then
 import SnapKit
 
-final class MainViewController: UIViewController {
+final class ObjectListViewController: UIViewController {
 
   // MARK: Views
   
@@ -23,7 +23,7 @@ final class MainViewController: UIViewController {
     frame: self.view.frame, collectionViewLayout: UICollectionViewFlowLayout()
   ).then {
     $0.backgroundColor = ColorReference.background
-    $0.register(ThumbnailCell.self)
+    $0.register(ObjectPreviewCell.self)
     $0.collectionViewLayout.do {
       guard let layout = $0 as? UICollectionViewFlowLayout else { return }
       
@@ -41,7 +41,7 @@ final class MainViewController: UIViewController {
   
   // MARK: Model
   
-  private let dataSource = MainModel.objects
+  private let dataSource = UIKitObject.allCases
   
   // MARK: Life Cycle
   
@@ -74,19 +74,19 @@ final class MainViewController: UIViewController {
 }
 //MARK: - UICollectionViewDataSource
 
-extension MainViewController: UICollectionViewDataSource {
+extension ObjectListViewController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return self.dataSource.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    return collectionView.dequeueCell(ThumbnailCell.self, indexPath: indexPath) ?? UICollectionViewCell()
+    return collectionView.dequeueCell(ObjectPreviewCell.self, indexPath: indexPath) ?? UICollectionViewCell()
   }
 }
 //MARK: - UICollectionViewDelegateFlowLayout
 
-extension MainViewController: UICollectionViewDelegateFlowLayout {
+extension ObjectListViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let object = self.dataSource[indexPath.item]
@@ -95,12 +95,12 @@ extension MainViewController: UICollectionViewDelegateFlowLayout {
   }
   
   func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    guard let cell = cell as? ThumbnailCell else { return }
+    guard let cell = cell as? ObjectPreviewCell else { return }
     cell.configure(with: self.dataSource[indexPath.item])
   }
   
   func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-    guard let cell = cell as? ThumbnailCell else { return }
+    guard let cell = cell as? ObjectPreviewCell else { return }
     cell.removeThumbnail()
   }
 }
