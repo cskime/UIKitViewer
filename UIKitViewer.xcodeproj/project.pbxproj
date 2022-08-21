@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		049505BF23E8329300790D15 /* ObjectPreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505BE23E8329300790D15 /* ObjectPreviewCell.swift */; };
 		049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505C023E84D4E00790D15 /* PropertyControlViewController.swift */; };
+		65B9C47C28B2073F0087238C /* TypeCastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9C47B28B2073F0087238C /* TypeCastable.swift */; };
 		AC0B8ABC23E987820057EEBC /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABB23E987820057EEBC /* SliderCell.swift */; };
 		AC0B8ABE23E98A700057EEBC /* CellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABD23E98A700057EEBC /* CellProvider.swift */; };
 		AC3B4114240E812600822398 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B4113240E812600822398 /* Identifiable.swift */; };
@@ -42,6 +43,7 @@
 		049505C023E84D4E00790D15 /* PropertyControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyControlViewController.swift; sourceTree = "<group>"; };
 		10EDE3281E696595A5C64C89 /* Pods-UIKitViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKitViewer.release.xcconfig"; path = "Target Support Files/Pods-UIKitViewer/Pods-UIKitViewer.release.xcconfig"; sourceTree = "<group>"; };
 		2B6F35BD279819609666BABB /* Pods-UIKitViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKitViewer.debug.xcconfig"; path = "Target Support Files/Pods-UIKitViewer/Pods-UIKitViewer.debug.xcconfig"; sourceTree = "<group>"; };
+		65B9C47B28B2073F0087238C /* TypeCastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCastable.swift; sourceTree = "<group>"; };
 		AC0B8ABB23E987820057EEBC /* SliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
 		AC0B8ABD23E98A700057EEBC /* CellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProvider.swift; sourceTree = "<group>"; };
 		AC3B4113240E812600822398 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -131,7 +133,7 @@
 				ACD4FDC223EFD17D00D6ED22 /* Common.swift */,
 				AC3B4113240E812600822398 /* Identifiable.swift */,
 				ACC715412417B11B00D01C31 /* NotificationNames.swift */,
-				ACE13F6B240E22F400376613 /* Extensions */,
+				65B9C47B28B2073F0087238C /* TypeCastable.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -148,26 +150,10 @@
 		AC87CBF2240E1B200015E527 /* Object List */ = {
 			isa = PBXGroup;
 			children = (
-				AC87CBF4240E1B2B0015E527 /* View */,
-				AC87CBF5240E1B2F0015E527 /* Controller */,
-			);
-			path = "Object List";
-			sourceTree = "<group>";
-		};
-		AC87CBF4240E1B2B0015E527 /* View */ = {
-			isa = PBXGroup;
-			children = (
 				049505BE23E8329300790D15 /* ObjectPreviewCell.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		AC87CBF5240E1B2F0015E527 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
 				ACE37E6623E43D3400055BFE /* ObjectListViewController.swift */,
 			);
-			path = Controller;
+			path = "Object List";
 			sourceTree = "<group>";
 		};
 		ACB74E3123E97F35001AE814 /* Control */ = {
@@ -243,6 +229,7 @@
 				AC87CBF2240E1B200015E527 /* Object List */,
 				ACB74E3123E97F35001AE814 /* Control */,
 				AC87CBF0240E1AD00015E527 /* Helper */,
+				ACE13F6B240E22F400376613 /* Extensions */,
 				AC87CBF1240E1B140015E527 /* Resource */,
 				ACE37E6D23E43D3500055BFE /* LaunchScreen.storyboard */,
 				ACE37E7023E43D3500055BFE /* Info.plist */,
@@ -374,6 +361,7 @@
 			files = (
 				AC3B4118240F7D0700822398 /* UIColor+Extension.swift in Sources */,
 				ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */,
+				65B9C47C28B2073F0087238C /* TypeCastable.swift in Sources */,
 				ACC7153E2416835400D01C31 /* PreviewCollectionViewCell.swift in Sources */,
 				ACE37E6723E43D3400055BFE /* ObjectListViewController.swift in Sources */,
 				AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */,
