@@ -131,7 +131,7 @@ class PaletteCell: ControlCell {
     case "onTintColor":
       return defaultColor.Switch.onTintColor
     case "thumbTintColor":
-      if self.currentObject == .UISwitch {
+        if self.currentObject == .switch {
         return defaultColor.Switch.thumbTintColor
       } else {
         return defaultColor.Slider.thumbTintColor

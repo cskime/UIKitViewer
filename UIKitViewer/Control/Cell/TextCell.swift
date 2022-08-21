@@ -63,9 +63,9 @@ class TextCell: ControlCell {
         self.textField.text = text
     } else {
       switch self.currentObject {
-      case .UIButton:
+      case .button:
         self.textField.text = "Button"
-      case .UILabel:
+      case .label:
         self.textField.text = "Label"
       default:
         break

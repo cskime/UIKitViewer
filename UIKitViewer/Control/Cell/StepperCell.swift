@@ -19,7 +19,7 @@ class StepperCell: ControlCell {
     set {
       self.stepper.value = newValue
       switch self.currentObject {
-      case .UIPageControl:
+      case .pageControl:
         self.valueLabel.text = Int(newValue).description
       default:
         self.valueLabel.text = newValue.description
