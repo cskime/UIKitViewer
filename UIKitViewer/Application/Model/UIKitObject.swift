@@ -8,13 +8,6 @@
 
 import UIKit
 
-// MARK:- Target Objects
-
-struct PropertyInfo {
-    var name: String
-    var controlType: ControlType
-}
-
 enum UIKitObject: String, CaseIterable, Hashable {
     case UIView
     case UIButton
