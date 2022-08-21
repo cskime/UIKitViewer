@@ -123,6 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				ACE37E6223E43D3400055BFE /* AppDelegate.swift */,
+				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
+				ACE37E7023E43D3500055BFE /* Info.plist */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -142,7 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				ACE37E6B23E43D3500055BFE /* Assets.xcassets */,
-				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
+				ACE37E6D23E43D3500055BFE /* LaunchScreen.storyboard */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -231,8 +233,6 @@
 				AC87CBF0240E1AD00015E527 /* Helper */,
 				ACE13F6B240E22F400376613 /* Extensions */,
 				AC87CBF1240E1B140015E527 /* Resource */,
-				ACE37E6D23E43D3500055BFE /* LaunchScreen.storyboard */,
-				ACE37E7023E43D3500055BFE /* Info.plist */,
 			);
 			path = UIKitViewer;
 			sourceTree = "<group>";
@@ -524,7 +524,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D8Z3QRBB63;
-				INFOPLIST_FILE = UIKitViewer/Info.plist;
+				INFOPLIST_FILE = UIKitViewer/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -546,7 +546,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = D8Z3QRBB63;
-				INFOPLIST_FILE = UIKitViewer/Info.plist;
+				INFOPLIST_FILE = UIKitViewer/Application/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
