@@ -89,16 +89,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		65B9C48828B216EF0087238C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
-				65B9C48B28B21F1F0087238C /* UIKitObject+preview.swift */,
-				65B9C48928B216FD0087238C /* PropertyInfo.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		AC0B8AB823E982900057EEBC /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -128,7 +118,6 @@
 			children = (
 				ACE37E6223E43D3400055BFE /* AppDelegate.swift */,
 				ACE37E7023E43D3500055BFE /* Info.plist */,
-				65B9C48828B216EF0087238C /* Model */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -153,13 +142,16 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		AC87CBF2240E1B200015E527 /* Object List */ = {
+		AC87CBF2240E1B200015E527 /* Object */ = {
 			isa = PBXGroup;
 			children = (
+				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
+				65B9C48B28B21F1F0087238C /* UIKitObject+preview.swift */,
+				65B9C48928B216FD0087238C /* PropertyInfo.swift */,
 				049505BE23E8329300790D15 /* ObjectPreviewCell.swift */,
 				ACE37E6623E43D3400055BFE /* ObjectListViewController.swift */,
 			);
-			path = "Object List";
+			path = Object;
 			sourceTree = "<group>";
 		};
 		ACB74E3123E97F35001AE814 /* Control */ = {
@@ -230,7 +222,7 @@
 			isa = PBXGroup;
 			children = (
 				AC87CBEF240E1ACA0015E527 /* Application */,
-				AC87CBF2240E1B200015E527 /* Object List */,
+				AC87CBF2240E1B200015E527 /* Object */,
 				ACB74E3123E97F35001AE814 /* Control */,
 				AC87CBF0240E1AD00015E527 /* Helper */,
 				ACE13F6B240E22F400376613 /* Extensions */,

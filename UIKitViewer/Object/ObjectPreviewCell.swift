@@ -102,16 +102,15 @@ final class ObjectPreviewCell: UICollectionViewCell {
     
     // MARK: - Components
     
-    private let imageView = UIImageView().then {
-        $0.contentMode = .scaleAspectFit
-        $0.clipsToBounds = true
+    private let previewContainer = UIView().then {
+        $0.backgroundColor = Color.background
     }
     private let titleLabel = UILabel().then {
-        $0.backgroundColor = .white
+        $0.backgroundColor = Color.titleBackground
         $0.textAlignment = .center
         $0.layer.borderColor = ColorReference.borderColor?.cgColor
         $0.layer.borderWidth = 1
-        $0.font = .preferredFont(forTextStyle: .headline)
+        $0.font = .systemFont(ofSize: 24, weight: .bold)
         $0.adjustsFontSizeToFitWidth = true
     }
     
@@ -188,5 +187,10 @@ private extension ObjectPreviewCell {
     
     enum Constant {
         static let previewObjectTag = 100
+    }
+    
+    enum Color {
+        static let background = UIColor(red: 235, green: 235, blue: 235, alpha: 1)
+        static let titleBackground = UIColor.white
     }
 }
