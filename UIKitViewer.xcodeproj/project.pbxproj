@@ -11,6 +11,8 @@
 		049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505C023E84D4E00790D15 /* PropertyControlViewController.swift */; };
 		656640A528B9A8390092776C /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 656640A428B9A8390092776C /* Then */; };
 		656640AD28B9A99B0092776C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 656640AC28B9A99B0092776C /* SnapKit */; };
+		656640AF28B9AB520092776C /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656640AE28B9AB520092776C /* BaseView.swift */; };
+		656640B328B9AC1A0092776C /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 656640B228B9AC1A0092776C /* BaseCollectionViewCell.swift */; };
 		65B9C47C28B2073F0087238C /* TypeCastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9C47B28B2073F0087238C /* TypeCastable.swift */; };
 		65B9C48A28B216FD0087238C /* PropertyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9C48928B216FD0087238C /* PropertyInfo.swift */; };
 		65B9C48C28B21F1F0087238C /* UIKitObject+preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B9C48B28B21F1F0087238C /* UIKitObject+preview.swift */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		049505BE23E8329300790D15 /* ObjectPreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectPreviewCell.swift; sourceTree = "<group>"; };
 		049505C023E84D4E00790D15 /* PropertyControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyControlViewController.swift; sourceTree = "<group>"; };
+		656640AE28B9AB520092776C /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		656640B228B9AC1A0092776C /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		65B9C47B28B2073F0087238C /* TypeCastable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCastable.swift; sourceTree = "<group>"; };
 		65B9C48928B216FD0087238C /* PropertyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyInfo.swift; sourceTree = "<group>"; };
 		65B9C48B28B21F1F0087238C /* UIKitObject+preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKitObject+preview.swift"; sourceTree = "<group>"; };
@@ -89,6 +93,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		656640B128B9AC0D0092776C /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				656640AE28B9AB520092776C /* BaseView.swift */,
+				656640B228B9AC1A0092776C /* BaseCollectionViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
 		AC0B8AB823E982900057EEBC /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -125,6 +138,7 @@
 		AC87CBF0240E1AD00015E527 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				656640B128B9AC0D0092776C /* Base */,
 				ACD4FDC223EFD17D00D6ED22 /* Common.swift */,
 				AC3B4113240E812600822398 /* Identifiable.swift */,
 				ACC715412417B11B00D01C31 /* NotificationNames.swift */,
@@ -309,6 +323,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				656640AF28B9AB520092776C /* BaseView.swift in Sources */,
 				65B9C48A28B216FD0087238C /* PropertyInfo.swift in Sources */,
 				AC3B4118240F7D0700822398 /* UIColor+Extension.swift in Sources */,
 				ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */,
@@ -336,6 +351,7 @@
 				ACE1203B23EBF59E00D484EF /* EnumerationExtensions.swift in Sources */,
 				ACE13F69240E20D400376613 /* UICollectionView+Extension.swift in Sources */,
 				ACC1ED0F247271BF009F4C1A /* MethodCell.swift in Sources */,
+				656640B328B9AC1A0092776C /* BaseCollectionViewCell.swift in Sources */,
 				AC3B4114240E812600822398 /* Identifiable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
