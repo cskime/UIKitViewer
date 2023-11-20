@@ -70,9 +70,7 @@ class MethodCell: ControlCell {
   // MARK: Interface
   
   override func configureContents() {
-    let property = self.currentProperty.name
-    let object = self.currentObject
-    self.propertyLabel.configure(name: property)
+    self.propertyLabel.configure(name: self.currentProperty.name)
   }
   
   required init?(coder: NSCoder) {

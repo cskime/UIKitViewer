@@ -291,6 +291,7 @@ extension UIDatePickerStyle: EnumerationExtension {
     case .automatic:    return "automatic"
     case .wheels:       return "wheels"
     case .compact:      return "compact"
+    case .inline:       return "inline"
     @unknown default:
       fatalError("UIDatePickerStyle: Unknown Case")
     }
