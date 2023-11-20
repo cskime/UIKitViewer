@@ -33,7 +33,7 @@ enum ControlType {
   }
 }
 
-protocol ControlCellDelegate: class {
+protocol ControlCellDelegate: AnyObject {
   func cell(_ tableViewCell: UITableViewCell, valueForColor color: UIColor?)
   func cell(_ tableViewCell: UITableViewCell, valueForSlider value: Float)
   func cell(_ tableViewCell: UITableViewCell, valueForToggle value: Bool)
