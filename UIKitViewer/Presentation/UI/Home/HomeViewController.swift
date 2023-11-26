@@ -12,95 +12,127 @@ import SnapKit
 
 final class HomeViewController: UIViewController {
     
-    // MARK: Views
-    
-    private enum UI {
-        static let itemSpacing: CGFloat = 10
-        static let lineSpacing: CGFloat = 10
-    }
+    // MARK: - UI
     
     private lazy var collectionView = UICollectionView(
-        frame: self.view.frame, collectionViewLayout: UICollectionViewFlowLayout()
+        frame: view.frame,
+        collectionViewLayout: UICollectionViewFlowLayout()
     ).then {
         $0.backgroundColor = ColorReference.background
-        $0.register(ThumbnailCell.self)
+        $0.register(HomeThumbnailCell.self)
         $0.collectionViewLayout.do {
-            guard let layout = $0 as? UICollectionViewFlowLayout else { return }
+            guard let layout = $0 as? UICollectionViewFlowLayout else {
+                return
+            }
             
-            layout.minimumInteritemSpacing = UI.itemSpacing
-            layout.minimumLineSpacing = UI.lineSpacing
-            
-            let inset: CGFloat = 16
-            layout.sectionInset = .init(top: inset, left: inset, bottom: inset, right: inset)
-            
-            let width = (UIScreen.main.bounds.width - UI.itemSpacing - inset * 2) / 2
-            let height = width * 0.9
-            layout.itemSize = CGSize(width: width, height: height)
+            layout.minimumInteritemSpacing = Metric.itemSpacing
+            layout.minimumLineSpacing = Metric.lineSpacing
+            layout.sectionInset = Metric.sectionInset
+            layout.itemSize = Metric.itemSize
         }
     }
     
-    // MARK: Model
     
+    // MARK: - Property
+    
+    private let controller: HomeControllerProtocol
+    private var viewModels = [HomeViewModel]()
     private let dataSource = UIKitObject.allCases
     
-    // MARK: Life Cycle
+    
+    // MARK: - Initializer
+    
+    init(controller: HomeController) {
+        self.controller = controller
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    // MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
+        setUpAttributes()
+        setUpSubviews()
+        setUpConstraints()
     }
     
-    // MARK: Initialize
     
-    private func setupUI() {
-        self.setupAttributes()
-        self.setupConstraints()
-    }
+    // MARK: - Setup
     
-    private func setupAttributes() {
-        self.view.backgroundColor = .systemBackground
-        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        self.navigationItem.title = "UIKit"
+    private func setUpAttributes() {
+        view.backgroundColor = .systemBackground
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        navigationItem.title = "UIKit"
         collectionView.dataSource = self
         collectionView.delegate = self
     }
     
-    private func setupConstraints() {
-        self.view.addSubview(self.collectionView)
-        self.collectionView.snp.makeConstraints {
-            $0.edges.equalTo(self.view.safeAreaLayoutGuide)
+    private func setUpSubviews() {
+        view.addSubview(collectionView)
+    }
+    
+    private func setUpConstraints() {
+        collectionView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
         }
     }
 }
-//MARK: - UICollectionViewDataSource
+
+
+// MARK: - UICollectionViewDataSource
 
 extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.dataSource.count
+        return dataSource.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueCell(ThumbnailCell.self, indexPath: indexPath) ?? UICollectionViewCell()
+        collectionView.dequeueCell(HomeThumbnailCell.self, indexPath: indexPath) ?? UICollectionViewCell()
     }
 }
-//MARK: - UICollectionViewDelegateFlowLayout
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let object = self.dataSource[indexPath.item]
+        let object = dataSource[indexPath.item]
         let operationVC = PropertyControlViewController(object: object)
         navigationController?.pushViewController(operationVC, animated: true)
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? ThumbnailCell else { return }
-        cell.configure(with: self.dataSource[indexPath.item])
+        guard let cell = cell as? HomeThumbnailCell else { return }
+        cell.configure(with: dataSource[indexPath.item])
     }
     
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? ThumbnailCell else { return }
+        guard let cell = cell as? HomeThumbnailCell else { return }
         cell.removeThumbnail()
+    }
+}
+
+
+// MARK: - Constant
+
+private extension HomeViewController {
+    
+    enum Metric {
+        static let itemSpacing: CGFloat = 10
+        static let lineSpacing: CGFloat = 10
+        static let sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        static var itemSize: CGSize {
+            let inset: CGFloat = 16
+            let width = (UIScreen.main.bounds.width - itemSpacing - inset * 2) / 2
+            let height = width * 0.9
+            return CGSize(width: width, height: height)
+        }
     }
 }

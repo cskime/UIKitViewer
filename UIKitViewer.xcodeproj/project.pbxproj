@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		049505BF23E8329300790D15 /* ThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505BE23E8329300790D15 /* ThumbnailCell.swift */; };
+		049505BF23E8329300790D15 /* HomeThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505BE23E8329300790D15 /* HomeThumbnailCell.swift */; };
 		049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505C023E84D4E00790D15 /* PropertyControlViewController.swift */; };
 		65B27E372B0B7F6F00D518F3 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 65B27E362B0B7F6F00D518F3 /* Then */; };
 		65B27E3A2B0B7F8E00D518F3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65B27E392B0B7F8E00D518F3 /* SnapKit */; };
@@ -19,6 +19,9 @@
 		65BC69932B1366FD00E42251 /* Property.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69922B1366FD00E42251 /* Property.swift */; };
 		65BC69952B13671300E42251 /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69942B13671300E42251 /* Method.swift */; };
 		65BC699E2B136AA500E42251 /* LoadComponentsUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC699D2B136AA500E42251 /* LoadComponentsUseCaseTests.swift */; };
+		65BC69A72B136C7600E42251 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69A62B136C7600E42251 /* HomeController.swift */; };
+		65BC69A92B136CA200E42251 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69A82B136CA200E42251 /* HomePresenter.swift */; };
+		65BC69B22B136EE600E42251 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69B12B136EE600E42251 /* HomeViewModel.swift */; };
 		AC0B8ABC23E987820057EEBC /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABB23E987820057EEBC /* SliderCell.swift */; };
 		AC0B8ABE23E98A700057EEBC /* CellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABD23E98A700057EEBC /* CellProvider.swift */; };
 		AC3B4114240E812600822398 /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC3B4113240E812600822398 /* Identifiable.swift */; };
@@ -57,7 +60,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		049505BE23E8329300790D15 /* ThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailCell.swift; sourceTree = "<group>"; };
+		049505BE23E8329300790D15 /* HomeThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeThumbnailCell.swift; sourceTree = "<group>"; };
 		049505C023E84D4E00790D15 /* PropertyControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyControlViewController.swift; sourceTree = "<group>"; };
 		65BC698A2B13665A00E42251 /* LoadComponentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadComponentsUseCase.swift; sourceTree = "<group>"; };
 		65BC698C2B1366AB00E42251 /* ComponentGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentGenerator.swift; sourceTree = "<group>"; };
@@ -67,6 +70,9 @@
 		65BC69942B13671300E42251 /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 		65BC699B2B136AA500E42251 /* UIKitViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UIKitViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65BC699D2B136AA500E42251 /* LoadComponentsUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadComponentsUseCaseTests.swift; sourceTree = "<group>"; };
+		65BC69A62B136C7600E42251 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		65BC69A82B136CA200E42251 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
+		65BC69B12B136EE600E42251 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		AC0B8ABB23E987820057EEBC /* SliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
 		AC0B8ABD23E98A700057EEBC /* CellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProvider.swift; sourceTree = "<group>"; };
 		AC3B4113240E812600822398 /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
@@ -167,8 +173,17 @@
 			isa = PBXGroup;
 			children = (
 				65BC69AC2B136D7100E42251 /* UI */,
+				65BC69A52B136C6400E42251 /* Adapter */,
 			);
 			path = Presentation;
+			sourceTree = "<group>";
+		};
+		65BC69A52B136C6400E42251 /* Adapter */ = {
+			isa = PBXGroup;
+			children = (
+				65BC69B02B136DF000E42251 /* Home */,
+			);
+			path = Adapter;
 			sourceTree = "<group>";
 		};
 		65BC69AA2B136CFC00E42251 /* Domain */ = {
@@ -198,8 +213,18 @@
 		65BC69AF2B136DEA00E42251 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				049505BE23E8329300790D15 /* ThumbnailCell.swift */,
+				049505BE23E8329300790D15 /* HomeThumbnailCell.swift */,
 				ACE37E6623E43D3400055BFE /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		65BC69B02B136DF000E42251 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				65BC69A62B136C7600E42251 /* HomeController.swift */,
+				65BC69A82B136CA200E42251 /* HomePresenter.swift */,
+				65BC69B12B136EE600E42251 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -456,6 +481,7 @@
 			files = (
 				AC3B4118240F7D0700822398 /* UIColor+Extension.swift in Sources */,
 				ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */,
+				65BC69A72B136C7600E42251 /* HomeController.swift in Sources */,
 				ACC7153E2416835400D01C31 /* PreviewCollectionViewCell.swift in Sources */,
 				ACE37E6723E43D3400055BFE /* HomeViewController.swift in Sources */,
 				AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */,
@@ -464,11 +490,13 @@
 				049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */,
 				65BC69952B13671300E42251 /* Method.swift in Sources */,
 				65BC698B2B13665A00E42251 /* LoadComponentsUseCase.swift in Sources */,
+				65BC69A92B136CA200E42251 /* HomePresenter.swift in Sources */,
 				AC0B8ABE23E98A700057EEBC /* CellProvider.swift in Sources */,
 				AC3B4116240E87A400822398 /* UITableView+Extension.swift in Sources */,
 				ACC71540241684D600D01C31 /* PreviewCollectionReusableView.swift in Sources */,
 				ACE1202D23EA7DDF00D484EF /* DisplayView.swift in Sources */,
 				65BC69932B1366FD00E42251 /* Property.swift in Sources */,
+				65BC69B22B136EE600E42251 /* HomeViewModel.swift in Sources */,
 				ACE1203923EAA81100D484EF /* TextCell.swift in Sources */,
 				ACE13F6F240E257A00376613 /* UIKitObject.swift in Sources */,
 				ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */,
@@ -479,7 +507,7 @@
 				AC3B411C240F88D000822398 /* PropertyLabel.swift in Sources */,
 				ACE37E6323E43D3400055BFE /* AppDelegate.swift in Sources */,
 				65BC698D2B1366AB00E42251 /* ComponentGenerator.swift in Sources */,
-				049505BF23E8329300790D15 /* ThumbnailCell.swift in Sources */,
+				049505BF23E8329300790D15 /* HomeThumbnailCell.swift in Sources */,
 				ACE1203B23EBF59E00D484EF /* EnumerationExtensions.swift in Sources */,
 				ACE13F69240E20D400376613 /* UICollectionView+Extension.swift in Sources */,
 				65BC69912B1366CE00E42251 /* ValueType.swift in Sources */,
