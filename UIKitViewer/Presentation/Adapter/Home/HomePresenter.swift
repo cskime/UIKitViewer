@@ -8,8 +8,12 @@
 
 import Foundation
 
-struct HomePresenter {
-    
+protocol HomeViewProtocol: AnyObject {
+    func display(viewModels: [HomeViewModel])
+}
+
+class HomePresenter {
+    weak var view: HomeViewProtocol?
 }
 
 
@@ -18,6 +22,9 @@ struct HomePresenter {
 extension HomePresenter: LoadComponentsUseCaseOutput {
     
     func present(components: [Component]) {
-        print(components)
+        let viewModels = components.map {
+            HomeViewModel(name: $0.name, thumbnail: Data())
+        }
+        view?.display(viewModels: viewModels)
     }
 }

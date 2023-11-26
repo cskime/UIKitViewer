@@ -28,10 +28,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private lazy var homeViewController: HomeViewController = {
-        let presenter = HomePresenter()
-        let loadComponentsUseCase = LoadComponentsUseCase(output: presenter)
-        let homeController = HomeController(input: loadComponentsUseCase)
-        return HomeViewController(controller: homeController)
+        let homeViewController = HomeViewController()
+        let homePresenter = HomePresenter()
+        let homeController = HomeController()
+        let loadComponentsUseCase = LoadComponentsUseCase()
+        
+        homeViewController.controller = homeController
+        homePresenter.view = homeViewController
+        homeController.input = loadComponentsUseCase
+        loadComponentsUseCase.output = homePresenter
+        
+        return homeViewController
     }()
 }
 

@@ -12,17 +12,16 @@ protocol HomeControllerProtocol {
     func initialize()
 }
 
-struct HomeController {
-    private let input: LoadComponentsUseCaseInput
-    
-    init(input: LoadComponentsUseCaseInput) {
-        self.input = input
-    }
+class HomeController {
+    var input: LoadComponentsUseCaseInput?
 }
+
+
+// MARK: - HomeControllerProtocol
 
 extension HomeController: HomeControllerProtocol {
     
     func initialize() {
-        
+        input?.load()
     }
 }

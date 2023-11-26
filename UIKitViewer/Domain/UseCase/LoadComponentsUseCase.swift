@@ -16,14 +16,16 @@ protocol LoadComponentsUseCaseOutput {
     func present(components: [Component])
 }
 
-struct LoadComponentsUseCase {
+class LoadComponentsUseCase {
     
-    private let output: LoadComponentsUseCaseOutput
+    // MARK: - Interface
+    
+    var output: LoadComponentsUseCaseOutput?
+    
+    
+    // MARK: - Property
+    
     private let generator = ComponentGenerator()
-    
-    init(output: LoadComponentsUseCaseOutput) {
-        self.output = output
-    }
 }
 
 
@@ -34,6 +36,6 @@ extension LoadComponentsUseCase: LoadComponentsUseCaseInput {
     func load() {
         let objects = UIKitObject.allCases
         let components = objects.map(generator.generate(for:))
-        output.present(components: components)
+        output?.present(components: components)
     }
 }
