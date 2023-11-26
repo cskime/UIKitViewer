@@ -20,6 +20,10 @@ struct LoadComponentsUseCase {
     
     private let output: LoadComponentsUseCaseOutput
     private let generator = ComponentGenerator()
+    
+    init(output: LoadComponentsUseCaseOutput) {
+        self.output = output
+    }
 }
 
 
