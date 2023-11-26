@@ -39,10 +39,9 @@
 		ACE1203923EAA81100D484EF /* TextCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1203823EAA81100D484EF /* TextCell.swift */; };
 		ACE1203B23EBF59E00D484EF /* EnumerationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE1203A23EBF59E00D484EF /* EnumerationExtensions.swift */; };
 		ACE13F69240E20D400376613 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE13F68240E20D400376613 /* UICollectionView+Extension.swift */; };
-		ACE13F6D240E236500376613 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE13F6C240E236500376613 /* MainModel.swift */; };
 		ACE13F6F240E257A00376613 /* UIKitObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE13F6E240E257A00376613 /* UIKitObject.swift */; };
 		ACE37E6323E43D3400055BFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE37E6223E43D3400055BFE /* AppDelegate.swift */; };
-		ACE37E6723E43D3400055BFE /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE37E6623E43D3400055BFE /* MainViewController.swift */; };
+		ACE37E6723E43D3400055BFE /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE37E6623E43D3400055BFE /* HomeViewController.swift */; };
 		ACE37E6C23E43D3500055BFE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ACE37E6B23E43D3500055BFE /* Assets.xcassets */; };
 		ACE37E6F23E43D3500055BFE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ACE37E6D23E43D3500055BFE /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -88,11 +87,10 @@
 		ACE1203823EAA81100D484EF /* TextCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCell.swift; sourceTree = "<group>"; };
 		ACE1203A23EBF59E00D484EF /* EnumerationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumerationExtensions.swift; sourceTree = "<group>"; };
 		ACE13F68240E20D400376613 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
-		ACE13F6C240E236500376613 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		ACE13F6E240E257A00376613 /* UIKitObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKitObject.swift; sourceTree = "<group>"; };
 		ACE37E5F23E43D3400055BFE /* UIKitViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UIKitViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ACE37E6223E43D3400055BFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ACE37E6623E43D3400055BFE /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		ACE37E6623E43D3400055BFE /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		ACE37E6B23E43D3500055BFE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ACE37E6E23E43D3500055BFE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ACE37E7023E43D3500055BFE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -165,6 +163,14 @@
 			path = UIKitViewerTests;
 			sourceTree = "<group>";
 		};
+		65BC69A42B136C5A00E42251 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				65BC69AC2B136D7100E42251 /* UI */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		65BC69AA2B136CFC00E42251 /* Domain */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +185,23 @@
 				65BC699D2B136AA500E42251 /* LoadComponentsUseCaseTests.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		65BC69AC2B136D7100E42251 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				65BC69AF2B136DEA00E42251 /* Home */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		65BC69AF2B136DEA00E42251 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				049505BE23E8329300790D15 /* ThumbnailCell.swift */,
+				ACE37E6623E43D3400055BFE /* HomeViewController.swift */,
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		AC0B8AB823E982900057EEBC /* View */ = {
@@ -230,40 +253,6 @@
 				ACE37E6B23E43D3500055BFE /* Assets.xcassets */,
 			);
 			path = Resource;
-			sourceTree = "<group>";
-		};
-		AC87CBF2240E1B200015E527 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				AC87CBF3240E1B290015E527 /* Model */,
-				AC87CBF4240E1B2B0015E527 /* View */,
-				AC87CBF5240E1B2F0015E527 /* Controller */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		AC87CBF3240E1B290015E527 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				ACE13F6C240E236500376613 /* MainModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		AC87CBF4240E1B2B0015E527 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				049505BE23E8329300790D15 /* ThumbnailCell.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		AC87CBF5240E1B2F0015E527 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				ACE37E6623E43D3400055BFE /* MainViewController.swift */,
-			);
-			path = Controller;
 			sourceTree = "<group>";
 		};
 		ACB74E3123E97F35001AE814 /* Control */ = {
@@ -336,8 +325,8 @@
 			isa = PBXGroup;
 			children = (
 				AC87CBEF240E1ACA0015E527 /* Application */,
+				65BC69A42B136C5A00E42251 /* Presentation */,
 				65BC69822B13627D00E42251 /* Domain */,
-				AC87CBF2240E1B200015E527 /* Home */,
 				ACB74E3123E97F35001AE814 /* Control */,
 				AC87CBF0240E1AD00015E527 /* Helper */,
 				AC87CBF1240E1B140015E527 /* Resource */,
@@ -468,7 +457,7 @@
 				AC3B4118240F7D0700822398 /* UIColor+Extension.swift in Sources */,
 				ACD4FDC323EFD17D00D6ED22 /* Common.swift in Sources */,
 				ACC7153E2416835400D01C31 /* PreviewCollectionViewCell.swift in Sources */,
-				ACE37E6723E43D3400055BFE /* MainViewController.swift in Sources */,
+				ACE37E6723E43D3400055BFE /* HomeViewController.swift in Sources */,
 				AC5076822410CD7B0002DCE9 /* StepperCell.swift in Sources */,
 				ACC64B8F240E2D18007CD967 /* ControlModel.swift in Sources */,
 				ACE1203523EA8EE900D484EF /* ToggleCell.swift in Sources */,
@@ -490,7 +479,6 @@
 				AC3B411C240F88D000822398 /* PropertyLabel.swift in Sources */,
 				ACE37E6323E43D3400055BFE /* AppDelegate.swift in Sources */,
 				65BC698D2B1366AB00E42251 /* ComponentGenerator.swift in Sources */,
-				ACE13F6D240E236500376613 /* MainModel.swift in Sources */,
 				049505BF23E8329300790D15 /* ThumbnailCell.swift in Sources */,
 				ACE1203B23EBF59E00D484EF /* EnumerationExtensions.swift in Sources */,
 				ACE13F69240E20D400376613 /* UICollectionView+Extension.swift in Sources */,

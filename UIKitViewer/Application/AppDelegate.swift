@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     sleep(1)
     
     window = UIWindow(frame: UIScreen.main.bounds)
-    let vc = UINavigationController(rootViewController: MainViewController())
+    let vc = UINavigationController(rootViewController: HomeViewController())
     vc.navigationBar.tintColor = .black
     window?.rootViewController = vc
     window?.makeKeyAndVisible()
