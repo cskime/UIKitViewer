@@ -87,6 +87,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		65BC69822B13627D00E42251 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				65BC69832B13629C00E42251 /* Entity */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		65BC69832B13629C00E42251 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
 		AC0B8AB823E982900057EEBC /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -134,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				ACE37E6B23E43D3500055BFE /* Assets.xcassets */,
-				ACE13F6E240E257A00376613 /* UIKitObject.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -241,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				AC87CBEF240E1ACA0015E527 /* Application */,
+				65BC69822B13627D00E42251 /* Domain */,
 				AC87CBF2240E1B200015E527 /* Home */,
 				ACB74E3123E97F35001AE814 /* Control */,
 				AC87CBF0240E1AD00015E527 /* Helper */,
