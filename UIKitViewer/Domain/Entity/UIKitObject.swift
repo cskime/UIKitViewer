@@ -8,18 +8,6 @@
 
 import UIKit
 
-// MARK:- Target Objects
-
-struct PropertyInfo {
-    var name: String
-    var controlType: ControlType
-}
-
-struct ObjectInfo {
-    var object: UIKitObject
-    var properties: [PropertyInfo]
-}
-
 enum UIKitObject: String, CaseIterable, Hashable {
     case UIView
     case UIButton
@@ -35,6 +23,16 @@ enum UIKitObject: String, CaseIterable, Hashable {
     case UICollectionView
     case UIActivityIndicatorView
     case UIDatePicker
+}
+
+extension UIKitObject {
+    
+    var name: String {
+        rawValue
+    }
+}
+
+extension UIKitObject {
     
     var objectsWithinInheritance: [Self] {
         guard var currentType = NSClassFromString(self.rawValue) as? UIView.Type else { return [] }
@@ -59,6 +57,16 @@ enum UIKitObject: String, CaseIterable, Hashable {
 }
 
 // MARK:- Properties
+
+struct PropertyInfo {
+    var name: String
+    var controlType: ControlType
+}
+
+struct ObjectInfo {
+    var object: UIKitObject
+    var properties: [PropertyInfo]
+}
 
 extension UIKitObject {
     var properties: [PropertyInfo] {
