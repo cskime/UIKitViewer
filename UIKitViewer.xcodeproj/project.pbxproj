@@ -160,9 +160,25 @@
 		65BC699C2B136AA500E42251 /* UIKitViewerTests */ = {
 			isa = PBXGroup;
 			children = (
-				65BC699D2B136AA500E42251 /* LoadComponentsUseCaseTests.swift */,
+				65BC69AA2B136CFC00E42251 /* Domain */,
 			);
 			path = UIKitViewerTests;
+			sourceTree = "<group>";
+		};
+		65BC69AA2B136CFC00E42251 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				65BC69AB2B136CFF00E42251 /* UseCase */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		65BC69AB2B136CFF00E42251 /* UseCase */ = {
+			isa = PBXGroup;
+			children = (
+				65BC699D2B136AA500E42251 /* LoadComponentsUseCaseTests.swift */,
+			);
+			path = UseCase;
 			sourceTree = "<group>";
 		};
 		AC0B8AB823E982900057EEBC /* View */ = {
