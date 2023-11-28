@@ -30,21 +30,24 @@ final class HomeViewController: UIViewController {
                 return
             }
             
-            layout.minimumInteritemSpacing = Metric.itemSpacing
-            layout.minimumLineSpacing = Metric.lineSpacing
-            layout.sectionInset = Metric.sectionInset
-            layout.itemSize = Metric.itemSize
+            layout.minimumInteritemSpacing = HomeLayout.itemSpacing
+            layout.minimumLineSpacing = HomeLayout.lineSpacing
+            layout.sectionInset = HomeLayout.sectionInset
+            layout.itemSize = HomeLayout.itemSize
         }
     }
     
     
     // MARK: - Property
     
-    private var viewModels = [HomeViewModel]() {
+    private var viewModel = HomeViewModel() {
         didSet {
             collectionView.reloadData()
         }
     }
+    
+    // TODO: Replace to HomeViewModel
+    // It's unavailable due to detail view(PropertyControlViewController)
     private let dataSource = UIKitObject.allCases
     
     
@@ -87,8 +90,8 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController: HomeViewProtocol {
     
-    func display(viewModels: [HomeViewModel]) {
-        self.viewModels = viewModels
+    func display(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
     }
 }
 
@@ -98,11 +101,13 @@ extension HomeViewController: HomeViewProtocol {
 extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        viewModel.components.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        collectionView.dequeueCell(HomeThumbnailCell.self, indexPath: indexPath) ?? UICollectionViewCell()
+        let cell = collectionView.dequeueCell(HomeThumbnailCell.self, indexPath: indexPath)
+        cell?.configure(with: viewModel.components[indexPath.item])
+        return cell ?? UICollectionViewCell()
     }
 }
 
@@ -115,33 +120,5 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         let object = dataSource[indexPath.item]
         let operationVC = PropertyControlViewController(object: object)
         navigationController?.pushViewController(operationVC, animated: true)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? HomeThumbnailCell else { return }
-        cell.configure(with: dataSource[indexPath.item])
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard let cell = cell as? HomeThumbnailCell else { return }
-        cell.removeThumbnail()
-    }
-}
-
-
-// MARK: - Constant
-
-private extension HomeViewController {
-    
-    enum Metric {
-        static let itemSpacing: CGFloat = 10
-        static let lineSpacing: CGFloat = 10
-        static let sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        static var itemSize: CGSize {
-            let inset: CGFloat = 16
-            let width = (UIScreen.main.bounds.width - itemSpacing - inset * 2) / 2
-            let height = width * 0.9
-            return CGSize(width: width, height: height)
-        }
     }
 }

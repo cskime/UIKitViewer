@@ -9,7 +9,7 @@
 import Foundation
 
 protocol HomeViewProtocol: AnyObject {
-    func display(viewModels: [HomeViewModel])
+    func display(viewModel: HomeViewModel)
 }
 
 class HomePresenter {
@@ -22,9 +22,7 @@ class HomePresenter {
 extension HomePresenter: LoadComponentsUseCaseOutput {
     
     func present(components: [Component]) {
-        let viewModels = components.map {
-            HomeViewModel(name: $0.name, thumbnail: Data())
-        }
-        view?.display(viewModels: viewModels)
+        let viewModel = HomeViewModel(components: components.map(\.name))
+        view?.display(viewModel: viewModel)
     }
 }

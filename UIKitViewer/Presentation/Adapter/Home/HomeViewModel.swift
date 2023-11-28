@@ -9,6 +9,9 @@
 import Foundation
 
 struct HomeViewModel {
-    let name: String
-    let thumbnail: Data
+    let components: [String]
+    
+    init(components: [String] = []) {
+        self.components = components
+    }
 }
