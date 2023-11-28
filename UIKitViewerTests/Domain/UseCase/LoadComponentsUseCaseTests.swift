@@ -13,7 +13,8 @@ final class LoadComponentsUseCaseTests: XCTestCase {
     
     func test_LoadComponentUseCase_Load_Components() {
         let output = LoadComponentsUseCaseOutputMock()
-        let useCase = LoadComponentsUseCase(output: output)
+        let useCase = LoadComponentsUseCase()
+        useCase.output = output
         useCase.load()
         XCTAssertFalse(output.components.isEmpty)
     }
