@@ -23,7 +23,6 @@
 		65BC69A92B136CA200E42251 /* HomePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69A82B136CA200E42251 /* HomePresenter.swift */; };
 		65BC69B22B136EE600E42251 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69B12B136EE600E42251 /* HomeViewModel.swift */; };
 		65BC69B62B13779200E42251 /* HomeThumbnailGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69B52B13779200E42251 /* HomeThumbnailGenerator.swift */; };
-		65BC69BB2B13799100E42251 /* HomeThumbnailGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69BA2B13799100E42251 /* HomeThumbnailGeneratorTests.swift */; };
 		65BC69BD2B16036800E42251 /* HomeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65BC69BC2B16036800E42251 /* HomeLayout.swift */; };
 		AC0B8ABC23E987820057EEBC /* SliderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABB23E987820057EEBC /* SliderCell.swift */; };
 		AC0B8ABE23E98A700057EEBC /* CellProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0B8ABD23E98A700057EEBC /* CellProvider.swift */; };
@@ -77,7 +76,6 @@
 		65BC69A82B136CA200E42251 /* HomePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePresenter.swift; sourceTree = "<group>"; };
 		65BC69B12B136EE600E42251 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		65BC69B52B13779200E42251 /* HomeThumbnailGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeThumbnailGenerator.swift; sourceTree = "<group>"; };
-		65BC69BA2B13799100E42251 /* HomeThumbnailGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeThumbnailGeneratorTests.swift; sourceTree = "<group>"; };
 		65BC69BC2B16036800E42251 /* HomeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeLayout.swift; sourceTree = "<group>"; };
 		AC0B8ABB23E987820057EEBC /* SliderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderCell.swift; sourceTree = "<group>"; };
 		AC0B8ABD23E98A700057EEBC /* CellProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProvider.swift; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 		65BC699C2B136AA500E42251 /* UIKitViewerTests */ = {
 			isa = PBXGroup;
 			children = (
-				65BC69B72B13797600E42251 /* Presentation */,
 				65BC69AA2B136CFC00E42251 /* Domain */,
 			);
 			path = UIKitViewerTests;
@@ -234,30 +231,6 @@
 				65BC69A62B136C7600E42251 /* HomeController.swift */,
 				65BC69A82B136CA200E42251 /* HomePresenter.swift */,
 				65BC69B12B136EE600E42251 /* HomeViewModel.swift */,
-			);
-			path = Home;
-			sourceTree = "<group>";
-		};
-		65BC69B72B13797600E42251 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				65BC69B82B13797B00E42251 /* Adapter */,
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
-		65BC69B82B13797B00E42251 /* Adapter */ = {
-			isa = PBXGroup;
-			children = (
-				65BC69B92B13797F00E42251 /* Home */,
-			);
-			path = Adapter;
-			sourceTree = "<group>";
-		};
-		65BC69B92B13797F00E42251 /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				65BC69BA2B13799100E42251 /* HomeThumbnailGeneratorTests.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -505,7 +478,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				65BC699E2B136AA500E42251 /* LoadComponentsUseCaseTests.swift in Sources */,
-				65BC69BB2B13799100E42251 /* HomeThumbnailGeneratorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,6 +28,8 @@ class HomeThumbnailGenerator: NSObject {
 
 private extension HomeThumbnailGenerator {
     
+    
+    
     func makeViewInstance(with name: String) -> UIView? {
         switch name {
         case "UIView":
