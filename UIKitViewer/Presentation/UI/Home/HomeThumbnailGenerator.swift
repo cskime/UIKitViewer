@@ -28,7 +28,7 @@ class HomeThumbnailGenerator: NSObject {
 
 private extension HomeThumbnailGenerator {
     
-    
+    // TODO: Set up default appearance for UITableView, UICollectionView, UIDatePicker
     
     func makeViewInstance(with name: String) -> UIView? {
         switch name {
