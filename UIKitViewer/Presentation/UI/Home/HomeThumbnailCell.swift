@@ -103,6 +103,7 @@ final class HomeThumbnailCell: UICollectionViewCell {
 // MARK: - UICollectionViewDataSource
 
 extension HomeThumbnailCell: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 9
     }

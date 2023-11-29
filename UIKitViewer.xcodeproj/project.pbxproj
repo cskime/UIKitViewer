@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		049505BF23E8329300790D15 /* HomeThumbnailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505BE23E8329300790D15 /* HomeThumbnailCell.swift */; };
 		049505C123E84D4E00790D15 /* PropertyControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 049505C023E84D4E00790D15 /* PropertyControlViewController.swift */; };
+		650AFF8A2B16CFB0008AD1F4 /* LoadComponentsUseCaseInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650AFF892B16CFB0008AD1F4 /* LoadComponentsUseCaseInput.swift */; };
+		650AFF8C2B16CFD3008AD1F4 /* LoadComponentsUseCaseOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 650AFF8B2B16CFD3008AD1F4 /* LoadComponentsUseCaseOutput.swift */; };
 		65B27E372B0B7F6F00D518F3 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 65B27E362B0B7F6F00D518F3 /* Then */; };
 		65B27E3A2B0B7F8E00D518F3 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 65B27E392B0B7F8E00D518F3 /* SnapKit */; };
 		65B27E3C2B0B7F8E00D518F3 /* SnapKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 65B27E3B2B0B7F8E00D518F3 /* SnapKit-Dynamic */; };
@@ -64,6 +66,8 @@
 /* Begin PBXFileReference section */
 		049505BE23E8329300790D15 /* HomeThumbnailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeThumbnailCell.swift; sourceTree = "<group>"; };
 		049505C023E84D4E00790D15 /* PropertyControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyControlViewController.swift; sourceTree = "<group>"; };
+		650AFF892B16CFB0008AD1F4 /* LoadComponentsUseCaseInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadComponentsUseCaseInput.swift; sourceTree = "<group>"; };
+		650AFF8B2B16CFD3008AD1F4 /* LoadComponentsUseCaseOutput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadComponentsUseCaseOutput.swift; sourceTree = "<group>"; };
 		65BC698A2B13665A00E42251 /* LoadComponentsUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadComponentsUseCase.swift; sourceTree = "<group>"; };
 		65BC698C2B1366AB00E42251 /* ComponentGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComponentGenerator.swift; sourceTree = "<group>"; };
 		65BC698E2B1366C600E42251 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
@@ -148,21 +152,22 @@
 			isa = PBXGroup;
 			children = (
 				65BC698A2B13665A00E42251 /* LoadComponentsUseCase.swift */,
-				65BC698C2B1366AB00E42251 /* ComponentGenerator.swift */,
-				65BC69962B13675900E42251 /* Data */,
+				650AFF892B16CFB0008AD1F4 /* LoadComponentsUseCaseInput.swift */,
+				650AFF8B2B16CFD3008AD1F4 /* LoadComponentsUseCaseOutput.swift */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
 		};
-		65BC69962B13675900E42251 /* Data */ = {
+		65BC69962B13675900E42251 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				65BC698C2B1366AB00E42251 /* ComponentGenerator.swift */,
 				65BC698E2B1366C600E42251 /* Component.swift */,
 				65BC69922B1366FD00E42251 /* Property.swift */,
 				65BC69902B1366CE00E42251 /* ValueType.swift */,
 				65BC69942B13671300E42251 /* Method.swift */,
 			);
-			path = Data;
+			path = Component;
 			sourceTree = "<group>";
 		};
 		65BC699C2B136AA500E42251 /* UIKitViewerTests */ = {
@@ -273,6 +278,7 @@
 				ACD4FDC223EFD17D00D6ED22 /* Common.swift */,
 				AC3B4113240E812600822398 /* Identifiable.swift */,
 				ACC715412417B11B00D01C31 /* NotificationNames.swift */,
+				65BC69962B13675900E42251 /* Component */,
 				ACE13F6B240E22F400376613 /* Extensions */,
 			);
 			path = Helper;
@@ -503,6 +509,7 @@
 				ACE1202D23EA7DDF00D484EF /* DisplayView.swift in Sources */,
 				65BC69932B1366FD00E42251 /* Property.swift in Sources */,
 				65BC69B22B136EE600E42251 /* HomeViewModel.swift in Sources */,
+				650AFF8C2B16CFD3008AD1F4 /* LoadComponentsUseCaseOutput.swift in Sources */,
 				ACE1203923EAA81100D484EF /* TextCell.swift in Sources */,
 				ACE13F6F240E257A00376613 /* UIKitObject.swift in Sources */,
 				ACE1203323EA8EE900D484EF /* PaletteCell.swift in Sources */,
@@ -517,6 +524,7 @@
 				ACE1203B23EBF59E00D484EF /* EnumerationExtensions.swift in Sources */,
 				ACE13F69240E20D400376613 /* UICollectionView+Extension.swift in Sources */,
 				65BC69912B1366CE00E42251 /* ValueType.swift in Sources */,
+				650AFF8A2B16CFB0008AD1F4 /* LoadComponentsUseCaseInput.swift in Sources */,
 				65BC69B62B13779200E42251 /* HomeThumbnailGenerator.swift in Sources */,
 				ACC1ED0F247271BF009F4C1A /* MethodCell.swift in Sources */,
 				65BC69BD2B16036800E42251 /* HomeLayout.swift in Sources */,

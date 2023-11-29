@@ -8,14 +8,6 @@
 
 import Foundation
 
-protocol LoadComponentsUseCaseInput {
-    func load()
-}
-
-protocol LoadComponentsUseCaseOutput {
-    func present(components: [Component])
-}
-
 class LoadComponentsUseCase {
     
     // MARK: - Interface
@@ -36,6 +28,7 @@ extension LoadComponentsUseCase: LoadComponentsUseCaseInput {
     func load() {
         let objects = UIKitObject.allCases
         let components = objects.map(generator.generate(for:))
-        output?.present(components: components)
+        let response = Response(components: components.map(\.name))
+        output?.present(response: response)
     }
 }

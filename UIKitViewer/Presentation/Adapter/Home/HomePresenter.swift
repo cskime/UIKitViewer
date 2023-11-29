@@ -20,9 +20,9 @@ class HomePresenter {
 // MARK: - LoadComponentsUseCaseOutput
 
 extension HomePresenter: LoadComponentsUseCaseOutput {
-    
-    func present(components: [Component]) {
-        let viewModel = HomeViewModel(components: components.map(\.name))
+
+    func present(response: LoadComponentsUseCase.Response) {
+        let viewModel = HomeViewModel(components: response.components)
         view?.display(viewModel: viewModel)
     }
 }
